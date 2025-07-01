@@ -17,14 +17,12 @@ knitr::opts_chunk$set(
   message = FALSE
   )
 library(vitae)
-library(tidyverse)
+library(dplyr)
 library(RefManageR)
 source(here::here("R/pretty.R"))
 source(here::here("R/rpackages.R"))
 source(here::here("R/gcite.R"))
-
 # source(here::here("R/add_bib_section.R"))
-
 ```
 
 # Employment history
@@ -98,7 +96,7 @@ tribble(
 # Research
 
 ```{r}
-pubs <- RefManageR::ReadBib(here::here("BMM_CV/refs_articles.bib"), check = FALSE) |> 
+pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE) |> 
   as_tibble() |> 
   filter(bibtype == "Article")
 ```
@@ -111,8 +109,8 @@ pubs <- RefManageR::ReadBib(here::here("BMM_CV/refs_articles.bib"), check = FALS
 
 ## Awarded
 
-```{r}
-grants <- read_csv(here::here("data/grant_income.csv"))
+```{r grants}
+grants <- readr::read_csv("grant_income.csv")
 
 sumgrants <- grants |> 
   filter(Status %in% c("Complete", "In progress")) |> 
@@ -182,14 +180,14 @@ grants |>
 ## Theses
 
 ```{r}
-bibliography_entries(here::here("BMM_CV/refs_theses.bib")) |> 
+bibliography_entries("refs_theses.bib") |> 
   arrange(issued)
 ```
 
 ## Pre-prints and in-review
 
 ```{r}
-bibliography_entries(here::here("BMM_CV/refs_articles.bib")) |> 
+bibliography_entries("refs_articles.bib") |> 
   filter(type == "manuscript") |> 
   arrange(issued, desc(author$family))
 ```
@@ -197,7 +195,7 @@ bibliography_entries(here::here("BMM_CV/refs_articles.bib")) |>
 ## Refereed research papers
 
 ```{r}
-bibliography_entries(here::here("BMM_CV/refs_articles.bib")) |> 
+bibliography_entries("refs_articles.bib") |> 
   filter(type == "article-journal") |> 
   arrange(issued, desc(author$family))
 ```
@@ -205,7 +203,7 @@ bibliography_entries(here::here("BMM_CV/refs_articles.bib")) |>
 ## Technical Reports
 
 ```{r}
-bibliography_entries(here::here("BMM_CV/refs_reports.bib")) %>%
+bibliography_entries("refs_reports.bib") %>%
   arrange(issued, desc(author$family))
 ```
 
@@ -216,7 +214,7 @@ TO COME
 ## Software
 
 ```{r}
-bibliography_entries(here::here("BMM_CV/Rpackages.bib"))
+bibliography_entries("refs_pkgs.bib")
 ```
 
 # Professional Service
