@@ -88,6 +88,76 @@ tribble(
   baretable()
 ```
 
+# Grants
+
+## Awarded
+
+```{r}
+grants <- read_csv(here::here("data/grant_income.csv"))
+
+sumgrants <- grants |> 
+  filter(Status %in% c("Complete", "In progress")) |> 
+  pull(Amount) |> 
+  sum(na.rm = TRUE)
+```
+
+I have acquired `r scales::dollar_format()(sumgrants)` in research grants since 2015.\vspace*{0.2cm}\enlargethispage*{0.5cm}
+
+```{r grantstable, results='asis'}
+grants |>
+  # filter(Amount > 100000, Type == "Research") |>
+  filter(Status %in% c("Complete", "In progress", "Pending")) |> 
+  mutate(
+    Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
+    Entry = paste(People, ". ``", Title, "''. ",
+      "\\emph{Funding from ", Source, "}",
+      sep = ""
+    ),
+    Amount = dollars(Amount)
+  ) |>
+  arrange(desc(Time), desc(Amount)) |>
+  select(Time, Entry, Amount) %>%
+  baretable(
+    align = "llp{13.3cm}r",
+    hline.after = c(0, NROW(.)),
+    size = "\\fontsize{10}{12}",
+    add.to.row = list(
+      pos = as.list(seq(NROW(.))),
+      command = rep("\\\\[-0.32cm]", NROW(.))
+    )
+  )
+```
+
+\vspace*{0.2cm}\enlargethispage*{0.5cm} 
+
+## Invited, not awarded
+
+Below are invited full proposals that were not awarded: \vspace*{0.2cm}\enlargethispage*{0.5cm}
+
+```{r grantstable-invite, results='asis'}
+grants |>
+  filter(!Status %in% c("Complete", "In progress", "Pending")) |> 
+  mutate(
+    Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
+    Entry = paste(People, ". ``", Title, "''. ",
+      "\\emph{Funding from ", Source, "}",
+      sep = ""
+    ),
+    Amount = dollars(Amount)
+  ) |>
+  arrange(desc(Time), desc(Amount)) |>
+  select(Time, Entry, Amount) %>%
+  baretable(
+    align = "llp{13.3cm}r",
+    hline.after = c(0, NROW(.)),
+    size = "\\fontsize{10}{12}",
+    add.to.row = list(
+      pos = as.list(seq(NROW(.))),
+      command = rep("\\\\[-0.32cm]", NROW(.))
+    )
+  )
+```
+
 
 # Publications
 
