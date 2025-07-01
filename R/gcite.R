@@ -32,5 +32,5 @@ get_scholar_cites <- function(date) {
 date <- Sys.Date()
 
 # Update Google scolar citation
-bmm <- get_gcites(date)
-bmmcites <- get_scholar_cites(date)
+bmm_cite <- get_gcites(date)
+bmm_cite_papers <- get_scholar_cites(date)
