@@ -6,6 +6,8 @@ email: "bmaitland101@gmail.com"
 github: bmait101
 date: "`r format(Sys.time(), '%B %Y')`"
 output: vitae::hyndman
+header-includes:
+  \definecolor{headcolor}{HTML}{000088}
 ---
 
 ```{r setup, include=FALSE}
@@ -16,31 +18,13 @@ knitr::opts_chunk$set(
   )
 library(vitae)
 library(tidyverse)
+library(RefManageR)
 source(here::here("R/pretty.R"))
-```
+source(here::here("R/rpackages.R"))
+source(here::here("R/gcite.R"))
 
-# Education
+# source(here::here("R/add_bib_section.R"))
 
-```{r degrees, results='asis'}
-tribble(
-  ~ Degree, ~ Year, ~ Institution, ~ Where,
-  "EPA Postdoctoral Fellow", "2022-2023", "University of Wisconsin-Madison", "Madison, WI, USA",
-  "Water Resources Fellow", "2020-2022", "University of Wisconsin-Madison", "Madison, WI, USA",
-  "Ph.D. Ecology", "2020", "University of Wyoming", "Laramie, WY, USA",
-  "M.Sc. Conservation Biology", "2015", "University of Alberta", "Edmonton, AB, CAN",
-  "B.S. Conservation Biology", "2011", "SUNY: ESF", "Syracuse, NY, USA"
-  ) |> 
-  baretable()
-
-# tribble(
-  # ~ Degree, ~ Year, ~ Institution, ~ Where,
-  # "EPA Postdoctoral Fellow", "2022-2023", "University of Wisconsin-Madison", "Madison, WI, USA",
-  # "Water Resources Postdoctoral Fellow", "2020-2022", "University of Wisconsin-Madison", "Madison, WI, USA",
-  # "Ph.D. Ecology", "2020", "University of Wyoming", "Laramie, WY, USA",
-  # "M.Sc. Conservation Biology", "2015", "University of Alberta", "Edmonton, AB, CAN",
-  # "B.S. Conservation Biology", "2011", "SUNY: ESF", "Syracuse, NY, USA"
-# ) %>% 
-#   detailed_entries(Degree, Year, Institution, Where)
 ```
 
 # Employment history
@@ -66,6 +50,29 @@ tribble(
   baretable()
 ```
 
+# Education and preparation
+
+```{r degrees, results='asis'}
+tribble(
+  ~ Degree, ~ Year, ~ Institution,
+  "EPA Postdoctoral Fellow", "2022-2023", "University of Wisconsin-Madison",
+  "Water Resources Fellow", "2020-2022", "University of Wisconsin-Madison",
+  "Ph.D. Ecology", "2020", "University of Wyoming",
+  "M.Sc. Conservation Biology", "2015", "University of Alberta",
+  "B.S. Conservation Biology", "2011", "SUNY: ESF"
+  ) |> 
+  baretable()
+
+# tribble(
+  # ~ Degree, ~ Year, ~ Institution, ~ Where,
+  # "EPA Postdoctoral Fellow", "2022-2023", "University of Wisconsin-Madison", "Madison, WI, USA",
+  # "Water Resources Postdoctoral Fellow", "2020-2022", "University of Wisconsin-Madison", "Madison, WI, USA",
+  # "Ph.D. Ecology", "2020", "University of Wyoming", "Laramie, WY, USA",
+  # "M.Sc. Conservation Biology", "2015", "University of Alberta", "Edmonton, AB, CAN",
+  # "B.S. Conservation Biology", "2011", "SUNY: ESF", "Syracuse, NY, USA"
+# ) %>% 
+#   detailed_entries(Degree, Year, Institution, Where)
+```
 
 # Awards and honours
 
@@ -87,6 +94,18 @@ tribble(
   ) |>
   baretable()
 ```
+
+# Research
+
+```{r}
+pubs <- RefManageR::ReadBib(here::here("BMM_CV/refs_articles.bib"), check = FALSE) |> 
+  as_tibble() |> 
+  filter(bibtype == "Article")
+```
+
+  * Since 2015 I have authored `r NROW(pubs)` papers in peer-reviewed journals on fisheries and conservation topics. 
+  * On Google Scholar my h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")` (as at `r format(Sys.time(), "%e %B %Y")`).
+  * I have coauthored `r NROW(bmm_pkgs)` R package as a result of my research. There have been over `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))`  downloads of my packages.
 
 # Grants
 
@@ -158,104 +177,71 @@ grants |>
   )
 ```
 
-
 # Publications
 
+## Theses
+
 ```{r}
-# knitr::write_bib(c("hatchR"), "packages.bib")
-
-bibliography_entries("Rpackages.bib") %>%
-  arrange(desc(author$family), issued)
+bibliography_entries(here::here("BMM_CV/refs_theses.bib")) |> 
+  arrange(issued)
 ```
 
+## Pre-prints and in-review
 
-```{r map-plot, eval=FALSE, fig.align='center', fig.width=6.1, fig.height=2.25, fig.showtext=TRUE, fig.dpi=300}
-load.fontawesome()
-home = fontawesome('fa-home')
-uni = fontawesome('fa-university')
-work = fontawesome('fa-briefcase')
-# teach = fontawesome('fa-chalkboard')
-
-world = rnaturalearth::ne_countries("medium", country = "united states of america", returnclass = 'sf')
-
-# Sample data frame with decimal degree coordinates
-df <- data.frame(
-  longitude = c(-73.935242, -76.144423, -113.4938),
-  latitude = c(40.730610, 43.046899, 53.5461),
-  name = c("New York", "Syracuse", "Ann Arbor")
-)
-
-# Create the sf object
-sf_object <- st_as_sf(df, coords = c("longitude", "latitude"), crs = 4326)
-ggplot() + 
-  geom_sf(data = world, fill = "lightblue", color = "white") +
-  geom_sf(data = sf_object, aes(color = name), size = 3) 
-
-cities_geom = st_sfc(
-    st_point(c(40.730610,-73.935242)),
-    st_point(c(43.046899,-76.144423)),
-    st_point(c(53.5461,-113.4938)), 
-    crs = 4326
-  ) 
-
-cities = st_sf(
-  name = c(
-    'New York NY, USA',
-    'Syracuse NY, USA',
-    'Ann Arbor, MI, USA'
-    ),
-  geometry = cities_geom
-  ) |>
-  # st_set_crs(4326) |>
-  mutate(
-    label = c(
-      paste(home),
-      rep(uni,1),
-      paste(work,uni, sep = " "))
-  )
-
-ggplot() +
-  geom_sf(data = world, color = 'white', lwd = 0.1) +
-  geom_sf_text(
-    data = cities,
-    aes(label = label),
-    size = 3,
-    color = '#009ACD',
-    family = "fontawesome-webfont"
-  ) +
-  coord_sf(
-    crs = '+proj=vandg',
-    xlim = c(-14000000, 7000000),
-    ylim = c(-750000,8000000)
-  )
-
-routes = cities |> 
-  as_sfnetwork() |> 
-  st_as_sf('edges') |> 
-  st_segmentize(units::set_units(1000, m))
-
-ggplot() +
-  geom_sf(data = world, color = 'white', lwd = 0.1) +
-  geom_sf_text(
-    data = cities,
-    aes(label = label),
-    size = 3,
-    color = '#009ACD',
-    family = "fontawesome-webfont"
-  ) +
-  geom_sf(
-    data = routes,
-    color = '#009ACD',
-    size = 1, alpha = 0.5,
-    linetype = 21
-  ) +
-  coord_sf(
-    crs = '+proj=vandg',
-    xlim = c(-14000000, 7000000),
-    ylim = c(-750000,8000000)
-  ) +
-  theme_void() +
-  theme(
-    plot.margin = margin(-1, 0, -0.8, 0, "cm")
-  )
+```{r}
+bibliography_entries(here::here("BMM_CV/refs_articles.bib")) |> 
+  filter(type == "manuscript") |> 
+  arrange(issued, desc(author$family))
 ```
+
+## Refereed research papers
+
+```{r}
+bibliography_entries(here::here("BMM_CV/refs_articles.bib")) |> 
+  filter(type == "article-journal") |> 
+  arrange(issued, desc(author$family))
+```
+
+## Technical Reports
+
+```{r}
+bibliography_entries(here::here("BMM_CV/refs_reports.bib")) %>%
+  arrange(issued, desc(author$family))
+```
+
+## Unpublished working papers
+
+TO COME
+
+## Software
+
+```{r}
+bibliography_entries(here::here("BMM_CV/Rpackages.bib"))
+```
+
+# Professional Service
+
+## Ad-hoc reviewer
+
+## Granting agency external reviewer
+
+## Conference organization and serive
+
+## Profressional society service
+
+## Professional society membership
+
+## University service
+
+# Teching
+
+# Mentoring
+
+# Media
+
+# Special skills and training
+
+# Community service and outreach
+
+# Pre-doctoral research and field experience
+
