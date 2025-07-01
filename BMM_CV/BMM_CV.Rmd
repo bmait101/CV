@@ -70,22 +70,22 @@ tribble(
 # Awards and honours
 
 ```{r awards, results='asis'}
-# tribble(
-#   ~Year, ~Award,
-#   2024, "Outstanding Service Award, USDA FS Rocky Mountain Research Station",
-#   2021, "Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
-#   2019, "Dean’s Graduate Scholar Award, College of Arts & Sciences University of Wyoming",
-#   2018, "Eugene Maughan Graduate Award, Western Division American Fisheries Society",
-#   2018, "Hank Gardner Graduate Award, Department of Zoology & Physiology University of Wyoming",
-#   2017, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society",
-#   2017, "Board of Visitors Award, College of Arts & Sciences University of Wyoming",
-#   2017, "Dennis Anderson Fisheries Award, Department Zoology & Physiology University of Wyoming ",
-#   2017, "William Trachtenberg Scholarship Award, Sustainable Fisheries Foundation",
-#   2017, "Vern Bressler Fisheries Award, Department of Zoology & Physiology University of Wyoming",
-#   2015, "Excellence in Fisheries Award, Canadian Aquatic Resources Section American Fisheries Society",
-#   2015, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society"
-#   ) |>
-#   baretable()
+tribble(
+  ~Year, ~Award,
+  2024, "Outstanding Service Award, USDA FS Rocky Mountain Research Station",
+  2021, "Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
+  2019, "Dean’s Graduate Scholar Award, College of Arts and Sciences University of Wyoming",
+  2018, "Eugene Maughan Graduate Award, Western Division American Fisheries Society",
+  2018, "Hank Gardner Graduate Award, Department of Zoology and Physiology University of Wyoming",
+  2017, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society",
+  2017, "Board of Visitors Award, College of Arts and Sciences University of Wyoming",
+  2017, "Dennis Anderson Fisheries Award, Department Zoology and Physiology University of Wyoming ",
+  2017, "William Trachtenberg Scholarship Award, Sustainable Fisheries Foundation",
+  2017, "Vern Bressler Fisheries Award, Department of Zoology and Physiology University of Wyoming",
+  2015, "Excellence in Fisheries Award, Canadian Aquatic Resources Section American Fisheries Society",
+  2015, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society"
+  ) |>
+  baretable()
 ```
 
 
