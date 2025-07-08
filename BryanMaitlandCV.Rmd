@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
   warning = FALSE, 
   message = FALSE
   )
+
 library(vitae)
 library(dplyr)
 library(RefManageR)
@@ -27,7 +28,7 @@ source(here::here("R/gcite.R"))
 # source(here::here("R/add_bib_section.R"))
 ```
 
-# Employment history
+# Employment
 
 ```{r employment, results='asis'}
 tribble(
@@ -57,7 +58,7 @@ tribble(
   baretable()
 ```
 
-# Education and preparation
+# Education
 
 ```{r degrees, results='asis'}
 tribble(
@@ -104,7 +105,7 @@ tribble(
 
 # Research
 
-```{r}
+```{r pubs}
 pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE) |> 
   as_tibble() |> 
   filter(bibtype == "Article")
@@ -116,8 +117,6 @@ pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE) |>
 
 # Grants
 
-## Awarded
-
 ```{r grants}
 grants <- readr::read_csv("grant_income.csv")
 
@@ -127,7 +126,7 @@ sumgrants <- grants |>
   sum(na.rm = TRUE)
 ```
 
-I have acquired `r scales::dollar_format()(sumgrants)` in research grants since 2015.\vspace*{0.2cm}\enlargethispage*{0.5cm}
+*   I have acquired `r scales::dollar_format()(sumgrants)` in research grants since 2015.\vspace*{0.2cm}\enlargethispage*{0.5cm}
 
 ```{r grantstable, results='asis'}
 grants |>
@@ -154,13 +153,13 @@ grants |>
   )
 ```
 
-\vspace*{0.2cm}\enlargethispage*{0.5cm}
+<!-- \vspace*{0.2cm}\enlargethispage*{0.5cm} -->
 
-## Invited, not awarded
+<!-- ## Invited, not awarded -->
 
-Below are invited full proposals that were not awarded: \vspace*{0.2cm}\enlargethispage*{0.5cm}
+<!-- Below are invited full proposals that were not awarded: \vspace*{0.2cm}\enlargethispage*{0.5cm} -->
 
-```{r grantstable-invite, results='asis'}
+```{r grantstable-invite, results='asis', eval=FALSE}
 grants |>
   filter(!Status %in% c("Complete", "In progress", "Pending")) |> 
   mutate(
@@ -183,6 +182,8 @@ grants |>
     )
   )
 ```
+
+\newpage
 
 # Publications
 
@@ -224,6 +225,67 @@ bibliography_entries("refs_reports.bib") %>%
 bibliography_entries("refs_pkgs.bib")
 ```
 
+# Specialized Skills and Certifications
+
+## Field Skills
+
+```{r, results='asis'}
+tribble(
+  ~area, ~skills,
+  "Fish Sampling", "Electrofishing, netting, seining, trawling, angling",
+  "Aquatic Ecology", "Water quality sampling, invertebrate sampling, aquatic vegetation sampling, habitat assessment",
+  "Identification", "Fish (freshwater and marine), amphibians, reptiles, aquatic invertebrates, aquatic plants",
+  "Operations", "Piloting and trailering small vessels, rafting, helicopters experience, orienteering",
+  "Misc", "Light machinery operation, small power equipment repair, minor electrical repair, handiwork",
+  ) |> 
+  baretable()
+```
+
+## Lab Skills
+
+```{r, results='asis'}
+tribble(
+  ~area, ~skills,
+  "Fisheries", "Fish aging (scales, otoliths), fish dissection, fish tissue processing",
+  "Aquatic Ecology", "Water quality analysis (nutrients, chlorophyll a, turbidity), invertebrate processing, aquatic vegetation",
+  "Stable Isotopes", "Sample preparation, ligh (C, N, O, S) and heavy (Sr) stable isotope analysis",
+  "Molecular", "DNA extraction, PCR, qPCR, ddRADseq library preparation, ddRADseq data analysis",
+  ) |> 
+  baretable()
+```
+
+## Computer Skills
+
+```{r, results='asis'}
+tribble(
+  ~area, ~skills,
+  "Operating Systems", "Linux, MacOS, Windows",
+  "Programming Languages", "R, Python, BASH, JavaScript",
+  "Markup Languages", "Markdown, RMarkdown, CSS, HTML, LaTeX",
+  "Data Interchange Formats", "CSV, JSON, XML, Feather",
+  "Other Languages", "YAML",
+  "Version Control", "Git",
+  "Text Editors", "RStudio, SQL Server Management Studio, Visual Studio, Visual Studio Code",
+  "Microsoft Office", "Excel, Outlook, OneNote, PowerPoint, Word"
+  ) |> 
+  baretable()
+```
+
+## Certifications
+
+```{r, results='asis'}
+tribble(
+  ~Year, ~Certification, ~Institution,
+  2025, "Wilderness First Aid", "Wilderness Medicine Institude",
+  2025, "Advanced CPR and First Aid", "American Red Cross",
+  2014, "Defensive Driving", "USDA Forest Service",
+  2018, "Avalanche Safety Level 1", "National Ski Patrol",
+  2013, "Electrofishing Safety", "University of Alberta",
+  2013, "MOCC Federal Motor Boat Operator", "US Department of the Interior",
+  ) |> 
+  baretable()
+```
+
 # Professional Service
 
 ## Ad-hoc reviewer
@@ -244,9 +306,7 @@ n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
 tribble(
   ~Year, ~Details,
   2025, "Lake Champlain Fisheries Research Program, full proposal review",
-  2024, "EPA, internal science review",
   2023, "NSF, Division of Environmental Biology, CAREER, full proposal review",
-  2023, "USGS, internal science review",
   ) |>
   baretable()
 ```
@@ -256,8 +316,8 @@ tribble(
 ```{r societies, results='asis'}
 tribble(
   ~Start, ~End, ~Position,
-  2010, NA, "Society for Conservation Biology",
   2010, NA, "American Fisheries Society",
+  2010, NA, "Society for Conservation Biology",
   2015, NA, "Ecological Society of America",
   2016, NA, "Society for Freshwater Science",
   2019, NA, "Galápagos Conservancy",
