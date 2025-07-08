@@ -30,7 +30,7 @@ source(here::here("R/gcite.R"))
 ```{r employment, results='asis'}
 tribble(
   ~Start, ~End, ~Position,
-  2023, 2024, "\\textbf{Research Associate},  Department of Civil and Environmental Engineering, University of Wisconsin-Madison",
+  2023, 2024, "\\textbf{Research Associate}, Department of Civil and Environmental Engineering, University of Wisconsin-Madison",
   2024, NA, "\\textbf{Research Fish Biologist}, Rocky Mountain Research Station, USDA Forest Service",
 ) |>
   arrange(-Start) |>
@@ -101,9 +101,9 @@ pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE) |>
   filter(bibtype == "Article")
 ```
 
-  * Since 2015 I have authored `r NROW(pubs)` papers in peer-reviewed journals on fisheries and conservation topics. 
-  * On Google Scholar my h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")` (as at `r format(Sys.time(), "%e %B %Y")`).
-  * I have coauthored `r NROW(bmm_pkgs)` R package as a result of my research. There have been over `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))`  downloads of my packages.
+-   Since 2015 I have authored `r NROW(pubs)` papers in peer-reviewed journals on fisheries and conservation topics.
+-   On Google Scholar my h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")` (as at `r format(Sys.time(), "%e %B %Y")`).
+-   I have coauthored `r NROW(bmm_pkgs)` R package as a result of my research. There have been over `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads of my packages.
 
 # Grants
 
@@ -145,7 +145,7 @@ grants |>
   )
 ```
 
-\vspace*{0.2cm}\enlargethispage*{0.5cm} 
+\vspace*{0.2cm}\enlargethispage*{0.5cm}
 
 ## Invited, not awarded
 
@@ -221,25 +221,160 @@ bibliography_entries("refs_pkgs.bib")
 
 ## Ad-hoc reviewer
 
-## Granting agency external reviewer
+```{r reviews1}
+n_reviewed <- 49
+n_journals <- 15
+n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
+```
+
+-   I have served as an ad-hoc reviewer for `r n_reviewed` manuscripts from `r n_journals` journals since 2016 ($\sim$ `r n_per_yr` per year) including: *Oecologia*, *Global Change Biology*, *Ecological Applications*, *Freshwater Biology*, *Freshwater Science*, *Frontiers in Ecology and Evolution*, *Hydrobiologia*, *Journal of Ecology*, *Fisheries Research*, *Environmental Biology of Fishes*, *Restoration Ecology*, *PeerJ*, *River Research and Applications*, *Journal of Great Lakes Research*, and *Diversity and Distributions*.
+
+## Other peer review
+
+```{r reviews2, results='asis'}
+tribble(
+  ~Year, ~Details,
+  2025, "Lake Champlain Fisheries Research Program, full proposal review",
+  2024, "EPA, internal science review",
+  2023, "NSF, Division of Environmental Biology, CAREER, full proposal review",
+  2023, "USGS, internal science review",
+  ) |>
+  baretable()
+```
 
 ## Conference organization and serive
 
+```{r conf-service, results='asis'}
+tribble(
+  ~Year, ~Details,
+  2024, "Abstract reviewer, American Geophysical Union, Fall Meeting",
+  ) |>
+  baretable()
+```
+
 ## Profressional society service
+
+```{r society-service, results='asis'}
+tribble(
+  ~Start, ~End, ~Position,
+  2015, NA, "\\textbf{Member}, Freshwater Working Group, Society for Conservation Biology",
+  2021, 2022, "\\textbf{Member}, Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
+  2020, 2022, "\\textbf{Member}, Trout Species Team, Wisconsin Department of Natural Resources",
+  2016, 2017, "\\textbf{President}, UWyo Student Chapter, American Fisheries Society",
+  2016, 2018, "\\textbf{Excom member}, CO-WY State Chapter, American Fisheries Society",
+  ) |>
+  # arrange(-Start) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Position) |>
+  baretable()
+```
 
 ## Professional society membership
 
+```{r societies, results='asis'}
+tribble(
+  ~Start, ~End, ~Position,
+  2010, NA, "Society for Conservation Biology",
+  2010, NA, "American Fisheries Society",
+  2015, NA, "Ecological Society of America",
+  2016, NA, "Society for Freshwater Science",
+  2019, NA, "Galápagos Conservancy",
+  2016, 2019, "Association for the Science of Limnology and Oceanography",
+  2010, 2016, "International Association of Great Lakes Research",
+  ) |>
+  # arrange(-Start) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Position) |>
+  baretable()
+```
+
 ## University service
+
+```{r uni-serivce, results='asis'}
+tribble(
+  ~Start, ~End, ~Position,
+  2022, 2024, "Field Operation Facilitation and Boat Committee, Center for Limnology, UW-Madison",
+  2019, 2020, "Faculty Search Committee, Department of Zoology and Physiology, University of Wyoming",
+  2016, 2020, "Social Media Coordinator, Program in Ecology, University of Wyoming",
+  2016, 2017, "Graduate Council, student representative, University of Wyoming",
+  2016, 2017, "President, Program in Ecology, University of Wyoming",
+  ) |>
+  # arrange(-Start) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Position) |>
+  baretable()
+```
 
 # Teching
 
+```{r teaching, results='asis'}
+tribble(
+  ~ Year, ~ Course, ~ Role, ~ Institution,
+  "2020", "ZOO 4330 - Ichthyology", "Instructor", "University of Wyoming",
+  "2019", "ZOO 4330 - Ichthyology", "Lab Instructor", "University of Wyoming",
+  "2018", "ZOO 4330 - Ichthyology", "Lab Instructor", "University of Wyoming",
+  "2017", "ZOO 4330 - Ichthyology", "Lab Instructor", "University of Wyoming",
+  "2016", "ZOO 4330 - Ichthyology", "Lab Instructor", "University of Wyoming",
+  "2015", "ZOO 4310 - Fisheries Management", "Lab Instructor", "University of Wyoming",
+  "2014", "RENR 460 - Fisheries Management", "Lab Instructor", "University of Alberta",
+  "2013", "RENR 460 - Fisheries Management", "Lab Instructor", "University of Alberta",
+  ) |> 
+  baretable()
+```
+
 # Mentoring
 
+## Undergraduate Students (Research Assistants, lab and field)
+
+```{r mentoring, results='asis'}
+tribble(
+  ~ Start, ~ End, ~ Name, ~ Institution,
+  2023, 2023, "Jonathan Martin", "University of Wisconsin-Madison",
+  2018, 2020, "Nathan Barrus", "University of Wyoming",
+  2019, 2020, "Russell Brubaker", "University of Wyoming",
+  2018, 2019, "Reilly Davis", "University of Wyoming",
+  2017, 2017, "Brynn Hirschman", "University of Wyoming",
+  2017, 2017, "Austin Jacobson", "University of Wyoming",
+  2016, 2016, "Shaun Helsper", "University of Wyoming",
+  2016, 2017, "Travis Allison", "University of Wyoming",
+  2016, 2016, "Andrew Annear", "University of Wyoming",
+  2015, 2015, "Jake Werner", "University of Wyoming",
+  ) |>
+  baretable()
+```
+
 # Media
+
 
 # Special skills and training
 
 # Community service and outreach
 
 # Pre-doctoral research and field experience
-
