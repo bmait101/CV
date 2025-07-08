@@ -50,3 +50,5 @@ rsconnect/
 
 #LaTex stuff
 *.log
+*.aux
+*.out
