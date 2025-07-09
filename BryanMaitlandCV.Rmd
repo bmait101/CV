@@ -14,6 +14,8 @@ header-includes:
   \definecolor{headcolor}{HTML}{000088}
 ---
 
+\newcounter{bib}
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE, 
@@ -113,9 +115,9 @@ pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE) |>
   filter(bibtype == "Article")
 ```
 
-*   Since 2015 I have authored `r NROW(pubs)` papers in peer-reviewed journals on fisheries, conservation, and food web topics.
+*   Since 2015 I have authored `r NROW(pubs)` papers in peer-reviewed journals on fisheries, and conservation (pages \pageref{papersstart}--\pageref{papersend}).
 *   On Google Scholar my h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")` (as at `r format(Sys.time(), "%e %B %Y")`).
-*   I have coauthored `r NROW(bmm_pkgs)` R package as a result of my research. There have been `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads of my packages.
+*   I have coauthored `r NROW(bmm_pkgs)` R package as a result of my research. There have been `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads of my packages (page \pageref{packagestart}).
 
 # Grants
 
@@ -204,6 +206,8 @@ bibliography_entries("refs_articles.bib") |>
   arrange(issued, desc(author$family))
 ```
 
+\refstepcounter{bib}\label{papersstart}
+
 ## Refereed research papers
 
 ```{r}
@@ -211,6 +215,8 @@ bibliography_entries("refs_articles.bib") |>
   filter(type == "article-journal") |> 
   arrange(issued, desc(author$family))
 ```
+
+\refstepcounter{bib}\label{papersend}
 
 ## Technical Reports
 
@@ -228,9 +234,13 @@ bibliography_entries("refs_working.bib") %>%
 
 ## Software
 
+\refstepcounter{bib}\label{packagestart}
+
 ```{r}
 bibliography_entries("refs_pkgs.bib")
 ```
+
+\refstepcounter{bib}\label{packageend}
 
 \newpage
 
