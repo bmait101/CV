@@ -7,7 +7,9 @@ orcid: 0000-0002-4491-5064
 linkedin: bryanmaitland
 github: bmait101
 date: "`r format(Sys.time(), '%B %Y')`"
-output: vitae::hyndman
+output: 
+  vitae::hyndman:
+    pandoc_args: ["--lua-filter=bold-surname.lua"]
 header-includes:
   \definecolor{headcolor}{HTML}{000088}
 ---
