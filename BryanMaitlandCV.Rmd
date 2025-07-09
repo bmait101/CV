@@ -3,9 +3,9 @@ name: Bryan M. Maitland
 position: "Research Fish Biologist"
 address: "USDA Forest Service, Rocky Mountain\\tabularnewline Research Station, Boise, ID, USA"
 email: "bmaitland101@gmail.com"
-github: bmait101
-linkedin: bryanmaitland
 orcid: 0000-0002-4491-5064
+linkedin: bryanmaitland
+github: bmait101
 date: "`r format(Sys.time(), '%B %Y')`"
 output: vitae::hyndman
 header-includes:
@@ -88,14 +88,14 @@ tribble(
 tribble(
   ~Year, ~Award,
   2024, "Outstanding Service Award, USDA FS Rocky Mountain Research Station",
-  2021, "Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
+  2021, "Best Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
   2019, "Dean’s Graduate Scholar Award, College of Arts and Sciences University of Wyoming",
   2018, "Eugene Maughan Graduate Award, Western Division American Fisheries Society",
   2018, "Hank Gardner Graduate Award, Department of Zoology and Physiology University of Wyoming",
   2017, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society",
   2017, "Board of Visitors Award, College of Arts and Sciences University of Wyoming",
   2017, "Dennis Anderson Fisheries Award, Department Zoology and Physiology University of Wyoming ",
-  2017, "William Trachtenberg Scholarship Award, Sustainable Fisheries Foundation",
+  2017, "William Trachtenberg Scholarship, Sustainable Fisheries Foundation",
   2017, "Vern Bressler Fisheries Award, Department of Zoology and Physiology University of Wyoming",
   2015, "Excellence in Fisheries Award, Canadian Aquatic Resources Section American Fisheries Society",
   2015, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society"
@@ -105,13 +105,13 @@ tribble(
 
 # Research
 
-```{r pubs}
+```{r article-totals}
 pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE) |> 
   as_tibble() |> 
   filter(bibtype == "Article")
 ```
 
-*   Since 2015 I have authored `r NROW(pubs)` papers in peer-reviewed journals on fisheries and conservation topics.
+*   Since 2015 I have authored `r NROW(pubs)` papers in peer-reviewed journals on fisheries, conservation, and food web topics.
 *   On Google Scholar my h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")` (as at `r format(Sys.time(), "%e %B %Y")`).
 *   I have coauthored `r NROW(bmm_pkgs)` R package as a result of my research. There have been over `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads of my packages.
 
@@ -128,7 +128,7 @@ sumgrants <- grants |>
 
 *   I have acquired `r scales::dollar_format()(sumgrants)` in research grants since 2015.\vspace*{0.2cm}\enlargethispage*{0.5cm}
 
-```{r grantstable, results='asis'}
+```{r grants-table, results='asis'}
 grants |>
   # filter(Amount > 100000, Type == "Research") |>
   filter(Status %in% c("Complete", "In progress", "Pending")) |> 
@@ -185,7 +185,7 @@ grants |>
 
 \newpage
 
-# Publications
+# Publications (chronological)
 
 ## Theses
 
@@ -217,7 +217,12 @@ bibliography_entries("refs_reports.bib") %>%
   arrange(issued, desc(author$family))
 ```
 
-<!-- ## Unpublished working papers -->
+## Unpublished working papers
+
+```{r}
+bibliography_entries("refs_working.bib") %>%
+  arrange(issued, desc(author$family))
+```
 
 ## Software
 
@@ -249,7 +254,7 @@ tribble(
   "Fisheries", "Fish aging (scales, otoliths), fish dissection, fish tissue processing",
   "Aquatic Ecology", "Water quality analysis (nutrients, chlorophyll a, turbidity), invertebrate processing, aquatic vegetation",
   "Stable Isotopes", "Sample preparation, ligh (C, N, O, S) and heavy (Sr) stable isotope analysis",
-  "Molecular", "DNA extraction, PCR, qPCR, ddRADseq library preparation, ddRADseq data analysis",
+  "Molecular", "DNA extraction, PCR, qPCR",
   ) |> 
   baretable()
 ```
@@ -262,7 +267,7 @@ tribble(
   "Operating Systems", "Linux, MacOS, Windows",
   "Programming Languages", "R, Python, BASH, JavaScript",
   "Markup Languages", "Markdown, RMarkdown, CSS, HTML, LaTeX",
-  "Data Interchange Formats", "CSV, JSON, XML, Feather",
+  "Data Interchange Formats", "CSV, JSON, XML",
   "Other Languages", "YAML",
   "Version Control", "Git",
   "Text Editors", "RStudio, SQL Server Management Studio, Visual Studio, Visual Studio Code",
@@ -296,9 +301,7 @@ n_journals <- 15
 n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
 ```
 
-*   I have served as an ad-hoc reviewer for `r n_reviewed` manuscripts from `r n_journals` journals since 2016 ($\sim$ `r n_per_yr` per year).
-
-<!-- including: *Oecologia*, *Global Change Biology*, *Ecological Applications*, *Freshwater Biology*, *Freshwater Science*, *Frontiers in Ecology and Evolution*, *Hydrobiologia*, *Fisheries Research*, *Environmental Biology of Fishes*, *Restoration Ecology*, and *River Research and Applications*.  -->
+*   I have served as an ad-hoc reviewer for `r n_reviewed` manuscripts from `r n_journals` journals since 2016 ($\sim$ `r n_per_yr` per year): including: *Oecologia*, *Global Change Biology*, *Ecological Applications*, *Freshwater Biology*, *Freshwater Science*, *Frontiers in Ecology and Evolution*, *Hydrobiologia*, *Fisheries Research*, *Environmental Biology of Fishes*, *Restoration Ecology*, and *River Research and Applications*.
 
 ## Other peer review
 
