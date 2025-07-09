@@ -68,12 +68,10 @@ tribble(
 
 ```{r degrees, results='asis'}
 tribble(
-  ~ Degree, ~ Institution, ~ Year,
-  # "EPA Postdoctoral Fellow", "2022-2023", "University of Wisconsin-Madison",
-  # "Water Resources Fellow", "2020-2022", "University of Wisconsin-Madison",
-  "Ph.D. Ecology", "University of Wyoming", "2020", 
-  "M.Sc. Conservation Biology", "University of Alberta", "2015",
-  "B.S. Conservation Biology \\textit{cum luade}", "SUNY: College of Environmental Science and Forestry", "2011",
+  ~ Degree, ~ Year, ~ Feild, ~ Institution,
+  "Ph.D.", 2020, "Ecology", "University of Wyoming",  
+  "M.Sc." ,2015, "Conservation Biology", "University of Alberta", 
+  "B.S.", 2011, "Conservation Biology \\textit{cum luade}", "SUNY: College of Environmental Science and Forestry",
   ) |> 
   baretable()
 
@@ -345,7 +343,7 @@ tribble(
   baretable()
 ```
 
-# Professional Service
+# Society and Professional Service
 
 ## Ad-hoc reviewer
 
@@ -368,7 +366,7 @@ tribble(
   baretable()
 ```
 
-## Society membership
+## Membership in professional societies
 
 ```{r societies, results='asis'}
 tribble(
@@ -396,7 +394,7 @@ tribble(
   baretable()
 ```
 
-## Society service
+## Service in professional societies
 
 ```{r society-service, results='asis'}
 tribble(
@@ -432,7 +430,20 @@ tribble(
   baretable()
 ```
 
-# University service
+# University involvement and service
+
+<!-- ## Adjunct and affiliate appointments -->
+
+<!-- ## Graduate student committees -->
+
+<!-- ## Postdoctoral researchers -->
+
+## Invited talks and presentations
+
+* *Freshwater science in a changing world: fisheries research for conservation & management*. School of Freshwater Science, UW-Milwaukee, Milwaukee, Dec 2023 
+* *Fish and Freshwater in a Changing World: Science for Management and Conservation*. Rocky Mountain Research Station, US Forest Service, Boise, April 2023
+* *Coldwater Fish in a Changing World: Actionable Ecology for Management and Policy*. Department of Ecology, Montana State University, Missoula, March 2022
+* *Exploring isotopic niches in Rocky Mountain Great Plains stream fish*. Dept. of Zoology & Physiology, University of Wyoming, Laramie, May 2017
 
 ## Committees, Groups, and Councils
 
