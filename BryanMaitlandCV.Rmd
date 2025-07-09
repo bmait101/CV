@@ -246,8 +246,6 @@ bibliography_entries("refs_pkgs.bib")
 
 \newpage
 
-# Invited 
-
 # Specialized Skills and Certifications
 
 ## Field Skills
@@ -308,6 +306,17 @@ tribble(
   baretable()
 ```
 
+## Leadership Development
+
+```{r leadership, results='asis'}
+tribble(
+  ~Year, ~Program, ~Institution,
+  2021, "Equity and Inclusion Workshop", "EQT By Design via WI Sea Grant",
+  2008, "Leave No Trace Master Educator", "Center for Outdoor Ethics, NOLS",
+  ) |> 
+  baretable()
+```
+
 ## Certifications
 
 ```{r, results='asis'}
@@ -319,6 +328,19 @@ tribble(
   2018, "Avalanche Safety Level 1", "National Ski Patrol",
   2013, "Electrofishing Safety", "University of Alberta",
   2013, "MOCC Federal Motor Boat Operator", "US Department of the Interior",
+  ) |> 
+  baretable()
+```
+
+## Additional Academic Training
+
+```{r, results='asis'}
+tribble(
+  ~Year, ~Course, ~Credits, ~Institution,
+  2008, "Environmental Ethics", "2 credits", "University of Utah",
+  2008, "Group Leadership Techniques", "2 credits", "University of Utah",
+  2008, "Wilderness Skills Practicum, Backpacking", "2 credits", "University of Utah",
+  2007, "Wilderness Skills Practicum, River Travel", "2 credits", "University of Utah",
   ) |> 
   baretable()
 ```
