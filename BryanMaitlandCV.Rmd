@@ -98,7 +98,7 @@ tribble(
   2018, "Hank Gardner Graduate Award, Department of Zoology and Physiology University of Wyoming",
   2017, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society",
   2017, "Board of Visitors Award, College of Arts and Sciences University of Wyoming",
-  2017, "Dennis Anderson Fisheries Award, Department Zoology and Physiology University of Wyoming ",
+  # 2017, "Dennis Anderson Fisheries Award, Department Zoology and Physiology University of Wyoming ",
   2017, "William Trachtenberg Scholarship, Sustainable Fisheries Foundation",
   2017, "Vern Bressler Fisheries Award, Department of Zoology and Physiology University of Wyoming",
   2015, "Excellence in Fisheries Award, Canadian Aquatic Resources Section American Fisheries Society",
@@ -113,11 +113,16 @@ tribble(
 pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE) |> 
   as_tibble() |> 
   filter(bibtype == "Article")
+
+talks <- RefManageR::ReadBib("refs_presentations.bib", check = FALSE) |> 
+  as_tibble() 
 ```
 
-*   Since 2015 I have authored `r NROW(pubs)` papers in peer-reviewed journals on fisheries, and conservation (pages \pageref{papersstart}--\pageref{papersend}).
-*   On Google Scholar my h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")` (as at `r format(Sys.time(), "%e %B %Y")`).
-*   I have coauthored `r NROW(bmm_pkgs)` R package as a result of my research. There have been `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads of my packages (page \pageref{packagestart}).
+* My current research focuses on the ecology, management, and conservation of freshwater fishes, with a particular emphasis on coldwater fishes in the Rocky Mountains, Pacific Northwest, and Great Lakes regions.
+* Since 2015 I have authored `r NROW(pubs)` papers in peer-reviewed journals on fisheries, and conservation (pages \pageref{papersstart}--\pageref{papersend}).
+* On Google Scholar my h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")` (as at `r format(Sys.time(), "%e %B %Y")`).
+* Since 2011 I have given or co-authored `r NROW(talks)` presentations on my research (pages \pageref{presstart}--\pageref{presend}).
+* I have coauthored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
 
 # Grants
 
@@ -193,14 +198,14 @@ grants |>
 
 ## Theses
 
-```{r}
+```{r theses}
 bibliography_entries("refs_theses.bib") |> 
   arrange(issued)
 ```
 
 ## Pre-prints and in-review
 
-```{r}
+```{r preprints}
 bibliography_entries("refs_articles.bib") |> 
   filter(type == "manuscript") |> 
   arrange(issued, desc(author$family))
@@ -210,7 +215,7 @@ bibliography_entries("refs_articles.bib") |>
 
 ## Refereed research papers
 
-```{r}
+```{r articles}
 bibliography_entries("refs_articles.bib") |> 
   filter(type == "article-journal") |> 
   arrange(issued, desc(author$family))
@@ -220,14 +225,14 @@ bibliography_entries("refs_articles.bib") |>
 
 ## Technical Reports
 
-```{r}
+```{r techreports}
 bibliography_entries("refs_reports.bib") %>%
   arrange(issued, desc(author$family))
 ```
 
 ## Unpublished working papers
 
-```{r}
+```{r unpublished}
 bibliography_entries("refs_working.bib") %>%
   arrange(issued, desc(author$family))
 ```
@@ -236,7 +241,7 @@ bibliography_entries("refs_working.bib") %>%
 
 \refstepcounter{bib}\label{packagestart}
 
-```{r}
+```{r software}
 bibliography_entries("refs_pkgs.bib")
 ```
 
@@ -354,17 +359,8 @@ n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
 ```
 
 *   I have served as an ad-hoc reviewer for `r n_reviewed` manuscripts from `r n_journals` journals since 2016 ($\sim$ `r n_per_yr` per year). 
-
-## Other peer review
-
-```{r reviews2, results='asis'}
-tribble(
-  ~Year, ~Details,
-  2025, "Lake Champlain Fisheries Research Program, full proposal review",
-  2023, "NSF, Division of Environmental Biology, CAREER, full proposal review",
-  ) |>
-  baretable()
-```
+*   2025, Lake Champlain Fisheries Research Program, full proposal review
+*   2023, NSF, Division of Environmental Biology, CAREER, full proposal review
 
 ## Society memberships
 
@@ -479,25 +475,30 @@ tribble(
 
 ```{r teaching, results='asis'}
 tribble(
-  ~ Year, ~ Role, ~ Course, ~ Institution,
-  "2020", "Instructor",     "Ichthyology",          "U Wyoming",
-  "2019", "Lab Instructor", "Ichthyology",          "U Wyoming",
-  "2018", "Lab Instructor", "Ichthyology",          "U Wyoming",
-  "2017", "Lab Instructor", "Ichthyology",          "U Wyoming",
-  "2016", "Lab Instructor", "Ichthyology",          "U Wyoming",
-  "2015", "Lab Instructor", "Fisheries Management", "U Wyoming",
-  "2014", "Lab Instructor", "Fisheries Management", "U Alberta",
-  "2013", "Lab Instructor", "Fisheries Management", "U Alberta",
-  ) |> 
+  ~ Start, ~ End, ~ Name, ~ Institution,
+  2020, 2020, "Instructor, Ichthyology", "University of Wyoming",
+  2016, 2019, "Lab Instructor, Ichthyology", "University of Wyoming",
+  2015, 2015, "Lab Instructor, Fisheries Management", "University of Wyoming",
+  2013, 2014, "Lab Instructor, Fisheries Management", "University of Alberta",
+  ) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Name, Institution) |>
   baretable()
 ```
 
 ## Mentoring
 
-### Undergraduate Students (Research Assistants, lab and field)
-
 ```{r mentoring, results='asis'}
-tribble(
+undergrads <- tribble(
   ~ Start, ~ End, ~ Name, ~ Institution,
   2023, 2023, "Jonathan Martin", "University of Wisconsin-Madison",
   2018, 2020, "Nathan Barrus", "University of Wyoming",
@@ -520,10 +521,13 @@ tribble(
       paste(Start, "--", End, sep = "")
     )
   ) |>
-  select(Years, Name, Institution) |>
-  baretable()
+  select(Years, Name, Institution)
+
+# undergrads |>
+#   baretable()
 ```
 
+* I have mentored `r nrow(undergrads)` undergraduate students as research assistants in lab and field settings at the Univerisity of Wyoming and University of Wisconsin-Madison. 
 
 # Public Service and Outreach
 
@@ -571,4 +575,20 @@ tribble(
 
 ## Invited
 
+\refstepcounter{bib}\label{presstart}
+
+```{r pres-invite}
+bibliography_entries("refs_presentations.bib") |> 
+  filter(note == "Invited") |> 
+  arrange(issued, desc(author$family))
+```
+
 ## Offered
+
+```{r pres-offered}
+bibliography_entries("refs_presentations.bib") |> 
+  filter(note == "Offered") |> 
+  arrange(issued, desc(author$family))
+```
+
+\refstepcounter{bib}\label{presend}
