@@ -299,7 +299,7 @@ tribble(
   "Data Visualization", "ggplot2, base R graphics, leaflet, plotly",
   "Data Management", "Data wrangling and cleaning, data management with SQL",
   "Package Development", "R package development, documentation, testing, and maintenance",
-  "GIS", "Sopatial analysis in R, QGIS, ArcGIS, Google Earth Engine"
+  "GIS", "Spatial analysis in R, QGIS, ArcGIS, Google Earth Engine"
   ) |> 
   baretable()
 ```
@@ -366,20 +366,20 @@ tribble(
   baretable()
 ```
 
-## Membership in professional societies
+## Society memberships
 
 ```{r societies, results='asis'}
 tribble(
   ~Start, ~End, ~Position,
-  2010, NA, "American Fisheries Society",
-  2010, NA, "Society for Conservation Biology",
-  2015, NA, "Ecological Society of America",
-  2016, NA, "Society for Freshwater Science",
-  2019, NA, "Galápagos Conservancy",
-  2016, 2019, "Association for the Science of Limnology and Oceanography",
-  2010, 2016, "International Association of Great Lakes Research",
+  2010, NA, "Member, American Fisheries Society",
+  2010, NA, "Member, Society for Conservation Biology",
+  2015, NA, "Member, Ecological Society of America",
+  2016, NA, "Member, Society for Freshwater Science",
+  2019, NA, "Member, Galápagos Conservancy",
+  2016, 2019, "Member, Association for the Science of Limnology and Oceanography",
+  2010, 2016, "Member, International Association of Great Lakes Research",
   ) |>
-  # arrange(-Start) |>
+  arrange(Start) |>
   mutate(
     Start = as.character(Start),
     End = as.character(End),
@@ -394,18 +394,18 @@ tribble(
   baretable()
 ```
 
-## Service in professional societies
+## Society leadership
 
 ```{r society-service, results='asis'}
 tribble(
   ~Start, ~End, ~Position,
-  2015, NA, "\\textbf{Member}, Freshwater Working Group, Society for Conservation Biology",
-  2021, 2022, "\\textbf{Member}, Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
-  2020, 2022, "\\textbf{Member}, Trout Species Team, Wisconsin Department of Natural Resources",
-  2016, 2017, "\\textbf{President}, UWyo Student Chapter, American Fisheries Society",
-  2016, 2018, "\\textbf{Excom member}, CO-WY State Chapter, American Fisheries Society",
+  2015, NA, "Member, Freshwater Working Group, Society for Conservation Biology",
+  2021, 2022, "Member, Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
+  2020, 2022, "Member, Trout Species Team, Wisconsin Department of Natural Resources",
+  2016, 2017, "President, UWyo Student Chapter, American Fisheries Society",
+  2016, 2018, "Excom Member, CO-WY State Chapter, American Fisheries Society",
   ) |>
-  # arrange(-Start) |>
+  arrange(Start) |>
   mutate(
     Start = as.character(Start),
     End = as.character(End),
@@ -420,12 +420,15 @@ tribble(
   baretable()
 ```
 
-## Conference organization and service
+## Conference organization
 
 ```{r conf-service, results='asis'}
 tribble(
   ~Year, ~Details,
-  2024, "Abstract reviewer, American Geophysical Union, Fall Meeting",
+  2024, "Program co-chair, Science to Restore and Manage Wildland Aquatic Habitats and Watersheds, AGU Fall Meeting",
+  2023, "Workshop leader, Programming with R, Wisconsin Chapter American Fisheries Society Annual Meeting",
+  2022, "Workshop leader, Programming with R, Wisconsin Chapter American Fisheries Society Annual Meeting",
+  2016, "Program co-chair, Western Division American Fisheries Society Student Colloquium",
   ) |>
   baretable()
 ```
@@ -440,9 +443,10 @@ tribble(
 
 ## Invited talks and presentations
 
+* *Freshwater science for tomorrow: advancing fish ecology, conservation, and management*. Wildlife Biology Program, University of Montana, Missoula, Feb 2025 
 * *Freshwater science in a changing world: fisheries research for conservation & management*. School of Freshwater Science, UW-Milwaukee, Milwaukee, Dec 2023 
-* *Fish and Freshwater in a Changing World: Science for Management and Conservation*. Rocky Mountain Research Station, US Forest Service, Boise, April 2023
-* *Coldwater Fish in a Changing World: Actionable Ecology for Management and Policy*. Department of Ecology, Montana State University, Missoula, March 2022
+* *Fish and Freshwater in a Changing World: Science for Management and Conservation*. Rocky Mountain Research Station, US Forest Service, Boise, Apr 2023
+* *Coldwater Fish in a Changing World: Actionable Ecology for Management and Policy*. Department of Ecology, Montana State University, Bozeman, Mar 2022
 * *Exploring isotopic niches in Rocky Mountain Great Plains stream fish*. Dept. of Zoology & Physiology, University of Wyoming, Laramie, May 2017
 
 ## Committees, Groups, and Councils
@@ -471,19 +475,19 @@ tribble(
   baretable()
 ```
 
-## Teching
+## Teaching
 
 ```{r teaching, results='asis'}
 tribble(
-  ~ Year, ~ Course, ~ Role, ~ Institution,
-  "2020", "ZOO 4330 - Ichthyology", "Instructor", "University of Wyoming",
-  "2019", "ZOO 4330 - Ichthyology", "Lab Instructor", "University of Wyoming",
-  "2018", "ZOO 4330 - Ichthyology", "Lab Instructor", "University of Wyoming",
-  "2017", "ZOO 4330 - Ichthyology", "Lab Instructor", "University of Wyoming",
-  "2016", "ZOO 4330 - Ichthyology", "Lab Instructor", "University of Wyoming",
-  "2015", "ZOO 4310 - Fisheries Management", "Lab Instructor", "University of Wyoming",
-  "2014", "RENR 460 - Fisheries Management", "Lab Instructor", "University of Alberta",
-  "2013", "RENR 460 - Fisheries Management", "Lab Instructor", "University of Alberta",
+  ~ Year, ~ Role, ~ Course, ~ Institution,
+  "2020", "Instructor",     "Ichthyology",          "U Wyoming",
+  "2019", "Lab Instructor", "Ichthyology",          "U Wyoming",
+  "2018", "Lab Instructor", "Ichthyology",          "U Wyoming",
+  "2017", "Lab Instructor", "Ichthyology",          "U Wyoming",
+  "2016", "Lab Instructor", "Ichthyology",          "U Wyoming",
+  "2015", "Lab Instructor", "Fisheries Management", "U Wyoming",
+  "2014", "Lab Instructor", "Fisheries Management", "U Alberta",
+  "2013", "Lab Instructor", "Fisheries Management", "U Alberta",
   ) |> 
   baretable()
 ```
@@ -506,17 +510,37 @@ tribble(
   2016, 2016, "Andrew Annear", "University of Wyoming",
   2015, 2015, "Jake Werner", "University of Wyoming",
   ) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Name, Institution) |>
   baretable()
 ```
 
-# Selected Media
+
+# Public Service and Outreach
+
+## Public Lectures
+
+* *Climate change, extreme weather, and stream trout in Wisconsin*. Trout Unlimited, Madison, WY, Mar 2022
+* *Stream culverts and fish: the good, the bad, and the ugly*. Pinedale Science Café, Pinedale, WY, Aug 2017
+* *Culverts as culprits: how road crossings affect fish*. Laramie Science Café, Laramie, WY, Jun 2016 
+
+## Selected Media
 
 * Milwaukee Journal Sentinel, Jan 2023. ["Climate change is making Wisconsin trout more vulnerable to floods and heat"](https://www.jsonline.com/story/news/2023/01/25/climate-change-is-making-wisconsin-trout-more-vulnerable-study-shows/69800081007/). (Also covered in separate stories on [WPR Public Radio](https://www.wpr.org/shows/morning-show/miss-wisconsin-crowned-miss-america-trout-feeling-affects-climate-change))
 * Water Blogged, Dec 2022. ["A Tale of Two Fishes: Study Maps the Future of Trout Populations in Wisconsin"](https://blog.limnology.wisc.edu/2022/12/19/a-tale-of-two-fishes-study-maps-the-future-of-trout-populations-in-wisconsin/)
 * UW-Madison News, Dec 2022. ["Study maps uneasy future of Wisconsin trout populations"](https://news.wisc.edu/study-maps-uneasy-future-of-wisconsin-trout-populations/)
 * The Tributary, Nov 2017. [“Stuck in a rut in Anaconda? Crash a cutthroat spawning party!”](https://wdafs.org/download/Vol-41-No-02.pdf/)
 
-# Community Service and Outreach
+## Service
 
 ```{r outreach, results='asis'}
 tribble(
@@ -543,3 +567,8 @@ tribble(
   baretable()
 ```
 
+# Presentations
+
+## Invited
+
+## Offered
