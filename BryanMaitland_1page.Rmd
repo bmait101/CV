@@ -1,0 +1,104 @@
+---
+name: Bryan M. Maitland, Ph.D.
+position: "Research Fish Biologist"
+address: "Rocky Mountain Research Station,\\tabularnewline USDA Forest Service, Boise, ID, USA"
+email: "bmaitland101@gmail.com"
+orcid: 0000-0002-4491-5064
+linkedin: bryanmaitland
+github: bmait101
+date: "`r format(Sys.time(), '%B %Y')`"
+output: 
+  vitae::hyndman:
+    pandoc_args: ["--lua-filter=bold-surname.lua"]
+header-includes:
+  \definecolor{headcolor}{HTML}{000088}
+---
+
+\newcounter{bib}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  warning = FALSE, 
+  message = FALSE
+  )
+
+library(vitae)
+library(dplyr)
+library(RefManageR)
+source(here::here("R/pretty.R"))
+source(here::here("R/rpackages.R"))
+source(here::here("R/gcite.R"))
+source(here::here("R/add_bib_section.R"))
+
+# Remove any temporary bib file
+if (fs::file_exists("temp.bib")) {
+  fs::file_delete("temp.bib")
+}
+```
+
+# Current position
+
+```{r employment, results='asis'}
+tribble(
+  ~Years, ~Position,
+  "2024--", "\\textbf{Research Fish Biologist}, Rocky Mountain Research Station, USDA Forest Service",
+  ) |>
+  baretable()
+```
+
+# Education
+
+```{r degrees, results='asis'}
+tribble(
+  ~ Degree, ~ Year, ~ Feild, ~ Institution,
+  "Ph.D.", 2020, "Ecology", "University of Wyoming",  
+  "M.Sc." ,2015, "Conservation Biology", "University of Alberta", 
+  "B.S.", 2011, "Conservation Biology \\textit{cum luade}", "SUNY: College of Environmental Science and Forestry",
+  ) |> 
+  baretable()
+```
+
+# Selected awards and honours
+
+```{r awards, results='asis'}
+tribble(
+  ~Year, ~Award,
+  2024, "Outstanding Service Award, USDA FS Rocky Mountain Research Station",
+  2019, "Dean’s Graduate Scholar Award, College of Arts and Sciences University of Wyoming",
+  2017, "William Trachtenberg Scholarship, Sustainable Fisheries Foundation",
+  ) |>
+  baretable()
+```
+
+# Selected papers
+
+```{r}
+pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE)
+
+n_pubs <- pubs |> 
+  as_tibble() |> 
+  filter(bibtype == "Article") |> 
+  nrow()
+```
+
+Since 2015 I have authored `r n_pubs` research papers on fish and conservation topics. Some highlights are listed below, with citations taken from Google Scholar on `r format(Sys.time(), "%e %B %Y")`.  My h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")`.
+
+```{r}
+targs <- c(
+  "Sparks2025",
+  "Maitland2024",
+  "Barrus2024", 
+  "Maitland2023",
+  "Maitland2022",
+  "Craig2017"
+  )
+pubs[targs] |>
+  bibliography_entries()
+
+# pubs[targs] |>
+#   add_bib_section(show_cites = TRUE, bmmcites = bmm_cite_papers)
+```
+
+
+
