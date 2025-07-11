@@ -61,7 +61,7 @@ add_bib_section <- function(
       }
     }
     # Create new bib file with x
-    WriteBib(x, file = here::here("BMM_CV/temp.bib"), append = TRUE)
+    WriteBib(x, file = here::here("temp.bib"), append = TRUE)
   } else {
     keys <- names(x)
   }
