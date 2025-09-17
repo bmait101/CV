@@ -195,14 +195,6 @@ bibliography_entries("refs_theses.bib") |>
   arrange(issued)
 ```
 
-## Pre-prints and in-review
-
-```{r preprints}
-bibliography_entries("refs_articles.bib") |> 
-  filter(type == "manuscript") |> 
-  arrange(issued, desc(author$family))
-```
-
 \refstepcounter{bib}\label{papersstart}
 
 ## Refereed research papers
@@ -219,6 +211,14 @@ bibliography_entries("refs_articles.bib") |>
 
 ```{r techreports}
 bibliography_entries("refs_reports.bib") %>%
+  arrange(issued, desc(author$family))
+```
+
+## Pre-prints and in-review
+
+```{r preprints}
+bibliography_entries("refs_articles.bib") |> 
+  filter(type == "manuscript") |> 
   arrange(issued, desc(author$family))
 ```
 
@@ -563,7 +563,7 @@ tribble(
   baretable()
 ```
 
-# Presentations
+# Presentations (chronological)
 
 ## Invited
 
