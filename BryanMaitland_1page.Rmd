@@ -86,7 +86,7 @@ Since 2015 I have authored `r n_pubs` research papers on fish and conservation t
 
 ```{r}
 targs <- c(
-  "Sparks2025",
+  "Sparks2025-1",
   "Maitland2024",
   "Barrus2024", 
   "Maitland2023",
