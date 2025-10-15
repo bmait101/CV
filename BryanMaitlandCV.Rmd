@@ -71,27 +71,6 @@ tribble(
   baretable()
 ```
 
-# Selected awards and honors
-
-```{r awards, results='asis'}
-tribble(
-  ~Year, ~Award,
-  2024, "Outstanding Service Award, U.S. Forest Service, Rocky Mountain Research Station",
-  2021, "Best Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
-  2019, "Dean’s Graduate Scholar Award, College of Arts and Sciences University of Wyoming",
-  2018, "Eugene Maughan Graduate Award, Western Division American Fisheries Society",
-  2018, "Hank Gardner Graduate Award, Department of Zoology and Physiology University of Wyoming",
-  2017, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society",
-  # 2017, "Board of Visitors Award, College of Arts and Sciences University of Wyoming",
-  # 2017, "Dennis Anderson Fisheries Award, Department Zoology and Physiology University of Wyoming ",
-  2017, "William Trachtenberg Scholarship, Sustainable Fisheries Foundation",
-  2017, "Vern Bressler Fisheries Award, Department of Zoology and Physiology University of Wyoming",
-  2015, "Excellence in Fisheries Award, Canadian Aquatic Resources Section American Fisheries Society",
-  2015, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society"
-  ) |>
-  baretable()
-```
-
 # Research
 
 ```{r article-counts}
@@ -105,11 +84,82 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
   nrow()
 ```
 
-* I am a fish ecologist specializing in fisheries conservation and aquatic community ecology, focused on understanding ecological processes that shape freshwater fish populations and food webs.
+* I am a **fish ecologist** specializing in **fisheries conservation** and **aquatic community ecology**, focused on understanding ecological processes that shape freshwater fish populations and food webs.
 * Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals on fisheries and conservation (pages \pageref{papersstart}--\pageref{papersend}).
 * On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
 * I have authored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
 * Since 2011 I have given or co-authored `r n_talks` presentations on my research (pages \pageref{presstart}--\pageref{presend}).
+
+
+# Publications and Products
+
+\refstepcounter{bib}\label{papersstart}
+
+## Refereed research papers
+
+```{r articles}
+bibliography_entries("bibs/journal_articles.bib") |> 
+  arrange(issued, desc(author$family))
+```
+
+\refstepcounter{bib}\label{papersend}
+
+## Technical Reports
+
+```{r techreports}
+bibliography_entries("bibs/tech_reports.bib") |> 
+  arrange(issued, desc(author$family))
+```
+
+## Theses
+
+```{r theses}
+bibliography_entries("bibs/theses.bib") |> 
+  arrange(issued, desc(author$family))
+```
+
+## Pre-prints and in-review
+
+```{r preprints}
+bibliography_entries("bibs/preprints.bib") |> 
+  arrange(issued, desc(author$family))
+```
+
+## Unpublished working papers
+
+```{r unpublished}
+bibliography_entries("bibs/working.bib") |> 
+  arrange(issued, desc(author$family))
+```
+
+## Software
+
+\refstepcounter{bib}\label{packagestart}
+
+```{r software}
+bibliography_entries("bibs/pkgs.bib")
+```
+
+\refstepcounter{bib}\label{packageend}
+
+# Invited Seminars and Keynote Presentations
+
+* *Freshwater science for tomorrow: advancing fish ecology, conservation, and management*. Wildlife Biology Program, University of Montana, Missoula, Feb 2025 
+* *Freshwater science in a changing world: fisheries research for conservation & management*. School of Freshwater Science, UW-Milwaukee, Milwaukee, Dec 2023 
+* *Fish and Freshwater in a Changing World: Science for Management and Conservation*. Rocky Mountain Research Station, US Forest Service, Boise, Apr 2023
+* *Coldwater Fish in a Changing World: Actionable Ecology for Management and Policy*. Department of Ecology, Montana State University, Bozeman, Mar 2022
+* *Exploring isotopic niches in Rocky Mountain Great Plains stream fish*. Dept. of Zoology & Physiology, University of Wyoming, Laramie, May 2017
+
+# Conference Presentations
+
+\refstepcounter{bib}\label{presstart}
+
+```{r pres-offered}
+bibliography_entries("bibs/conf_presentations.bib") |> 
+  arrange(issued, desc(author$family))
+```
+
+\refstepcounter{bib}\label{presend}
 
 # Grants
 
@@ -122,7 +172,9 @@ sumgrants <- grants |>
   sum(na.rm = TRUE)
 ```
 
-*   I have acquired (in most cases jointly) `r scales::dollar_format()(sumgrants)` in research grants since 2015. Grants \> $5,000 below: \vspace*{0.2cm}\enlargethispage*{0.5cm}
+*   I have acquired (in most cases jointly) `r scales::dollar_format()(sumgrants)` in research grants since 2015. Grants \> $5,000 below, with PI listed first: \vspace*{0.2cm}\enlargethispage*{0.5cm}
+
+<!-- Convert to "2025 - PI - Source - title - Amount - Status" -->
 
 ```{r grants-table, results='asis'}
 grants |>
@@ -178,63 +230,258 @@ grants |>
     )
   )
 ```
+<!-- \vspace*{0.2cm}\enlargethispage*{0.5cm} -->
 
-\newpage
+# Awards and Honors (selected)
 
-# Publications
-
-## Theses
-
-```{r theses}
-bibliography_entries("bibs/theses.bib") |> 
-  arrange(issued, desc(author$family))
+```{r awards, results='asis'}
+tribble(
+  ~Year, ~Award,
+  2024, "Outstanding Service Award, U.S. Forest Service, Rocky Mountain Research Station",
+  2021, "Best Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
+  2019, "Dean’s Graduate Scholar Award, College of Arts and Sciences University of Wyoming",
+  2018, "Eugene Maughan Graduate Award, Western Division American Fisheries Society",
+  2018, "Hank Gardner Graduate Award, Department of Zoology and Physiology University of Wyoming",
+  2017, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society",
+  # 2017, "Board of Visitors Award, College of Arts and Sciences University of Wyoming",
+  # 2017, "Dennis Anderson Fisheries Award, Department Zoology and Physiology University of Wyoming ",
+  2017, "William Trachtenberg Scholarship, Sustainable Fisheries Foundation",
+  2017, "Vern Bressler Fisheries Award, Department of Zoology and Physiology University of Wyoming",
+  2015, "Excellence in Fisheries Award, Canadian Aquatic Resources Section American Fisheries Society",
+  2015, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society"
+  ) |>
+  baretable()
 ```
 
-\refstepcounter{bib}\label{papersstart}
+# Teachning and Mentorship
 
-## Refereed research papers
+## Teaching
 
-```{r articles}
-bibliography_entries("bibs/journal_articles.bib") |> 
-  arrange(issued, desc(author$family))
+```{r teaching, results='asis'}
+tribble(
+  ~ Start, ~ End, ~ Name, ~ Institution,
+  2020, 2020, "Instructor, Ichthyology", "University of Wyoming",
+  2016, 2019, "Lab Instructor, Ichthyology", "University of Wyoming",
+  2015, 2015, "Lab Instructor, Fisheries Management", "University of Wyoming",
+  2013, 2014, "Lab Instructor, Fisheries Management", "University of Alberta",
+  ) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Name, Institution) |>
+  baretable()
 ```
 
-\refstepcounter{bib}\label{papersend}
+## Mentoring
 
-## Technical Reports
+```{r mentoring, results='asis'}
+undergrads <- tribble(
+  ~ Start, ~ End, ~ Name, ~ Institution,
+  2023, 2023, "Jonathan Martin", "University of Wisconsin-Madison",
+  2018, 2020, "Nathan Barrus", "University of Wyoming",
+  2019, 2020, "Russell Brubaker", "University of Wyoming",
+  2018, 2019, "Reilly Davis", "University of Wyoming",
+  2017, 2017, "Brynn Hirschman", "University of Wyoming",
+  2017, 2017, "Austin Jacobson", "University of Wyoming",
+  2016, 2016, "Shaun Helsper", "University of Wyoming",
+  2016, 2017, "Travis Allison", "University of Wyoming",
+  2016, 2016, "Andrew Annear", "University of Wyoming",
+  2015, 2015, "Jake Werner", "University of Wyoming",
+  ) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Name, Institution)
 
-```{r techreports}
-bibliography_entries("bibs/tech_reports.bib") |> 
-  arrange(issued, desc(author$family))
+# undergrads |>
+#   baretable()
 ```
 
-## Pre-prints and in-review
+* I have supervised `r nrow(undergrads)` undergraduate research assistants in lab and field settings; several are now in graduate programs and natural resource agencies.
 
-```{r preprints}
-bibliography_entries("bibs/preprints.bib") |> 
-  arrange(issued, desc(author$family))
+
+# Professional Service and Leadership
+
+<!-- ## Adjunct and affiliate appointments -->
+
+<!-- ## Graduate student committees -->
+
+<!-- ## Postdoctoral researchers -->
+
+## University Committees, Groups, and Councils
+
+```{r uni-serivce, results='asis'}
+tribble(
+  ~Start, ~End, ~Position,
+  2022, 2024, "Field Operation Facilitation and Boat Committee, Center for Limnology, UW-Madison",
+  2019, 2020, "Faculty Search Committee, Department of Zoology and Physiology, University of Wyoming",
+  2016, 2020, "Social Media Coordinator, Program in Ecology, University of Wyoming",
+  2016, 2017, "Graduate Council, student representative, University of Wyoming",
+  2016, 2017, "President, Program in Ecology, University of Wyoming",
+  ) |>
+  # arrange(-Start) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Position) |>
+  baretable()
 ```
 
-## Unpublished working papers
+## Ad-hoc Reviewer
 
-```{r unpublished}
-bibliography_entries("bibs/working.bib") |> 
-  arrange(issued, desc(author$family))
+```{r reviews1}
+n_reviewed <- 50
+n_journals <- 15
+n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
 ```
 
-## Software
+*   I have served as an ad-hoc reviewer for `r n_reviewed` manuscripts from `r n_journals` journals since 2016 ($\sim$ `r n_per_yr` per year). 
+*   2025, Lake Champlain Fisheries Research Program, full proposal review
+*   2023, NSF, Division of Environmental Biology, CAREER, full proposal review
 
-\refstepcounter{bib}\label{packagestart}
+## Society Memberships
 
-```{r software}
-bibliography_entries("bibs/pkgs.bib")
+```{r societies, results='asis'}
+tribble(
+  ~Start, ~End, ~Position,
+  2010, NA, "American Fisheries Society",
+  2010, NA, "Society for Conservation Biology",
+  2015, NA, "Ecological Society of America",
+  2016, NA, "Society for Freshwater Science",
+  2019, NA, "Galápagos Conservancy",
+  2016, 2019, "Association for the Science of Limnology and Oceanography",
+  2010, 2016, "International Association of Great Lakes Research",
+  ) |>
+  arrange(Start) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Position) |>
+  baretable()
 ```
 
-\refstepcounter{bib}\label{packageend}
+## Society Leadership
 
-\newpage
+```{r society-service, results='asis'}
+tribble(
+  ~Start, ~End, ~Position,
+  2015, NA, "Member, Freshwater Working Group, Society for Conservation Biology",
+  2021, 2022, "Member, Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
+  2020, 2022, "Member, Trout Species Team, Wisconsin Department of Natural Resources",
+  2016, 2017, "President, UWyo Student Chapter, American Fisheries Society",
+  2016, 2018, "Excom Member, CO-WY State Chapter, American Fisheries Society",
+  ) |>
+  arrange(Start) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Position) |>
+  baretable()
+```
 
-# Specialized Skills and Certifications
+## Conference Organization
+
+```{r conf-service, results='asis'}
+tribble(
+  ~Year, ~Details,
+  2024, "Program co-chair, Science to Restore and Manage Wildland Aquatic Habitats and Watersheds, AGU Fall Meeting",
+  2023, "Workshop leader, Programming with R, Wisconsin Chapter American Fisheries Society Annual Meeting",
+  2022, "Workshop leader, Programming with R, Wisconsin Chapter American Fisheries Society Annual Meeting",
+  2016, "Program co-chair, Western Division American Fisheries Society Student Colloquium",
+  ) |>
+  baretable()
+```
+
+## Leadership Development
+
+```{r leadership, results='asis'}
+tribble(
+  ~Year, ~Program, ~Institution,
+  2021, "Equity and Inclusion Workshop", "EQT By Design via WI Sea Grant",
+  2008, "Leave No Trace Master Educator", "Center for Outdoor Ethics, NOLS",
+  ) |> 
+  baretable()
+```
+
+# Community and Public Engagement
+
+## Public Lectures
+
+* *Climate change, extreme weather, and stream trout in Wisconsin*. Trout Unlimited, Madison, WY, Mar 2022
+* *Stream culverts and fish: the good, the bad, and the ugly*. Pinedale Science Café, Pinedale, WY, Aug 2017
+* *Culverts as culprits: how road crossings affect fish*. Laramie Science Café, Laramie, WY, Jun 2016 
+
+## Selected Media
+
+* Milwaukee Journal Sentinel, Jan 2023. ["Climate change is making Wisconsin trout more vulnerable to floods and heat"](https://www.jsonline.com/story/news/2023/01/25/climate-change-is-making-wisconsin-trout-more-vulnerable-study-shows/69800081007/). (Also covered in separate stories on [WPR Public Radio](https://www.wpr.org/shows/morning-show/miss-wisconsin-crowned-miss-america-trout-feeling-affects-climate-change))
+* Water Blogged, Dec 2022. ["A Tale of Two Fishes: Study Maps the Future of Trout Populations in Wisconsin"](https://blog.limnology.wisc.edu/2022/12/19/a-tale-of-two-fishes-study-maps-the-future-of-trout-populations-in-wisconsin/)
+* UW-Madison News, Dec 2022. ["Study maps uneasy future of Wisconsin trout populations"](https://news.wisc.edu/study-maps-uneasy-future-of-wisconsin-trout-populations/)
+* The Tributary, Nov 2017. [“Stuck in a rut in Anaconda? Crash a cutthroat spawning party!”](https://wdafs.org/download/Vol-41-No-02.pdf/)
+
+## Public Service
+
+```{r outreach, results='asis'}
+tribble(
+  ~ Start, ~ End, ~ Role, ~ Institution,
+  2022, 2023, "Food service volunteer", "Ronald McDonald House, Madison, WI",
+  2016, 2020, "Science outreach and stream ecology field trips", "Laramie High School, Laramie, WY",
+  2016, 2019, "Group leader, Wyoming Bio-Blitz", "Biodiversity Institute, University of Wyoming",
+  2016, 2018, "Big Brother", "Big Brothers Big Sisters of Wyoming",
+  2017, 2018, "Habitat restoration projects", "Girl Scouts of America",
+  2016, 2017, "Science judge", "Wyoming State Science Fair"
+  ) |>
+  # arrange(-Start) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, ""),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Role, Institution) |>
+  baretable()
+```
+
+
+# Technical Skills and Training
 
 ## Field Skills
 
@@ -294,17 +541,6 @@ tribble(
   baretable()
 ```
 
-## Leadership Development
-
-```{r leadership, results='asis'}
-tribble(
-  ~Year, ~Program, ~Institution,
-  2021, "Equity and Inclusion Workshop", "EQT By Design via WI Sea Grant",
-  2008, "Leave No Trace Master Educator", "Center for Outdoor Ethics, NOLS",
-  ) |> 
-  baretable()
-```
-
 ## Certifications
 
 ```{r, results='asis'}
@@ -320,7 +556,7 @@ tribble(
   baretable()
 ```
 
-## Additional Academic Training
+## Additional Training
 
 ```{r, results='asis'}
 tribble(
@@ -333,245 +569,4 @@ tribble(
   baretable()
 ```
 
-# Society and Professional Service
 
-## Ad-hoc reviewer
-
-```{r reviews1}
-n_reviewed <- 49
-n_journals <- 15
-n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
-```
-
-*   I have served as an ad-hoc reviewer for `r n_reviewed` manuscripts from `r n_journals` journals since 2016 ($\sim$ `r n_per_yr` per year). 
-*   2025, Lake Champlain Fisheries Research Program, full proposal review
-*   2023, NSF, Division of Environmental Biology, CAREER, full proposal review
-
-## Society memberships
-
-```{r societies, results='asis'}
-tribble(
-  ~Start, ~End, ~Position,
-  2010, NA, "American Fisheries Society",
-  2010, NA, "Society for Conservation Biology",
-  2015, NA, "Ecological Society of America",
-  2016, NA, "Society for Freshwater Science",
-  2019, NA, "Galápagos Conservancy",
-  2016, 2019, "Association for the Science of Limnology and Oceanography",
-  2010, 2016, "International Association of Great Lakes Research",
-  ) |>
-  arrange(Start) |>
-  mutate(
-    Start = as.character(Start),
-    End = as.character(End),
-    End = tidyr::replace_na(End, ""),
-    Years = if_else(End == Start,
-      as.character(Start),
-      paste(Start, "--", End, sep = ""),
-      paste(Start, "--", End, sep = "")
-    )
-  ) |>
-  select(Years, Position) |>
-  baretable()
-```
-
-## Society leadership
-
-```{r society-service, results='asis'}
-tribble(
-  ~Start, ~End, ~Position,
-  2015, NA, "Member, Freshwater Working Group, Society for Conservation Biology",
-  2021, 2022, "Member, Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
-  2020, 2022, "Member, Trout Species Team, Wisconsin Department of Natural Resources",
-  2016, 2017, "President, UWyo Student Chapter, American Fisheries Society",
-  2016, 2018, "Excom Member, CO-WY State Chapter, American Fisheries Society",
-  ) |>
-  arrange(Start) |>
-  mutate(
-    Start = as.character(Start),
-    End = as.character(End),
-    End = tidyr::replace_na(End, ""),
-    Years = if_else(End == Start,
-      as.character(Start),
-      paste(Start, "--", End, sep = ""),
-      paste(Start, "--", End, sep = "")
-    )
-  ) |>
-  select(Years, Position) |>
-  baretable()
-```
-
-## Conference organization
-
-```{r conf-service, results='asis'}
-tribble(
-  ~Year, ~Details,
-  2024, "Program co-chair, Science to Restore and Manage Wildland Aquatic Habitats and Watersheds, AGU Fall Meeting",
-  2023, "Workshop leader, Programming with R, Wisconsin Chapter American Fisheries Society Annual Meeting",
-  2022, "Workshop leader, Programming with R, Wisconsin Chapter American Fisheries Society Annual Meeting",
-  2016, "Program co-chair, Western Division American Fisheries Society Student Colloquium",
-  ) |>
-  baretable()
-```
-
-# University involvement and service
-
-<!-- ## Adjunct and affiliate appointments -->
-
-<!-- ## Graduate student committees -->
-
-<!-- ## Postdoctoral researchers -->
-
-## Invited talks and presentations
-
-* *Freshwater science for tomorrow: advancing fish ecology, conservation, and management*. Wildlife Biology Program, University of Montana, Missoula, Feb 2025 
-* *Freshwater science in a changing world: fisheries research for conservation & management*. School of Freshwater Science, UW-Milwaukee, Milwaukee, Dec 2023 
-* *Fish and Freshwater in a Changing World: Science for Management and Conservation*. Rocky Mountain Research Station, US Forest Service, Boise, Apr 2023
-* *Coldwater Fish in a Changing World: Actionable Ecology for Management and Policy*. Department of Ecology, Montana State University, Bozeman, Mar 2022
-* *Exploring isotopic niches in Rocky Mountain Great Plains stream fish*. Dept. of Zoology & Physiology, University of Wyoming, Laramie, May 2017
-
-## Committees, Groups, and Councils
-
-```{r uni-serivce, results='asis'}
-tribble(
-  ~Start, ~End, ~Position,
-  2022, 2024, "Field Operation Facilitation and Boat Committee, Center for Limnology, UW-Madison",
-  2019, 2020, "Faculty Search Committee, Department of Zoology and Physiology, University of Wyoming",
-  2016, 2020, "Social Media Coordinator, Program in Ecology, University of Wyoming",
-  2016, 2017, "Graduate Council, student representative, University of Wyoming",
-  2016, 2017, "President, Program in Ecology, University of Wyoming",
-  ) |>
-  # arrange(-Start) |>
-  mutate(
-    Start = as.character(Start),
-    End = as.character(End),
-    End = tidyr::replace_na(End, ""),
-    Years = if_else(End == Start,
-      as.character(Start),
-      paste(Start, "--", End, sep = ""),
-      paste(Start, "--", End, sep = "")
-    )
-  ) |>
-  select(Years, Position) |>
-  baretable()
-```
-
-## Teaching
-
-```{r teaching, results='asis'}
-tribble(
-  ~ Start, ~ End, ~ Name, ~ Institution,
-  2020, 2020, "Instructor, Ichthyology", "University of Wyoming",
-  2016, 2019, "Lab Instructor, Ichthyology", "University of Wyoming",
-  2015, 2015, "Lab Instructor, Fisheries Management", "University of Wyoming",
-  2013, 2014, "Lab Instructor, Fisheries Management", "University of Alberta",
-  ) |>
-  mutate(
-    Start = as.character(Start),
-    End = as.character(End),
-    End = tidyr::replace_na(End, ""),
-    Years = if_else(End == Start,
-      as.character(Start),
-      paste(Start, "--", End, sep = ""),
-      paste(Start, "--", End, sep = "")
-    )
-  ) |>
-  select(Years, Name, Institution) |>
-  baretable()
-```
-
-## Mentoring
-
-```{r mentoring, results='asis'}
-undergrads <- tribble(
-  ~ Start, ~ End, ~ Name, ~ Institution,
-  2023, 2023, "Jonathan Martin", "University of Wisconsin-Madison",
-  2018, 2020, "Nathan Barrus", "University of Wyoming",
-  2019, 2020, "Russell Brubaker", "University of Wyoming",
-  2018, 2019, "Reilly Davis", "University of Wyoming",
-  2017, 2017, "Brynn Hirschman", "University of Wyoming",
-  2017, 2017, "Austin Jacobson", "University of Wyoming",
-  2016, 2016, "Shaun Helsper", "University of Wyoming",
-  2016, 2017, "Travis Allison", "University of Wyoming",
-  2016, 2016, "Andrew Annear", "University of Wyoming",
-  2015, 2015, "Jake Werner", "University of Wyoming",
-  ) |>
-  mutate(
-    Start = as.character(Start),
-    End = as.character(End),
-    End = tidyr::replace_na(End, ""),
-    Years = if_else(End == Start,
-      as.character(Start),
-      paste(Start, "--", End, sep = ""),
-      paste(Start, "--", End, sep = "")
-    )
-  ) |>
-  select(Years, Name, Institution)
-
-# undergrads |>
-#   baretable()
-```
-
-* I have mentored `r nrow(undergrads)` undergraduate students as research assistants in lab and field settings at the Univerisity of Wyoming and University of Wisconsin-Madison. 
-
-# Public Service and Outreach
-
-## Public Lectures
-
-* *Climate change, extreme weather, and stream trout in Wisconsin*. Trout Unlimited, Madison, WY, Mar 2022
-* *Stream culverts and fish: the good, the bad, and the ugly*. Pinedale Science Café, Pinedale, WY, Aug 2017
-* *Culverts as culprits: how road crossings affect fish*. Laramie Science Café, Laramie, WY, Jun 2016 
-
-## Selected Media
-
-* Milwaukee Journal Sentinel, Jan 2023. ["Climate change is making Wisconsin trout more vulnerable to floods and heat"](https://www.jsonline.com/story/news/2023/01/25/climate-change-is-making-wisconsin-trout-more-vulnerable-study-shows/69800081007/). (Also covered in separate stories on [WPR Public Radio](https://www.wpr.org/shows/morning-show/miss-wisconsin-crowned-miss-america-trout-feeling-affects-climate-change))
-* Water Blogged, Dec 2022. ["A Tale of Two Fishes: Study Maps the Future of Trout Populations in Wisconsin"](https://blog.limnology.wisc.edu/2022/12/19/a-tale-of-two-fishes-study-maps-the-future-of-trout-populations-in-wisconsin/)
-* UW-Madison News, Dec 2022. ["Study maps uneasy future of Wisconsin trout populations"](https://news.wisc.edu/study-maps-uneasy-future-of-wisconsin-trout-populations/)
-* The Tributary, Nov 2017. [“Stuck in a rut in Anaconda? Crash a cutthroat spawning party!”](https://wdafs.org/download/Vol-41-No-02.pdf/)
-
-## Service
-
-```{r outreach, results='asis'}
-tribble(
-  ~ Start, ~ End, ~ Role, ~ Institution,
-  2022, 2023, "Food service volunteer", "Ronald McDonald House, Madison, WI",
-  2016, 2020, "Science outreach and stream ecology field trips", "Laramie High School, Laramie, WY",
-  2016, 2019, "Group leader, Wyoming Bio-Blitz", "Biodiversity Institute, University of Wyoming",
-  2016, 2018, "Big Brother", "Big Brothers Big Sisters of Wyoming",
-  2017, 2018, "Habitat restoration projects", "Girl Scouts of America",
-  2016, 2017, "Science judge", "Wyoming State Science Fair"
-  ) |>
-  # arrange(-Start) |>
-  mutate(
-    Start = as.character(Start),
-    End = as.character(End),
-    End = tidyr::replace_na(End, ""),
-    Years = if_else(End == Start,
-      as.character(Start),
-      paste(Start, "--", End, sep = ""),
-      paste(Start, "--", End, sep = "")
-    )
-  ) |>
-  select(Years, Role, Institution) |>
-  baretable()
-```
-
-# Presentations (invited)
-
-\refstepcounter{bib}\label{presstart}
-
-```{r pres-invite}
-bibliography_entries("bibs/conf_presentations.bib") |> 
-  filter(note == "Invited") |> 
-  arrange(issued, desc(author$family))
-```
-
-# Presentations (offered)
-
-```{r pres-offered}
-bibliography_entries("bibs/conf_presentations.bib") |> 
-  filter(note == "Offered") |> 
-  arrange(issued, desc(author$family))
-```
-
-\refstepcounter{bib}\label{presend}
