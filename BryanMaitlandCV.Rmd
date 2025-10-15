@@ -95,12 +95,12 @@ tribble(
 # Research
 
 ```{r article-counts}
-n_pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE) |> 
+n_pubs <- RefManageR::ReadBib("bibs/journal_articles.bib", check = FALSE) |> 
   as_tibble() |> 
   filter(bibtype == "Article") |> 
   nrow()
 
-n_talks <- RefManageR::ReadBib("refs_presentations.bib", check = FALSE) |> 
+n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |> 
   as_tibble() |> 
   nrow()
 ```
@@ -186,7 +186,8 @@ grants |>
 ## Theses
 
 ```{r theses}
-bibliography_entries("refs_theses.bib")
+bibliography_entries("bibs/theses.bib") |> 
+  arrange(issued, desc(author$family))
 ```
 
 \refstepcounter{bib}\label{papersstart}
@@ -194,8 +195,7 @@ bibliography_entries("refs_theses.bib")
 ## Refereed research papers
 
 ```{r articles}
-bibliography_entries("refs_articles.bib") |> 
-  filter(type == "article-journal")  %>%
+bibliography_entries("bibs/journal_articles.bib") |> 
   arrange(issued, desc(author$family))
 ```
 
@@ -204,22 +204,21 @@ bibliography_entries("refs_articles.bib") |>
 ## Technical Reports
 
 ```{r techreports}
-bibliography_entries("refs_reports.bib") %>%
+bibliography_entries("bibs/tech_reports.bib") |> 
   arrange(issued, desc(author$family))
 ```
 
 ## Pre-prints and in-review
 
 ```{r preprints}
-bibliography_entries("refs_articles.bib") |> 
-  filter(type == "manuscript") |> 
+bibliography_entries("bibs/preprints.bib") |> 
   arrange(issued, desc(author$family))
 ```
 
 ## Unpublished working papers
 
 ```{r unpublished}
-bibliography_entries("refs_working.bib") %>%
+bibliography_entries("bibs/working.bib") |> 
   arrange(issued, desc(author$family))
 ```
 
@@ -228,7 +227,7 @@ bibliography_entries("refs_working.bib") %>%
 \refstepcounter{bib}\label{packagestart}
 
 ```{r software}
-bibliography_entries("refs_pkgs.bib")
+bibliography_entries("bibs/pkgs.bib")
 ```
 
 \refstepcounter{bib}\label{packageend}
@@ -562,7 +561,7 @@ tribble(
 \refstepcounter{bib}\label{presstart}
 
 ```{r pres-invite}
-bibliography_entries("refs_presentations.bib") |> 
+bibliography_entries("bibs/conf_presentations.bib") |> 
   filter(note == "Invited") |> 
   arrange(issued, desc(author$family))
 ```
@@ -570,7 +569,7 @@ bibliography_entries("refs_presentations.bib") |>
 # Presentations (offered)
 
 ```{r pres-offered}
-bibliography_entries("refs_presentations.bib") |> 
+bibliography_entries("bibs/conf_presentations.bib") |> 
   filter(note == "Offered") |> 
   arrange(issued, desc(author$family))
 ```
