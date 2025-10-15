@@ -1,0 +1,11 @@
+<macro name="citation-number">
+    <text variable="citation-number"/>
+  </macro>
+  <bibliography>
+<sort>
+      <key macro="issued" sort="ascending"/>
+      <key macro="citation-number" sort="descending"/>
+</sort>
+...
+
+</bibliography>
