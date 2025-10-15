@@ -6,7 +6,9 @@ email: "bmaitland101@gmail.com"
 orcid: 0000-0002-4491-5064
 linkedin: bryanmaitland
 github: bmait101
+researchgate: bryan-maitland
 date: "`r format(Sys.time(), '%B %Y')`"
+csl: "csl/ecology_revised.csl"
 output: 
   vitae::hyndman:
     pandoc_args: ["--lua-filter=bold-surname.lua"]
@@ -39,15 +41,8 @@ tribble(
   ~Start, ~End, ~Position,
   2024, NA, "\\textbf{Research Fish Biologist}, Rocky Mountain Research Station, USDA Forest Service",
   2023, 2024, "\\textbf{Research Associate}, Dept. of Civil and Environmental Engineering, University of Wisconsin-Madison",
-  2022, 2023, "\\textbf{EPA Postdoctoral Fellow}, Center for Limnology, University of Wisconsin-Madison",
-  2020, 2022, "\\textbf{Water Resources Postdoctoral Fellow}, WI Water Resrouces Institute, University of Wisconsin-Madison",
-  # 2015, 2020, "\\textbf{Graduate Research Assistant}, Department of Zoology and Physiology, University of Wyoming",
-  # 2013, 2015, "\\textbf{Graduate Research Assistant}, Department of Renewable Resources, University of Alberta",
-  # 2014, 2014, "\\textbf{Research Technician}, Athabasca River Oil Sands Project, University of Alberta",
-  # 2013, 2014, "\\textbf{Research Technician}, Aquatics Division, Parks Canada",
-  # 2011, 2013, "\\textbf{Fisheries Research Technician}, USGS Great Lakes Science Center",
-  # 2010, 2011, "\\textbf{Laboratory Assistant}, Department of Environmental and Forest Biology, SUNY: ESF",
-  # 2010, 2011, "\\textbf{Research Technician}, Thousand Islands Biological Station, SUNY: ESF",
+  2022, 2023, "\\textbf{Postdoctoral Fellow}, Center for Limnology, University of Wisconsin-Madison",
+  2020, 2022, "\\textbf{WI Water Resources Postdoctoral Fellow}, Aquatic Sciences Center (UW-Madison) and WDNR"
   ) |>
   arrange(-Start) |>
   mutate(
@@ -76,18 +71,18 @@ tribble(
   baretable()
 ```
 
-# Awards and honours
+# Selected awards and honours
 
 ```{r awards, results='asis'}
 tribble(
   ~Year, ~Award,
-  2024, "Outstanding Service Award, USDA FS Rocky Mountain Research Station",
+  2024, "Outstanding Service Award, U.S. Forest Service, Rocky Mountain Research Station",
   2021, "Best Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
   2019, "Dean’s Graduate Scholar Award, College of Arts and Sciences University of Wyoming",
   2018, "Eugene Maughan Graduate Award, Western Division American Fisheries Society",
   2018, "Hank Gardner Graduate Award, Department of Zoology and Physiology University of Wyoming",
   2017, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society",
-  2017, "Board of Visitors Award, College of Arts and Sciences University of Wyoming",
+  # 2017, "Board of Visitors Award, College of Arts and Sciences University of Wyoming",
   # 2017, "Dennis Anderson Fisheries Award, Department Zoology and Physiology University of Wyoming ",
   2017, "William Trachtenberg Scholarship, Sustainable Fisheries Foundation",
   2017, "Vern Bressler Fisheries Award, Department of Zoology and Physiology University of Wyoming",
@@ -99,7 +94,7 @@ tribble(
 
 # Research
 
-```{r article-totals}
+```{r article-counts}
 n_pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE) |> 
   as_tibble() |> 
   filter(bibtype == "Article") |> 
@@ -110,10 +105,10 @@ n_talks <- RefManageR::ReadBib("refs_presentations.bib", check = FALSE) |>
   nrow()
 ```
 
-* My current research focuses on the ecology, management, and conservation of freshwater fishes, with a particular emphasis on coldwater fishes in the Rocky Mountains, Pacific Northwest, and Great Lakes regions.
-* Since 2015 I have authored `r n_pubs` papers in peer-reviewed journals on fisheries and conservation (pages \pageref{papersstart}--\pageref{papersend}).
-* On Google Scholar my h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")` (as at `r format(Sys.time(), "%e %B %Y")`).
-* I have coauthored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
+* I am a fish ecologist specializing in fisheries conservation and aquatic community ecology, focused on understanding ecological processes that shape freshwater fish populations and food webs.
+* Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals on fisheries and conservation (pages \pageref{papersstart}--\pageref{papersend}).
+* On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
+* I have authored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
 * Since 2011 I have given or co-authored `r n_talks` presentations on my research (pages \pageref{presstart}--\pageref{presend}).
 
 # Grants
@@ -127,11 +122,11 @@ sumgrants <- grants |>
   sum(na.rm = TRUE)
 ```
 
-*   I have acquired `r scales::dollar_format()(sumgrants)` in research grants since 2015.\vspace*{0.2cm}\enlargethispage*{0.5cm}
+*   I have acquired (in most cases jointly) `r scales::dollar_format()(sumgrants)` in research grants since 2015. Grants \> $5,000 below: \vspace*{0.2cm}\enlargethispage*{0.5cm}
 
 ```{r grants-table, results='asis'}
 grants |>
-  # filter(Amount > 100000, Type == "Research") |>
+  filter(Amount >= 5000, Type == "Research") |>
   filter(Status %in% c("Complete", "In progress", "Pending")) |> 
   mutate(
     Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
@@ -186,13 +181,12 @@ grants |>
 
 \newpage
 
-# Publications (chronological within subgroups)
+# Publications
 
 ## Theses
 
 ```{r theses}
-bibliography_entries("refs_theses.bib") |> 
-  arrange(issued)
+bibliography_entries("refs_theses.bib")
 ```
 
 \refstepcounter{bib}\label{papersstart}
@@ -201,7 +195,7 @@ bibliography_entries("refs_theses.bib") |>
 
 ```{r articles}
 bibliography_entries("refs_articles.bib") |> 
-  filter(type == "article-journal") |> 
+  filter(type == "article-journal")  %>%
   arrange(issued, desc(author$family))
 ```
 
@@ -563,9 +557,7 @@ tribble(
   baretable()
 ```
 
-# Presentations (chronological)
-
-## Invited
+# Presentations (invited)
 
 \refstepcounter{bib}\label{presstart}
 
@@ -575,7 +567,7 @@ bibliography_entries("refs_presentations.bib") |>
   arrange(issued, desc(author$family))
 ```
 
-## Offered
+# Presentations (offered)
 
 ```{r pres-offered}
 bibliography_entries("refs_presentations.bib") |> 
