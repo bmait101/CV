@@ -8,7 +8,7 @@ linkedin: bryanmaitland
 github: bmait101
 researchgate: bryan-maitland
 date: "`r format(Sys.time(), '%B %Y')`"
-csl: "csl/ecology_revised.csl"
+csl: "csl/apa_cv.csl"
 output: 
   vitae::hyndman:
     pandoc_args: ["--lua-filter=lua/bold-surname.lua"]
@@ -71,7 +71,7 @@ tribble(
   baretable()
 ```
 
-# Selected awards and honours
+# Selected awards and honors
 
 ```{r awards, results='asis'}
 tribble(
