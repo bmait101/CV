@@ -11,7 +11,7 @@ date: "`r format(Sys.time(), '%B %Y')`"
 csl: "csl/ecology_revised.csl"
 output: 
   vitae::hyndman:
-    pandoc_args: ["--lua-filter=bold-surname.lua"]
+    pandoc_args: ["--lua-filter=lua/bold-surname.lua"]
 header-includes:
   \definecolor{headcolor}{HTML}{000088}
 ---
