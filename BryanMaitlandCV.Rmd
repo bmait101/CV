@@ -256,8 +256,6 @@ tribble(
 
 # Teachning and Mentorship
 
-## Teaching
-
 ```{r teaching, results='asis'}
 tribble(
   ~ Start, ~ End, ~ Name, ~ Institution,
@@ -279,8 +277,6 @@ tribble(
   select(Years, Name, Institution) |>
   baretable()
 ```
-
-## Mentoring
 
 ```{r mentoring, results='asis'}
 undergrads <- tribble(
@@ -312,7 +308,9 @@ undergrads <- tribble(
 #   baretable()
 ```
 
-* I have supervised `r nrow(undergrads)` undergraduate research assistants in lab and field settings; several are now in graduate programs and natural resource agencies.
+*   I have prepared and delivered full lecture curriculum; developed labs; supervised TAs
+*   I have supervised `r nrow(undergrads)` undergraduate research assistants in lab and field settings
+*   Several of these students have entered graduate programs or natural resource agencies
 
 
 # Professional Service and Leadership
