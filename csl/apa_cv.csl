@@ -1654,7 +1654,6 @@
               <text macro="event"/>
               <text macro="publisher"/>
             </group>
-            <text macro="access"/>
             <text macro="publication-history"/>
           </group>
         </else>
