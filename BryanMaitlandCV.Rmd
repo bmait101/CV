@@ -11,7 +11,7 @@ date: "`r format(Sys.time(), '%B %Y')`"
 csl: "csl/apa_cv.csl"
 output: 
   vitae::hyndman:
-    pandoc_args: ["--lua-filter=lua/names01.lua"]
+    pandoc_args: ["--lua-filter=lua/names.lua"]
 header-includes:
   \definecolor{headcolor}{HTML}{000088}
 ---
@@ -96,7 +96,7 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
 
 \refstepcounter{bib}\label{papersstart}
 
-## Refereed research papers
+## Peer-reviewed Research Papers
 
 \* indicates shared first authorship. Underlined names indicate undergraduate research mentees.
 
@@ -154,6 +154,8 @@ bibliography_entries("bibs/pkgs.bib")
 * *Exploring isotopic niches in Rocky Mountain Great Plains stream fish*. Dept. of Zoology & Physiology, University of Wyoming, Laramie, May 2017
 
 # Conference Presentations
+
+Underlined names indicate undergraduate research mentees.
 
 \refstepcounter{bib}\label{presstart}
 
@@ -255,8 +257,6 @@ tribble(
   baretable()
 ```
 
-\newpage 
-
 # Teachning and Mentorship
 
 ```{r teaching, results='asis'}
@@ -284,6 +284,8 @@ tribble(
 ```{r mentoring, results='asis'}
 undergrads <- tribble(
   ~ Start, ~ End, ~ Name, ~ Institution,
+  2024, 2025, "Trevor Davis", "University of Tennessee, Chattanooga",
+  2024, 2025, "Dylan Keisser", "University of Tennessee, Chattanooga",
   2023, 2023, "Jonathan Martin", "University of Wisconsin-Madison",
   2018, 2020, "Nathan Barrus", "University of Wyoming",
   2019, 2020, "Russell Brubaker", "University of Wyoming",
@@ -558,9 +560,9 @@ tribble(
   baretable()
 ```
 
-## Additional Training
+<!-- ## Additional Training -->
 
-```{r, results='asis'}
+```{r, results='asis', eval=FALSE}
 tribble(
   ~Year, ~Course, ~Credits, ~Institution,
   2008, "Environmental Ethics", "2 credits", "University of Utah",
