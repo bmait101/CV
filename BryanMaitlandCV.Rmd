@@ -84,6 +84,7 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
   nrow()
 ```
 
+* **Themes**: Fisheries ecology and management under environmental change, aquatic food web ecology, quantitative ecology and spatial modeling, river-lake linkages, stable isotope ecology.  
 * I am a **fish ecologist** specializing in **fisheries conservation** and **aquatic community ecology**, focused on understanding ecological processes that shape freshwater fish populations and food webs.
 * Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals on fisheries and conservation (pages \pageref{papersstart}--\pageref{papersend}).
 * On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
@@ -96,6 +97,8 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
 \refstepcounter{bib}\label{papersstart}
 
 ## Refereed research papers
+
+\* indicates shared first authorship. 
 
 ```{r articles}
 bibliography_entries("bibs/journal_articles.bib") |> 
@@ -321,6 +324,18 @@ undergrads <- tribble(
 
 <!-- ## Postdoctoral researchers -->
 
+## Ad-hoc Reviewer
+
+```{r reviews1}
+n_reviewed <- 50
+n_journals <- 15
+n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
+```
+
+*   I have served as an ad-hoc reviewer for `r n_reviewed` manuscripts from `r n_journals` journals since 2016 ($\sim$ `r n_per_yr` per year). 
+*   2025, **Lake Champlain Fisheries Research Program**, full proposal review
+*   2023, **NSF**, Division of Environmental Biology, CAREER, full proposal review
+
 ## University Committees, Groups, and Councils
 
 ```{r uni-serivce, results='asis'}
@@ -346,18 +361,6 @@ tribble(
   select(Years, Position) |>
   baretable()
 ```
-
-## Ad-hoc Reviewer
-
-```{r reviews1}
-n_reviewed <- 50
-n_journals <- 15
-n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
-```
-
-*   I have served as an ad-hoc reviewer for `r n_reviewed` manuscripts from `r n_journals` journals since 2016 ($\sim$ `r n_per_yr` per year). 
-*   2025, Lake Champlain Fisheries Research Program, full proposal review
-*   2023, NSF, Division of Environmental Biology, CAREER, full proposal review
 
 ## Society Memberships
 
