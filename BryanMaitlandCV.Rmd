@@ -11,7 +11,7 @@ date: "`r format(Sys.time(), '%B %Y')`"
 csl: "csl/apa_cv.csl"
 output: 
   vitae::hyndman:
-    pandoc_args: ["--lua-filter=lua/bold-surname.lua"]
+    pandoc_args: ["--lua-filter=lua/names01.lua"]
 header-includes:
   \definecolor{headcolor}{HTML}{000088}
 ---
@@ -98,7 +98,7 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
 
 ## Refereed research papers
 
-\* indicates shared first authorship. 
+\* indicates shared first authorship. Underlined names indicate undergraduate research mentees.
 
 ```{r articles}
 bibliography_entries("bibs/journal_articles.bib") |> 
