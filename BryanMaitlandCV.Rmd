@@ -1,19 +1,19 @@
 ---
-name: Bryan M. Maitland, Ph.D.
-position: "Fisheries, Food Webs, Conservation Biology, Aquatic Ecology"
+name: Bryan M. Maitland
+position: ""
 address: "Rocky Mountain Research Station,\\tabularnewline USDA Forest Service, Boise, ID, USA"
 email: "bmaitland101@gmail.com"
 orcid: 0000-0002-4491-5064
 # linkedin: bryanmaitland
 github: bmait101
-researchgate: bryan-maitland
+# researchgate: bryan-maitland
 date: "`r format(Sys.time(), '%B %Y')`"
 csl: "csl/apa_cv.csl"
 output: 
   vitae::hyndman:
     pandoc_args: ["--lua-filter=lua/names.lua"]
 header-includes:
-  \definecolor{headcolor}{HTML}{000088}
+  \definecolor{headcolor}{HTML}{006666}
 ---
 
 \newcounter{bib}
@@ -63,10 +63,10 @@ tribble(
 
 ```{r degrees, results='asis'}
 tribble(
-  ~ Degree, ~ Year, ~ Feild, ~ Institution,
-  "Ph.D.", 2020, "Ecology", "University of Wyoming",  
-  "M.Sc." ,2015, "Conservation Biology", "University of Alberta", 
-  "B.S.", 2011, "Conservation Biology \\textit{cum laude}", "SUNY: College of Environmental Science and Forestry",
+  ~ Year, ~ Degree, ~ Feild, ~ Institution,
+  2020, "Ph.D.", "Ecology", "University of Wyoming",  
+  2015, "M.Sc.", "Conservation Biology", "University of Alberta", 
+  2011, "B.S.", "Conservation Biology \\textit{cum laude}", "SUNY: College of Environmental Science and Forestry",
   ) |> 
   baretable()
 ```
@@ -84,8 +84,7 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
   nrow()
 ```
 
-* I am a **fish ecologist** specializing in **fisheries conservation** and **aquatic community ecology**. 
-* My research is focused on understanding ecological processes that shape fish populations and food webs.
+* **Research Interests**: Fisheries ecology and conservation; freshwater ecosystem responses to climate change and land use change; aquatic habitat connectivity; stable isotope ecology; ecological statistics and programming. 
 * Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals on fisheries and conservation (pages \pageref{papersstart}--\pageref{papersend}).
 * On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
 * I have authored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
@@ -93,7 +92,7 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
 
 \refstepcounter{bib}\label{papersstart}
 
-# Peer-reviewed research papers
+# Publications
 
 \* indicates shared first authorship. Underlined names indicate undergraduate research mentees.
 
@@ -103,6 +102,16 @@ bibliography_entries("bibs/journal_articles.bib") |>
 ```
 
 \refstepcounter{bib}\label{papersend}
+
+# R-packages
+
+\refstepcounter{bib}\label{packagestart}
+
+```{r software}
+bibliography_entries("bibs/pkgs.bib")
+```
+
+\refstepcounter{bib}\label{packageend}
 
 # Technical reports
 
@@ -131,38 +140,6 @@ bibliography_entries("bibs/preprints.bib") |>
 bibliography_entries("bibs/working.bib")
 ```
 
-# Software
-
-\refstepcounter{bib}\label{packagestart}
-
-```{r software}
-bibliography_entries("bibs/pkgs.bib")
-```
-
-\refstepcounter{bib}\label{packageend}
-
-# Major presentations
-
-* Invited speaker, *Freshwater science for tomorrow: advancing fish ecology, conservation, and management*. Wildlife Biology Program, University of Montana, Missoula, Feb 2025 
-* Invited speaker, *Freshwater science in a changing world: fisheries research for conservation & management*. School of Freshwater Science, UW-Milwaukee, Milwaukee, Dec 2023 
-* Workshop leader, *Programming with R*. Wisconsin Chapter American Fisheries Society Annual Meeting, Stevens Point, Nov 2023
-* Invited speaker, *Fish and Freshwater in a Changing World: Science for Management and Conservation*. Rocky Mountain Research Station, US Forest Service, Boise, Apr 2023
-* Invited speaker, *Coldwater Fish in a Changing World: Actionable Ecology for Management and Policy*. Department of Ecology, Montana State University, Bozeman, Mar 2022
-* Invited speaker, *Exploring isotopic niches in Rocky Mountain Great Plains stream fish*. Dept. of Zoology & Physiology, University of Wyoming, Laramie, May 2020
-
-# Conference presentations
-
-Underlined names indicate undergraduate research mentees.
-
-\refstepcounter{bib}\label{presstart}
-
-```{r pres-offered}
-bibliography_entries("bibs/conf_presentations.bib") |> 
-  arrange(issued, desc(author$family))
-```
-
-\refstepcounter{bib}\label{presend}
-
 # Grants
 
 ```{r grants}
@@ -174,9 +151,7 @@ sumgrants <- grants |>
   sum(na.rm = TRUE)
 ```
 
-*   I have acquired (in most cases jointly) `r scales::dollar_format()(sumgrants)` in research grants since 2015. Grants \> $5,000 below, PI listed first: \vspace*{0.2cm}\enlargethispage*{0.5cm}
-
-<!-- Convert to "2025 - PI - Source - title - Amount - Status" -->
+*   I have acquired (in most cases jointly) `r scales::dollar_format()(sumgrants)` in research grants since 2015. Grants \> $5,000 below: \vspace*{0.2cm}\enlargethispage*{0.5cm}
 
 ```{r grants-table, results='asis'}
 grants |>
@@ -184,17 +159,19 @@ grants |>
   filter(Status %in% c("Complete", "In progress", "Pending")) |> 
   mutate(
     Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
-    Entry = paste(People, ". ``", Title, "''. ",
-      "\\emph{Funding from ", Source, "}",
+    Entry = paste(
+      Role, ". ``", Title, "''. ",
+      "\\emph{Funding from ", Source, "}", ". Collaborators: ",
+      Collaborators, ".",
       sep = ""
     ),
     Amount = dollars(Amount)
   ) |>
   arrange(desc(Time), desc(Amount)) |>
-  select(Time, Entry, Type, Amount) %>%  # need pipe for baretable
+  select(Time, Entry, Amount) %>%  
   baretable(
-    align = "llp{13.3cm}lr",  # added 'l' for Type, extra column
-    hline.after = c(0, NROW(.)),
+    align = "llp{13.3cm}r",  
+    # hline.after = c(0, NROW(.)),
     size = "\\fontsize{10}{12}",
     add.to.row = list(
       pos = as.list(seq(NROW(.))),
@@ -207,22 +184,24 @@ grants |>
 
 *   Below are invited full proposals that were not awarded: \vspace*{0.2cm}\enlargethispage*{0.5cm}
 
-```{r grantstable-invite, results='asis', eval=TRUE}
+```{r grantstable-invite, results='asis'}
 grants |>
   filter(!Status %in% c("Complete", "In progress", "Pending")) |> 
   mutate(
     Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
-    Entry = paste(People, ". ``", Title, "''. ",
-      "\\emph{Funding from ", Source, "}",
+    Entry = paste(
+      Role, ". ``", Title, "''. ",
+      "\\emph{Funding from ", Source, "}", ". Collaborators: ",
+      Collaborators, ".",
       sep = ""
     ),
     Amount = dollars(Amount)
   ) |>
   arrange(desc(Time), desc(Amount)) |>
-  select(Time, Entry, Type, Amount) %>%  # need pipe for baretable
+  select(Time, Entry, Amount) %>%  
   baretable(
-    align = "llp{13.3cm}lr",  # added 'l' for Type, extra column
-    hline.after = c(0, NROW(.)),
+    align = "llp{13.3cm}r",
+    # hline.after = c(0, NROW(.)),
     size = "\\fontsize{10}{12}",
     add.to.row = list(
       pos = as.list(seq(NROW(.))),
@@ -233,19 +212,41 @@ grants |>
 
 \vspace*{0.2cm}\enlargethispage*{0.5cm}
 
-# Awards and honors (selected)
 
-```{r awards, results='asis'}
+# Honors and Awards
+
+## Professional awards
+
+```{r award1, results='asis'}
 tribble(
   ~Year, ~Award,
   2024, "Outstanding Service Award, U.S. Forest Service, Rocky Mountain Research Station",
   2021, "Best Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
+  ) |>
+  baretable()
+```
+
+## Fellowships
+
+```{r award2, results='asis'}
+tribble(
+  ~Year, ~Award,
+  2024, "Wisconsin Water Resources Postdoctoral Fellow, University of Wisconsin-Madison",
+  ) |>
+  baretable()
+```
+
+## Student Awards
+
+```{r award3, results='asis'}
+tribble(
+  ~Year, ~Award,
   2019, "Dean’s Graduate Scholar Award, College of Arts and Sciences University of Wyoming",
   2018, "Eugene Maughan Graduate Award, Western Division American Fisheries Society",
   2018, "Hank Gardner Graduate Award, Department of Zoology and Physiology University of Wyoming",
   2017, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society",
-  # 2017, "Board of Visitors Award, College of Arts and Sciences University of Wyoming",
-  # 2017, "Dennis Anderson Fisheries Award, Department Zoology and Physiology University of Wyoming ",
+  2017, "Board of Visitors Award, College of Arts and Sciences University of Wyoming",
+  2017, "Dennis Anderson Fisheries Award, Department Zoology and Physiology University of Wyoming ",
   2017, "William Trachtenberg Scholarship, Sustainable Fisheries Foundation",
   2017, "Vern Bressler Fisheries Award, Department of Zoology and Physiology University of Wyoming",
   2015, "Excellence in Fisheries Award, Canadian Aquatic Resources Section American Fisheries Society",
@@ -254,7 +255,84 @@ tribble(
   baretable()
 ```
 
-# Teaching and mentorship
+# Invited Academic Talks
+
+```{r talks, results='asis'}
+talks <- readr::read_csv("invited_talks.csv")
+
+talks |>
+  mutate(
+    Time = paste0(Year, "--", Month),
+    Entry = paste(
+      "``", Title, "''. ",
+      Place, ".",
+      sep = ""
+      )
+    ) |>
+  select(Time, Entry) %>%  
+  baretable(
+    align = "llp{14cm}",
+    size = "\\fontsize{10}{12}",
+    add.to.row = list(
+      pos = as.list(seq(NROW(.))),
+      command = rep("\\\\[-0.32cm]", NROW(.))
+    )
+  )
+```
+
+# Teaching
+
+## University of Wyoming
+
+* ZOO 4330: Ichthyology, Instructor of Record
+  * Spring 2020: 3 credits, 22 students
+
+* Zoo 4330: Ichthyology, Teaching Assistant, Lab Instructor
+  * Spring 2019: 3 credits, 20 students
+  * Spring 2018: 3 credits, 25 students
+  * Spring 2017: 3 credits, 19 students
+  * Spring 2016: 3 credits, 18 students
+
+* ZOO 4310: Fisheries Management, Teaching Assistant, Lab Instructor
+  * Fall 2019: 3 credits, 21 students
+  * Fall 2018: 3 credits, 26 students
+  * Fall 2017: 3 credits, 23 students
+  * Fall 2016: 3 credits, 19 students
+  * Fall 2015: 3 credits, 23 students
+
+## University of Alberta
+
+* RENR 376: Fisheries and Wildlife Management, Teaching Assistant, Lab Instructor
+  * Spring 2015: 3 credits, 27 students
+  * Spring 2014: 3 credits, 29 students
+
+## Guest Lectures
+
+```{r guest-lecs, results='asis'}
+lecs <- readr::read_csv("guest_lecs.csv")
+
+lecs |>
+  mutate(
+    Time = paste0(Year, "--", Month),
+    Entry = paste(
+      "``", Title, "''. ",
+      Place, ".",
+      sep = ""
+      )
+    ) |>
+  select(Time, Entry) %>%  
+  baretable(
+    align = "llp{14cm}",
+    size = "\\fontsize{10}{12}",
+    add.to.row = list(
+      pos = as.list(seq(NROW(.))),
+      command = rep("\\\\[-0.32cm]", NROW(.))
+    )
+  )
+```
+
+
+# Mentoring
 
 ```{r mentoring, results='asis'}
 undergrads <- tribble(
@@ -288,11 +366,12 @@ undergrads <- tribble(
 #   baretable()
 ```
 
-*   I have prepared and delivered full lecture curriculum as instructor of record; developed labs; supervised TAs
-*   I have supervised `r nrow(undergrads)` undergraduate research assistants in lab and field settings
-*   Several of these students have entered graduate programs or natural resource agencies
+* I have mentored `r nrow(undergrads)` undergraduate research assistants in lab and field settings
+  * University of Wyoming, UW-Madison, University of Tennessee-Chattanooga
+  * Several of these students have entered graduate programs or natural resource agencies
 
-# Professional service and leadership
+
+# Professional Service and Leadership
 
 <!-- ## Adjunct and affiliate appointments -->
 
@@ -300,31 +379,23 @@ undergrads <- tribble(
 
 <!-- ## Postdoctoral researchers -->
 
-## Ad-hoc reviewer
+## Service
 
-```{r reviews1}
-n_reviewed <- 50
-n_journals <- 15
-n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
-```
-
-*   I have served as an ad-hoc reviewer for `r n_reviewed` manuscripts from `r n_journals` journals since 2016 ($\sim$ `r n_per_yr` per year). 
-*   2025, **Lake Champlain Fisheries Research Program**, full proposal review
-*   2023, **NSF**, Division of Environmental Biology, CAREER, full proposal review
-
-
-## University service
-
-```{r uni-serivce, results='asis'}
+```{r serivce, results='asis'}
 tribble(
   ~Start, ~End, ~Position,
   2022, 2024, "Field Operation Facilitation and Boat Committee, Center for Limnology, UW-Madison",
+  2021, 2022, "Member, Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
+  2020, 2022, "Member, Trout Species Team, Wisconsin Department of Natural Resources",
   2019, 2020, "Faculty Search Committee, Department of Zoology and Physiology, University of Wyoming",
   2016, 2020, "Social Media Coordinator, Program in Ecology, University of Wyoming",
+  2016, 2018, "Excom Member, CO-WY State Chapter, American Fisheries Society",
   2016, 2017, "Graduate Council, student representative, University of Wyoming",
   2016, 2017, "President, Program in Ecology, University of Wyoming",
+  2016, 2017, "President, UWyo Student Chapter, American Fisheries Society",
+  2015, NA, "Member, Freshwater Working Group, Society for Conservation Biology",
   ) |>
-  # arrange(-Start) |>
+  arrange(-Start) |>
   mutate(
     Start = as.character(Start),
     End = as.character(End),
@@ -367,33 +438,7 @@ tribble(
   baretable()
 ```
 
-## Society leadership
-
-```{r society-service, results='asis'}
-tribble(
-  ~Start, ~End, ~Position,
-  2015, NA, "Member, Freshwater Working Group, Society for Conservation Biology",
-  2021, 2022, "Member, Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
-  2020, 2022, "Member, Trout Species Team, Wisconsin Department of Natural Resources",
-  2016, 2017, "President, UWyo Student Chapter, American Fisheries Society",
-  2016, 2018, "Excom Member, CO-WY State Chapter, American Fisheries Society",
-  ) |>
-  arrange(Start) |>
-  mutate(
-    Start = as.character(Start),
-    End = as.character(End),
-    End = tidyr::replace_na(End, ""),
-    Years = if_else(End == Start,
-      as.character(Start),
-      paste(Start, "--", End, sep = ""),
-      paste(Start, "--", End, sep = "")
-    )
-  ) |>
-  select(Years, Position) |>
-  baretable()
-```
-
-## Conference organization
+## Society service
 
 ```{r conf-service, results='asis'}
 tribble(
@@ -403,6 +448,22 @@ tribble(
   ) |>
   baretable()
 ```
+
+## Reviewer
+
+* Proposal reviewer
+  * Lake Champlain Fisheries Research Program
+  * NSF, Division of Environmental Biology (DEB)
+
+```{r reviews1}
+n_reviewed <- 55
+n_journals <- 18
+n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
+```
+
+* Manuscript reviewer: 
+  * Since 2016, I have reviewed `r n_reviewed` manuscripts from `r n_journals` journals ($\sim$ `r n_per_yr` per year). 
+  * Journals include: Fisheries Research, Oecologia, Global Change Biology, Ecological Applications, Ecosphere, Freshwater Biology, Freshwater Science, North American Journal of Fisheries Management, Frontiers in Ecology and Evolution, Aquatic Invasions, Hydrobiologia, Journal of Ecology, Environmental Biology of Fishes, Restoration Ecology, PeerJ, River Research and Applications, Journal of Great Lakes Research Diversity and Distributions, Transportation Research: Part D.
 
 ## Leadership development
 
@@ -415,22 +476,56 @@ tribble(
   baretable()
 ```
 
-# Community and public engagement
+# Outreach and Broader Impacts
 
-## Public lectures
+## Hosted workshops
 
-* *Climate change, extreme weather, and stream trout in Wisconsin*. Trout Unlimited, Madison, WY, Mar 2022
-* *Stream culverts and fish: the good, the bad, and the ugly*. Pinedale Science Café, Pinedale, WY, Aug 2017
-* *Culverts as culprits: how road crossings affect fish*. Laramie Science Café, Laramie, WY, Jun 2016 
+```{r workshops, results='asis'}
+shops <- readr::read_csv("workshops.csv")
 
-## Selected media
+shops |>
+  mutate(
+    Time = paste0(Year, "--", Month),
+    Entry = paste(
+      "``", Title, "''. ",
+      Place, ".",
+      sep = ""
+      )
+    ) |>
+  select(Time, Entry) %>%  
+  baretable(
+    align = "llp{14cm}",
+    size = "\\fontsize{10}{12}",
+    add.to.row = list(
+      pos = as.list(seq(NROW(.))),
+      command = rep("\\\\[-0.32cm]", NROW(.))
+    )
+  )
+```
 
-* Milwaukee Journal Sentinel, Jan 2023. ["Climate change is making Wisconsin trout more vulnerable to floods and heat"](https://www.jsonline.com/story/news/2023/01/25/climate-change-is-making-wisconsin-trout-more-vulnerable-study-shows/69800081007/). (Also covered in separate stories on [WPR Public Radio](https://www.wpr.org/shows/morning-show/miss-wisconsin-crowned-miss-america-trout-feeling-affects-climate-change))
-* Water Blogged, Dec 2022. ["A Tale of Two Fishes: Study Maps the Future of Trout Populations in Wisconsin"](https://blog.limnology.wisc.edu/2022/12/19/a-tale-of-two-fishes-study-maps-the-future-of-trout-populations-in-wisconsin/)
-* UW-Madison News, Dec 2022. ["Study maps uneasy future of Wisconsin trout populations"](https://news.wisc.edu/study-maps-uneasy-future-of-wisconsin-trout-populations/)
-* The Tributary, Nov 2017. [“Stuck in a rut in Anaconda? Crash a cutthroat spawning party!”](https://wdafs.org/download/Vol-41-No-02.pdf/)
 
-## Public service
+## Media and public talks
+
+```{r media, results='asis'}
+media <- readr::read_csv("media.csv")
+
+media |>
+  mutate(
+    Time = paste0(Year, "--", Month),
+    ) |>
+  select(Time, Outlet, Topic) %>%  
+  baretable(
+    # align = "llp{14cm}r",
+    size = "\\fontsize{10}{12}",
+    add.to.row = list(
+      pos = as.list(seq(NROW(.))),
+      command = rep("\\\\[-0.32cm]", NROW(.))
+    )
+  )
+```
+
+
+## Public service and outreach
 
 ```{r outreach, results='asis'}
 tribble(
@@ -456,6 +551,19 @@ tribble(
   select(Years, Role, Institution) |>
   baretable()
 ```
+
+# Conference Presentations
+
+Underlined names indicate undergraduate research mentees.
+
+\refstepcounter{bib}\label{presstart}
+
+```{r pres-offered}
+bibliography_entries("bibs/conf_presentations.bib") |> 
+  arrange(issued, desc(author$family))
+```
+
+\refstepcounter{bib}\label{presend}
 
 
 # Technical skills and training
@@ -545,5 +653,4 @@ tribble(
   ) |> 
   baretable()
 ```
-
 
