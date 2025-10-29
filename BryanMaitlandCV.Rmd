@@ -392,7 +392,6 @@ undergrads <- tribble(
 * I have mentored `r nrow(undergrads)` undergraduate students in research design, fieldwork, and data analysis and the University of Wyoming, UW-Madison, and the University of Tennessee-Chattanooga. 
 * Several of these students have entered graduate programs or natural resource agencies.
 
-
 # Professional Service and Leadership
 
 <!-- ## Adjunct and affiliate appointments -->
