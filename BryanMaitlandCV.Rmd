@@ -71,7 +71,7 @@ tribble(
   baretable()
 ```
 
-# Research
+# Research Summary
 
 ```{r article-counts}
 n_pubs <- RefManageR::ReadBib("bibs/journal_articles.bib", check = FALSE) |> 
@@ -85,14 +85,15 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
 ```
 
 * **Research Interests**: Fish; fisheries ecology and conservation; freshwater ecosystem responses to climate change and land use change; aquatic habitat connectivity; stable isotope ecology; spatial statistics and data science. 
-* Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals on fisheries and conservation (pages \pageref{papersstart}--\pageref{papersend}).
+* **My research integrates** field ecology, isotopic and spatial analyses, and predictive modeling to understand how freshwater food webs respond to environmental change.
+* Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals (pages \pageref{papersstart}--\pageref{papersend}).
 * On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
 * I have authored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
 * I have contributed `r n_talks` papers and posters at AFS, SFS, ASLO, AGU, IAGLR, and regional chapter meetings (pages \pageref{presstart}--\pageref{presend}).
 
 \refstepcounter{bib}\label{papersstart}
 
-# Publications
+# Peer-Reviewed Publications
 
 \* indicates shared first authorship. Underlined names indicate undergraduate research mentees.
 
@@ -151,11 +152,11 @@ sumgrants <- grants |>
   sum(na.rm = TRUE)
 ```
 
-**I have acquired (in most cases jointly) `r scales::dollar_format()(sumgrants)` in research grants since 2015. Grants \> $5,000 below:** \vspace*{0.2cm}\enlargethispage*{0.5cm}
+**Since 2015, I have led or co-led `r scales::dollar_format()(sumgrants)` in funded projects and contributed to multiple invited proposals exceeding $2M in scope. Funded and pending grants \> $10,000 are given below:** \vspace*{0.2cm}\enlargethispage*{0.5cm}
 
 ```{r grants-table, results='asis'}
 grants |>
-  filter(Amount >= 5000) |>
+  filter(Amount >= 10000) |>
   filter(Status %in% c("Complete", "In progress", "Pending")) |> 
   mutate(
     Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
@@ -182,7 +183,7 @@ grants |>
 
 \vspace*{0.2cm}\enlargethispage*{0.5cm}
 
-**Below are invited full proposals that were withdrawn due to federal funding issues in the U.S.:** \vspace*{0.2cm}\enlargethispage*{0.5cm}
+**Invited full proposals that were withdrawn due to federal funding issues in the U.S.:** \vspace*{0.2cm}\enlargethispage*{0.5cm}
 
 ```{r grantstable-with, results='asis'}
 grants |>
@@ -212,7 +213,7 @@ grants |>
 
 \vspace*{0.2cm}\enlargethispage*{0.5cm}
 
-**Finally, invited full proposals that were not awarded:** \vspace*{0.2cm}\enlargethispage*{0.5cm}
+**Invited full proposals that were not awarded:** \vspace*{0.2cm}\enlargethispage*{0.5cm}
 
 ```{r grantstable-nope, results='asis'}
 grants |>
@@ -311,12 +312,12 @@ talks |>
 
 # Teaching
 
+* I have taught and assisted in courses spanning ichthyology, fisheries management, and stable isotope ecology.
+
 ## University of Wyoming
 
-* ZOO 4330: Ichthyology, Instructor of Record
+* Zoo 4330: Ichthyology, Lecture delivery, Teaching Assistant, Lab Instructor
   * Spring 2020: 3 credits, 22 students
-
-* Zoo 4330: Ichthyology, Teaching Assistant, Lab Instructor
   * Spring 2019: 3 credits, 20 students
   * Spring 2018: 3 credits, 25 students
   * Spring 2017: 3 credits, 19 students
@@ -350,14 +351,7 @@ lecs |>
       )
     ) |>
   select(Time, Entry) %>%  
-  baretable(
-    align = "llp{14cm}",
-    size = "\\fontsize{10}{12}",
-    add.to.row = list(
-      pos = as.list(seq(NROW(.))),
-      command = rep("\\\\[-0.32cm]", NROW(.))
-    )
-  )
+  baretable()
 ```
 
 
@@ -395,9 +389,8 @@ undergrads <- tribble(
 #   baretable()
 ```
 
-* I have mentored `r nrow(undergrads)` undergraduate research assistants in lab and field settings
-  * University of Wyoming, UW-Madison, University of Tennessee-Chattanooga
-  * Several of these students have entered graduate programs or natural resource agencies
+* I have mentored `r nrow(undergrads)` undergraduate students in research design, fieldwork, and data analysis and the University of Wyoming, UW-Madison, and the University of Tennessee-Chattanooga. 
+* Several of these students have entered graduate programs or natural resource agencies.
 
 
 # Professional Service and Leadership
@@ -522,14 +515,7 @@ shops |>
       )
     ) |>
   select(Time, Entry) %>%  
-  baretable(
-    align = "llp{14cm}",
-    size = "\\fontsize{10}{12}",
-    add.to.row = list(
-      pos = as.list(seq(NROW(.))),
-      command = rep("\\\\[-0.32cm]", NROW(.))
-    )
-  )
+  baretable()
 ```
 
 
@@ -543,14 +529,7 @@ media |>
     Time = paste0(Year, "--", Month),
     ) |>
   select(Time, Outlet, Topic) %>%  
-  baretable(
-    # align = "llp{14cm}r",
-    size = "\\fontsize{10}{12}",
-    add.to.row = list(
-      pos = as.list(seq(NROW(.))),
-      command = rep("\\\\[-0.32cm]", NROW(.))
-    )
-  )
+  baretable()
 ```
 
 
@@ -595,11 +574,11 @@ bibliography_entries("bibs/conf_presentations.bib") |>
 \refstepcounter{bib}\label{presend}
 
 
-# Technical skills and training
+<!-- # Technical skills and training -->
 
-## Field
+<!-- ## Field -->
 
-```{r, results='asis'}
+```{r, results='asis', eval=FALSE}
 tribble(
   ~area, ~skills,
   "Fish Sampling", "Electrofishing, netting, seining, trawling, angling",
@@ -611,9 +590,9 @@ tribble(
   baretable()
 ```
 
-## Lab
+<!-- ## Lab -->
 
-```{r, results='asis'}
+```{r, results='asis', eval=FALSE}
 tribble(
   ~area, ~skills,
   "Fisheries", "Fish aging (scales, otoliths), fish dissection, fish tissue processing",
@@ -624,9 +603,9 @@ tribble(
   baretable()
 ```
 
-## Computer
+<!-- ## Computer -->
 
-```{r, results='asis'}
+```{r, results='asis', eval=FALSE}
 tribble(
   ~area, ~skills,
   "Operating Systems", "Linux, MacOS, Windows",
@@ -641,9 +620,9 @@ tribble(
   baretable()
 ```
 
-## Analytical
+<!-- ## Analytical -->
 
-```{r, results='asis'}
+```{r, results='asis', eval=FALSE}
 tribble(
   ~area, ~skills,
   "Statistical Analysis", "Generalized linear models, mixed effects models, Bayesian statistics, multivariate statistics",
@@ -655,9 +634,9 @@ tribble(
   baretable()
 ```
 
-## Certifications
+<!-- ## Certifications -->
 
-```{r, results='asis'}
+```{r, results='asis', eval=FALSE}
 tribble(
   ~Year, ~Certification, ~Institution,
   2025, "Wilderness First Aid", "Wilderness Medicine Institute",
