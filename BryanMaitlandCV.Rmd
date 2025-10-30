@@ -13,7 +13,7 @@ output:
   vitae::hyndman:
     pandoc_args: ["--lua-filter=lua/names.lua"]
 header-includes:
-  \definecolor{headcolor}{HTML}{0000ff}
+  \definecolor{headcolor}{HTML}{005838}
 ---
 
 \newcounter{bib}
@@ -141,6 +141,8 @@ bibliography_entries("bibs/preprints.bib") |>
 bibliography_entries("bibs/working.bib")
 ```
 
+\vspace*{0.2cm}
+
 # Grants
 
 ```{r grants}
@@ -152,7 +154,7 @@ sumgrants <- grants |>
   sum(na.rm = TRUE)
 ```
 
-**Since 2015, I have led or co-led `r scales::dollar_format()(sumgrants)` in funded projects and contributed to multiple invited proposals exceeding $2M in scope. Funded and pending grants \> $10,000 are given below:** \vspace*{0.2cm}\enlargethispage*{0.5cm}
+**Since 2015, I have led or co-led `r scales::dollar_format()(sumgrants)` in funded projects and contributed to multiple invited proposals exceeding $2M in scope. Funded and pending grants \> $10,000 are given below:** \vspace*{0.25cm}
 
 ```{r grants-table, results='asis'}
 grants |>
@@ -172,7 +174,6 @@ grants |>
   select(Time, Entry, Amount) %>%  
   baretable(
     align = "llp{13.3cm}r",  
-    # hline.after = c(0, NROW(.)),
     size = "\\fontsize{10}{12}",
     add.to.row = list(
       pos = as.list(seq(NROW(.))),
@@ -181,9 +182,9 @@ grants |>
   )
 ```
 
-\vspace*{0.2cm}\enlargethispage*{0.5cm}
+\vspace*{0.25cm}
 
-**Invited full proposals that were withdrawn due to federal funding issues in the U.S.:** \vspace*{0.2cm}\enlargethispage*{0.5cm}
+**Invited full proposals that were withdrawn due to federal funding issues in the U.S.:** \vspace*{0.25cm}
 
 ```{r grantstable-with, results='asis'}
 grants |>
@@ -201,8 +202,7 @@ grants |>
   arrange(desc(Time), desc(Amount)) |>
   select(Time, Entry, Amount) %>%  
   baretable(
-    align = "llp{13.3cm}r",
-    # hline.after = c(0, NROW(.)),
+    align = "lp{1.6cm}p{13.3cm}r",
     size = "\\fontsize{10}{12}",
     add.to.row = list(
       pos = as.list(seq(NROW(.))),
@@ -211,9 +211,9 @@ grants |>
   )
 ```
 
-\vspace*{0.2cm}\enlargethispage*{0.5cm}
+\vspace*{0.25cm}
 
-**Invited full proposals that were not awarded:** \vspace*{0.2cm}\enlargethispage*{0.5cm}
+**Invited full proposals that were not awarded:** \vspace*{0.25cm}
 
 ```{r grantstable-nope, results='asis'}
 grants |>
@@ -231,8 +231,7 @@ grants |>
   arrange(desc(Time), desc(Amount)) |>
   select(Time, Entry, Amount) %>%  
   baretable(
-    align = "llp{13.3cm}r",
-    # hline.after = c(0, NROW(.)),
+    align = "lp{1.6cm}p{13.3cm}r",
     size = "\\fontsize{10}{12}",
     add.to.row = list(
       pos = as.list(seq(NROW(.))),
