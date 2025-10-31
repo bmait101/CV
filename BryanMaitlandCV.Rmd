@@ -48,7 +48,7 @@ tribble(
   mutate(
     Start = as.character(Start),
     End = as.character(End),
-    End = tidyr::replace_na(End, ""),
+    End = tidyr::replace_na(End, "Present"),
     Years = if_else(End == Start,
       as.character(Start),
       paste(Start, "--", End, sep = ""),
@@ -65,7 +65,7 @@ tribble(
 tribble(
   ~ Year, ~ Degree, ~ Feild, ~ Institution,
   2020, "Ph.D.", "Ecology", "University of Wyoming",  
-  2015, "M.Sc.", "Conservation Biology", "University of Alberta", 
+  2015, "M.Sc.", "Conservation Biology (Fisheries)", "University of Alberta", 
   2011, "B.S.", "Conservation Biology \\textit{cum laude}", "SUNY: College of Environmental Science and Forestry",
   ) |> 
   baretable()
@@ -85,7 +85,7 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
 ```
 
 * **Research Interests**: Fish; fisheries ecology and conservation; freshwater ecosystem responses to climate change and land use change; aquatic habitat connectivity; stable isotope ecology; spatial statistics and data science. 
-* **My research integrates** field ecology, isotopic and spatial analyses, and predictive modeling to understand how freshwater food webs respond to environmental change.
+* **My research integrates** field ecology, isotopic and spatial analyses, and predictive modeling to understand how freshwater fish populations and food webs respond to environmental change.
 * Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals (pages \pageref{papersstart}--\pageref{papersend}).
 * On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
 * I have authored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
@@ -261,6 +261,7 @@ tribble(
 tribble(
   ~Year, ~Award,
   2024, "Wisconsin Water Resources Postdoctoral Fellow, University of Wisconsin-Madison",
+  2019, "Dean’s Graduate Fellowship, College of Arts and Sciences, University of Wyoming",
   ) |>
   baretable()
 ```
@@ -270,7 +271,6 @@ tribble(
 ```{r award3, results='asis'}
 tribble(
   ~Year, ~Award,
-  2019, "Dean’s Graduate Scholar Award, College of Arts and Sciences University of Wyoming",
   2018, "Eugene Maughan Graduate Award, Western Division American Fisheries Society",
   2018, "Hank Gardner Graduate Award, Department of Zoology and Physiology University of Wyoming",
   2017, "Clemens-Rigler Award, Canadian Aquatic Resources Section American Fisheries Society",
@@ -311,11 +311,11 @@ talks |>
 
 # Teaching
 
-* I have taught and assisted in courses spanning ichthyology, fisheries management, and stable isotope ecology.
+**I have taught and assisted in courses spanning ichthyology, fisheries management, and stable isotope ecology.**
 
 ## University of Wyoming
 
-* Zoo 4330: Ichthyology, Lecture delivery, Teaching Assistant, Lab Instructor
+* ZOO 4330: Ichthyology, Lecture delivery, Teaching Assistant, Lab Instructor
   * Spring 2020: 3 credits, 22 students
   * Spring 2019: 3 credits, 20 students
   * Spring 2018: 3 credits, 25 students
@@ -360,8 +360,7 @@ lecs |>
 undergrads <- tribble(
   ~ Start, ~ End, ~ Name, ~ Institution,
   2024, 2025, "Trevor Davis", "University of Tennessee, Chattanooga",
-  2024, 2025, "Dylan Keisser", "University of Tennessee, Chattanooga",
-  2023, 2023, "Jonathan Martin", "University of Wisconsin-Madison",
+  2023, 2024, "Jonathan Martin", "University of Wisconsin-Madison",
   2018, 2020, "Nathan Barrus", "University of Wyoming",
   2019, 2020, "Russell Brubaker", "University of Wyoming",
   2018, 2019, "Reilly Davis", "University of Wyoming",
@@ -375,7 +374,7 @@ undergrads <- tribble(
   mutate(
     Start = as.character(Start),
     End = as.character(End),
-    End = tidyr::replace_na(End, ""),
+    End = tidyr::replace_na(End, "Present"),
     Years = if_else(End == Start,
       as.character(Start),
       paste(Start, "--", End, sep = ""),
@@ -384,12 +383,41 @@ undergrads <- tribble(
   ) |>
   select(Years, Name, Institution)
 
-# undergrads |>
-#   baretable()
+postbacs <- tribble(
+  ~ Start, ~ End, ~ Name, ~ Institution,
+  2025, NA, "Garrison Ferone", "University of Idaho",
+  2023, 2025, "Dylan Keisser", "University of Tennessee, Chattanooga",
+  ) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, "Present"),
+    Years = if_else(End == Start,
+      as.character(Start),
+      paste(Start, "--", End, sep = ""),
+      paste(Start, "--", End, sep = "")
+    )
+  ) |>
+  select(Years, Name, Institution)
 ```
 
-* I have mentored `r nrow(undergrads)` undergraduate students in research design, fieldwork, and data analysis and the University of Wyoming, UW-Madison, and the University of Tennessee-Chattanooga. 
-* Several of these students have entered graduate programs or natural resource agencies.
+**I have mentored `r nrow(postbacs)` post-baccalaureate and `r nrow(undergrads)` undergraduate students in research design, fieldwork, and data analysis.**
+
+## Post-baccalaureate researchers
+
+``` {r postbac-tables, results='asis'}
+postbacs |> 
+  baretable()
+```
+
+## Undergraduate researchers
+
+``` {r undergrad-tables, results='asis'}
+undergrads |> 
+  baretable()
+```
+
+
 
 # Professional Service and Leadership
 
@@ -419,7 +447,7 @@ tribble(
   mutate(
     Start = as.character(Start),
     End = as.character(End),
-    End = tidyr::replace_na(End, ""),
+    End = tidyr::replace_na(End, "Present"),
     Years = if_else(End == Start,
       as.character(Start),
       paste(Start, "--", End, sep = ""),
@@ -443,11 +471,11 @@ tribble(
   2016, 2019, "Association for the Science of Limnology and Oceanography",
   2010, 2016, "International Association of Great Lakes Research",
   ) |>
-  arrange(Start) |>
+  arrange(-Start) |>
   mutate(
     Start = as.character(Start),
     End = as.character(End),
-    End = tidyr::replace_na(End, ""),
+    End = tidyr::replace_na(End, "Present"),
     Years = if_else(End == Start,
       as.character(Start),
       paste(Start, "--", End, sep = ""),
@@ -463,6 +491,7 @@ tribble(
 ```{r conf-service, results='asis'}
 tribble(
   ~Year, ~Details,
+  2026, "Program co-chair, Fish and Fire, American Fisheries Society Annual Meeting",
   2024, "Program co-chair, Science to Restore and Manage Wildland Aquatic Habitats and Watersheds, AGU Fall Meeting",
   2016, "Program co-chair, Western Division American Fisheries Society Student Colloquium",
   ) |>
@@ -478,7 +507,7 @@ tribble(
 ```{r reviews1}
 n_reviewed <- 55
 n_journals <- 18
-n_per_yr <- round(n_reviewed / (2025 - 2016), 1)
+n_per_yr <- round(n_reviewed / (as.numeric(format(Sys.Date(), "%Y")) - 2016), 1)
 ```
 
 * Manuscript reviewer: 
