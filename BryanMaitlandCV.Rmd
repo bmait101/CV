@@ -95,7 +95,7 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
 
 # Peer-Reviewed Publications
 
-\* indicates shared first authorship. Underlined names indicate undergraduate research mentees.
+\* indicates shared first authorship. \underline{Underlined names} indicate undergraduate research mentees.
 
 ```{r articles}
 bibliography_entries("bibs/journal_articles.bib") |> 
@@ -131,8 +131,7 @@ bibliography_entries("bibs/theses.bib") |>
 # Pre-prints and in-review
 
 ```{r preprints}
-bibliography_entries("bibs/preprints.bib") |> 
-  arrange(issued, desc(author$family))
+bibliography_entries("bibs/preprints.bib") 
 ```
 
 # Unpublished working papers
@@ -311,29 +310,36 @@ talks |>
 
 # Teaching
 
-**I have taught and assisted in courses spanning ichthyology, fisheries management, and stable isotope ecology.**
+## Instructor of Record
 
-## University of Wyoming
+```{r instructor, results='asis'}
+tribble(
+  ~Course, ~Name, ~Place, ~Term, ~Credits, ~Students,
+  "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2020", "3 credits", "22 students"
+  ) |>
+  baretable()
+```
 
-* ZOO 4330: Ichthyology, Lecture delivery, Teaching Assistant, Lab Instructor
-  * Spring 2020: 3 credits, 22 students
-  * Spring 2019: 3 credits, 20 students
-  * Spring 2018: 3 credits, 25 students
-  * Spring 2017: 3 credits, 19 students
-  * Spring 2016: 3 credits, 18 students
+## Teaching Assistant and Lab Instructor
 
-* ZOO 4310: Fisheries Management, Teaching Assistant, Lab Instructor
-  * Fall 2019: 3 credits, 21 students
-  * Fall 2018: 3 credits, 26 students
-  * Fall 2017: 3 credits, 23 students
-  * Fall 2016: 3 credits, 19 students
-  * Fall 2015: 3 credits, 23 students
-
-## University of Alberta
-
-* RENR 376: Fisheries and Wildlife Management, Teaching Assistant, Lab Instructor
-  * Spring 2015: 3 credits, 27 students
-  * Spring 2014: 3 credits, 29 students
+```{r TA, results='asis'}
+tribble(
+  ~Course, ~Name, ~Place, ~Term, ~Credits, ~Students,
+  "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2020", "3 credits", "22 students", 
+  "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2019", "3 credits", "20 students",
+  "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2018", "3 credits", "25 students",
+  "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2017", "3 credits", "19 students",
+  "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2016", "3 credits", "18 students",
+  "ZOO 4310", "Fisheries Management", "University of Wyoming", "Fall 2019", "3 credits", "21 students",
+  "ZOO 4310", "Fisheries Management", "University of Wyoming", "Fall 2018", "3 credits", "26 students",
+  "ZOO 4310", "Fisheries Management", "University of Wyoming", "Fall 2017", "3 credits", "22 students",
+  "ZOO 4310", "Fisheries Management", "University of Wyoming", "Fall 2017", "3 credits", "19 students",
+  "ZOO 4310", "Fisheries Management", "University of Wyoming", "Fall 2017", "3 credits", "23 students",
+  "ZOO 4310", "Fisheries and Wildlife Management", "University of Alberta", "Spring 2015", "4 credits", "27 students",
+  "ZOO 4310", "Fisheries and Wildlife Management", "University of Alberta", "Spring 2014", "4 credits", "29 students",
+  ) |>
+  baretable()
+```
 
 ## Guest Lectures
 
@@ -353,6 +359,7 @@ lecs |>
   baretable()
 ```
 
+\newpage 
 
 # Mentoring
 
@@ -401,22 +408,19 @@ postbacs <- tribble(
   select(Years, Name, Institution)
 ```
 
-**I have mentored `r nrow(postbacs)` post-baccalaureate and `r nrow(undergrads)` undergraduate students in research design, fieldwork, and data analysis.**
-
-## Post-baccalaureate researchers
+## Post-baccalaureate
 
 ``` {r postbac-tables, results='asis'}
 postbacs |> 
   baretable()
 ```
 
-## Undergraduate researchers
+## Undergraduate
 
 ``` {r undergrad-tables, results='asis'}
 undergrads |> 
   baretable()
 ```
-
 
 
 # Professional Service and Leadership
