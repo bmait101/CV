@@ -1626,7 +1626,7 @@
       </group>
     </layout>
   </citation>
-  <bibliography hanging-indent="true" et-al-min="23" et-al-use-first="21" et-al-use-last="true" entry-spacing="0" line-spacing="2">
+  <bibliography hanging-indent="true" et-al-min="15" et-al-use-first="15" et-al-use-last="true" entry-spacing="0" line-spacing="2">
     <sort>
       <key variable="citation-number" sort="descending"/>
     </sort>
