@@ -516,7 +516,7 @@ n_per_yr <- round(n_reviewed / (as.numeric(format(Sys.Date(), "%Y")) - 2016), 1)
 
 * Manuscript reviewer: 
   * Since 2016, I have reviewed `r n_reviewed` manuscripts from `r n_journals` journals ($\sim$ `r n_per_yr` per year). 
-  * Journals include: Fisheries Research, Oecologia, Global Change Biology, Ecological Applications, Ecosphere, Freshwater Biology, Freshwater Science, North American Journal of Fisheries Management, Frontiers in Ecology and Evolution, Aquatic Invasions, Hydrobiologia, Journal of Ecology, Environmental Biology of Fishes, Restoration Ecology, PeerJ, River Research and Applications, Journal of Great Lakes Research Diversity and Distributions, Transportation Research: Part D.
+  * Journals include: Fisheries Research, Oecologia, Global Change Biology, Ecological Applications, Ecosphere, Freshwater Biology, Freshwater Science, Fisheries, North American Journal of Fisheries Management, Frontiers in Ecology and Evolution, Aquatic Invasions, Hydrobiologia, Journal of Ecology, Environmental Biology of Fishes, Restoration Ecology, PeerJ, River Research and Applications, Journal of Great Lakes Research Diversity and Distributions, Transportation Research: Part D.
 
 ## Leadership development
 
