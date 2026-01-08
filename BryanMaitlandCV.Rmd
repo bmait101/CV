@@ -157,8 +157,8 @@ sumgrants <- grants |>
 
 ```{r grants-table, results='asis'}
 grants |>
-  filter(Amount >= 10000) |>
   filter(Status %in% c("Complete", "In progress", "Pending")) |> 
+  filter(Amount >= 10000) |>
   mutate(
     Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
     Entry = paste(

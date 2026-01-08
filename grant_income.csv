@@ -1,23 +1,23 @@
-﻿Source,Start,End,Role,Collaborators,Title,Amount,Status
-U.S. Fish and Wildlife Serivce,Pending,,Co-PI,M. Sparks (Lead-PI),Bull Trout movement using PIT tag arrays in the Boise Basin,56620,Pending
-National Geographic Society,Pending,,Co-PI,"D. Dauwwalter (Lead-PI), M. Sparks, K. Carim, R. Thurow",Scaling satellite monitoring of fish spawning across space,20872,Pending
-Trout Unlimited,2025,2027,Lead-PI,"D. Daulwater, M. Sparks",Monitoring Chinook Salmon spawning from space,38122,In progress
-DoD SERDP,2025,,Lead-PI,"M. Sparks, B. Finney, K. Carim, A. Fraik, R. Thurow, C. Shobe, D. White",A palaeoecological toolset to address shifting baseline syndrome,1500000,"Invited, withdrawn"
-UC-Davis and USDA Forest Service,2024,2027,Lead-PI,C. Jeffries,Chinook Salmon life history and otolith microchemistry,50184,In progress
-NSF IRES,2025,2029,Partner,"O. Jensen (Lead-PI), G. Batsaikhan, H. Bradley, S. Chandra, C. Free, T. Goldberg, K. Hartman, P. Lopez-Duarte, B. Mendsaihkan, T. Miller, M. Provost, J. Weber, T. Young",IRES: Climate change resilience in an aquatic bright spot: Lakes and rivers of Northern Mongolia,749133,In progress
-Joint Fire Science Program,2026,2028,Co-PI,"J. Peirce (Lead-PI), B. Sadegh, A. Bergstrom, C. Wasler, M. Sparks, D. Isaak",From flames to fish: Co-management for wildfire and aquatic species in Idaho,150284,In progress
-WI Sea Grant,2023,,Lead-PI,O. Jensen,Cross-lake comparison of habitat coupling in Lakes Michigan and Superior,258571,"Invited, not awarded"
-AFS WI Chapter,2022,2022,Lead-PI,None,Professional Travel Grant,4000,Complete
-USGS MW CASC,2021,,Lead-PI,"A. Latzka, O. Jensen, S. Loheide",Climate change and groundwater pumping impacts on Wisconsin trout fisheries,399853,"Invited, not awarded"
-CO-WY AFS,2020,2021,Lead-PI,F. Rahel,Food web responces to Tiger Muskie biocontrol in Wyoming,1000,Complete
-NANFA,2020,2020,Lead-PI,F. Rahel,Non-lethal methods for stable isotope analysis in fishes,1000,Complete
-UWyo Biodiversity Institute,2020,2021,Lead-PI,F. Rahel,Accessible underwater landscapes for non-STEM audiences,19866,Complete
-CO-WY AFS,2019,2019,Lead-PI,F. Rahel,Validating fin-tissue for stable isotope studies in fishes,1000,Complete
-UWyo Zoology,2019,2020,Lead-PI,F. Rahel,Diet specialization along stream gradients,22398,Complete
-UWyo Biodiversity Institute,2018,2019,Lead-PI,F. Rahel,Assimilation and discrimination of C and N in prairie stream fishes,6000,Complete
-AFS Western Division,2018,2018,Lead-PI,None,Eugene Maughan Graduate Award,4500,Complete
-UWyo Biodiversity Institute,2017,2018,Lead-PI,F. Rahel,Isotopic niches and fish biodiversity in Rocky Mountain streams,4500,Complete
-AFS CARS,2017,2017,Lead-PI,None,Clemens-Rigler Student Travel Grant,2000,Complete
-Sustainable Fisheries Foundation,2017,2017,Lead-PI,None,William Trachtenberg Scholarship Grant,4000,Complete
-UWyo Biodiversity Institute,2015,2018,Lead-PI,F. Rahel,Factors that influence the diversity of fish assemblages in Wyoming,25207,Complete
-AFS CARS,2015,2015,Lead-PI,None,Clemens-Rigler Student Travel Grant,2000,Complete
+﻿Source,Start,End,Amount,Status,Role,Collaborators,Title
+UWyo Biodiversity Institute,2015,2018,25207,Complete,Lead-PI,F. Rahel,Factors that influence the diversity of fish assemblages in Wyoming
+AFS CARS,2015,2015,2000,Complete,Lead-PI,None,Clemens-Rigler Student Travel Grant
+UWyo Biodiversity Institute,2017,2018,4500,Complete,Lead-PI,F. Rahel,Isotopic niches and fish biodiversity in Rocky Mountain streams
+AFS CARS,2017,2017,2000,Complete,Lead-PI,None,Clemens-Rigler Student Travel Grant
+Sustainable Fisheries Foundation,2017,2017,4000,Complete,Lead-PI,None,William Trachtenberg Scholarship Grant
+UWyo Biodiversity Institute,2018,2019,6000,Complete,Lead-PI,F. Rahel,Assimilation and discrimination of C and N in prairie stream fishes
+AFS Western Division,2018,2018,4500,Complete,Lead-PI,None,Eugene Maughan Graduate Award
+CO-WY AFS,2019,2019,1000,Complete,Lead-PI,F. Rahel,Validating fin-tissue for stable isotope studies in fishes
+UWyo Zoology,2019,2020,22398,Complete,Lead-PI,F. Rahel,Diet specialization along stream gradients
+CO-WY AFS,2020,2021,1000,Complete,Lead-PI,F. Rahel,Food web responces to Tiger Muskie biocontrol in Wyoming
+NANFA,2020,2020,1000,Complete,Lead-PI,F. Rahel,Non-lethal methods for stable isotope analysis in fishes
+UWyo Biodiversity Institute,2020,2021,19866,Complete,Lead-PI,F. Rahel,Accessible underwater landscapes for non-STEM audiences
+USGS MW CASC,2021,,399853,"Invited, not awarded",Lead-PI,"A. Latzka, O. Jensen, S. Loheide",Climate change and groundwater pumping impacts on Wisconsin trout fisheries
+AFS WI Chapter,2022,2022,4000,Complete,Lead-PI,None,Professional Travel Grant
+WI Sea Grant,2023,,258571,"Invited, not awarded",Lead-PI,O. Jensen,Cross-lake comparison of habitat coupling in Lakes Michigan and Superior
+UC-Davis and USDA Forest Service,2024,2027,50184,In progress,Lead-PI,C. Jeffries,Chinook Salmon life history and otolith microchemistry
+National Geographic Society,2025,,20872,Not awarded,Co-PI,"D. Dauwwalter (Lead-PI), M. Sparks, K. Carim, R. Thurow",Scaling satellite monitoring of fish spawning across space
+Trout Unlimited,2025,2027,38122,In progress,Lead-PI,"D. Daulwater, M. Sparks",Monitoring Chinook Salmon spawning from space
+DoD SERDP,2025,,1500000,"Invited, withdrawn",Lead-PI,"M. Sparks, B. Finney, K. Carim, A. Fraik, R. Thurow, C. Shobe, D. White",A palaeoecological toolset to address shifting baseline syndrome
+NSF IRES,2025,2029,749133,In progress,Partner,"O. Jensen (Lead-PI), G. Batsaikhan, H. Bradley, S. Chandra, C. Free, T. Goldberg, K. Hartman, P. Lopez-Duarte, B. Mendsaihkan, T. Miller, M. Provost, J. Weber, T. Young",IRES: Climate change resilience in an aquatic bright spot: Lakes and rivers of Northern Mongolia
+Joint Fire Science Program,2026,2028,150284,In progress,Co-PI,"J. Peirce (Lead-PI), B. Sadegh, A. Bergstrom, C. Wasler, M. Sparks, D. Isaak",From flames to fish: Co-management for wildfire and aquatic species in Idaho
+U.S. Fish and Wildlife Serivce,Pending,,56620,Pending,Co-PI,M. Sparks (Lead-PI),Bull Trout movement using PIT tag arrays in the Boise Basin
