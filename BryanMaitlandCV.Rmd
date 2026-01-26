@@ -153,7 +153,7 @@ sumgrants <- grants |>
   sum(na.rm = TRUE)
 ```
 
-**Since 2015, I have led or co-led $`r sprintf("%2.1f", sumgrants/1e6)` million in funded projects and contributed to multiple invited proposals exceeding $2 million in scope. Funded and pending grants \> $10,000 are given below:** \vspace*{0.25cm}
+**Since 2015, I have led, co-led, or partnered on $`r sprintf("%2.1f", sumgrants/1e6)` million in funded projects and contributed to multiple invited proposals exceeding $2 million in scope. Funded and pending grants \> $10,000 are given below:** \vspace*{0.25cm}
 
 ```{r grants-table, results='asis'}
 grants |>
