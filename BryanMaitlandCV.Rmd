@@ -248,7 +248,7 @@ grants |>
 ```{r award1, results='asis'}
 tribble(
   ~Year, ~Award,
-  2025, "Outstanding Service Award, U.S. Forest Service, Rocky Mountain Research Station",
+  2026, "Outstanding Service Award, U.S. Forest Service, Rocky Mountain Research Station",
   2024, "Outstanding Service Award, U.S. Forest Service, Rocky Mountain Research Station",
   2021, "Best Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
   ) |>
@@ -260,7 +260,7 @@ tribble(
 ```{r award2, results='asis'}
 tribble(
   ~Year, ~Award,
-  2024, "Wisconsin Water Resources Postdoctoral Fellow, University of Wisconsin-Madison",
+  2020, "Wisconsin Water Resources Postdoctoral Fellow, University of Wisconsin-Madison",
   2019, "Dean’s Graduate Fellowship, College of Arts and Sciences, University of Wyoming",
   ) |>
   baretable()
