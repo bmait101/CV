@@ -360,8 +360,6 @@ lecs |>
   baretable()
 ```
 
-\newpage 
-
 # Mentoring
 
 ```{r mentoring, results='asis'}
