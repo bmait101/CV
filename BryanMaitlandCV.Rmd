@@ -391,6 +391,7 @@ undergrads <- tribble(
 
 postbacs <- tribble(
   ~ Start, ~ End, ~ Name, ~ Institution,
+  2025, NA, "Quinn Smith", "University of Wiscosnin-Madison",
   2025, NA, "Garrison Ferone", "University of Idaho",
   2023, 2025, "Dylan Keisser", "University of Tennessee, Chattanooga",
   ) |>
@@ -407,14 +408,14 @@ postbacs <- tribble(
   select(Years, Name, Institution)
 ```
 
-## Post-baccalaureate
+## Graduate students
 
 ``` {r postbac-tables, results='asis'}
 postbacs |> 
   baretable()
 ```
 
-## Undergraduate
+## Undergraduate students
 
 ``` {r undergrad-tables, results='asis'}
 undergrads |> 
@@ -435,6 +436,7 @@ undergrads |>
 ```{r serivce, results='asis'}
 tribble(
   ~Start, ~End, ~Position,
+  2025, 2029, "Mentor of Practice, NSF IRES: Climate Change Resilience in an Aquatic Bright Spot, Jensen (PI), UW-Madison",
   2022, 2024, "Field Operation Facilitation and Boat Committee, Center for Limnology, UW-Madison",
   2021, 2022, "Member, Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
   2020, 2022, "Member, Trout Species Team, Wisconsin Department of Natural Resources",
