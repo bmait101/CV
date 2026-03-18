@@ -84,12 +84,12 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
   nrow()
 ```
 
-* **Research Interests**: Fish; fisheries ecology and conservation; freshwater ecosystem responses to climate change and land use change; aquatic habitat connectivity; stable isotope ecology; spatial statistics and data science. 
-* **My research integrates** field ecology, isotopic and spatial analyses, and predictive modeling to understand how freshwater fish populations and food webs respond to environmental change.
-* Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals (pages \pageref{papersstart}--\pageref{papersend}).
-* On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
-* I have authored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
-* I have contributed `r n_talks` papers and posters at AFS, SFS, ASLO, AGU, IAGLR, and regional chapter meetings (pages \pageref{presstart}--\pageref{presend}).
+-   **Research Interests**: Fish; fisheries ecology and conservation; freshwater ecosystem responses to climate change and land use change; aquatic habitat connectivity; stable isotope ecology; spatial statistics and data science.
+-   **My research integrates** field ecology, isotopic and spatial analyses, and predictive modeling to understand how freshwater fish populations and food webs respond to environmental change.
+-   Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals (pages \pageref{papersstart}--\pageref{papersend}).
+-   On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
+-   I have authored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
+-   I have contributed `r n_talks` papers and posters at AFS, SFS, ASLO, AGU, IAGLR, and regional chapter meetings (pages \pageref{presstart}--\pageref{presend}).
 
 \refstepcounter{bib}\label{papersstart}
 
@@ -140,7 +140,7 @@ bibliography_entries("bibs/preprints.bib")
 bibliography_entries("bibs/working.bib")
 ```
 
-\vspace*{0.2cm}
+\vspace\*{0.2cm}
 
 # Grants
 
@@ -153,7 +153,7 @@ sumgrants <- grants |>
   sum(na.rm = TRUE)
 ```
 
-**Since 2015, I have led, co-led, or partnered on $`r sprintf("%2.1f", sumgrants/1e6)` million in funded projects and contributed to multiple invited proposals exceeding $2 million in scope. Funded and pending grants \> $10,000 are given below:** \vspace*{0.25cm}
+**Since 2015, I have led, co-led, or partnered on \$`r sprintf("%2.1f", sumgrants/1e6)` million in funded projects and contributed to multiple invited proposals exceeding \$2 million in scope. Funded and pending grants \> \$10,000 are given below:** \vspace\*{0.25cm}
 
 ```{r grants-table, results='asis'}
 grants |>
@@ -181,9 +181,9 @@ grants |>
   )
 ```
 
-\vspace*{0.25cm}
+\vspace\*{0.25cm}
 
-**Invited full proposals that were withdrawn due to federal funding issues in the U.S.:** \vspace*{0.25cm}
+**Invited full proposals that were withdrawn due to federal funding issues in the U.S.:** \vspace\*{0.25cm}
 
 ```{r grantstable-with, results='asis'}
 grants |>
@@ -210,9 +210,9 @@ grants |>
   )
 ```
 
-\vspace*{0.25cm}
+\vspace\*{0.25cm}
 
-**Invited full proposals that were not awarded:** \vspace*{0.25cm}
+**Invited full proposals that were not awarded:** \vspace\*{0.25cm}
 
 ```{r grantstable-nope, results='asis'}
 grants |>
@@ -393,16 +393,15 @@ n_journals <- 18
 n_per_yr <- round(n_reviewed / (as.numeric(format(Sys.Date(), "%Y")) - 2016), 1)
 ```
 
-* Manuscript Review
-  * Since 2016, I have reviewed `r n_reviewed` manuscripts from `r n_journals` journals ($\sim$ `r n_per_yr` per year). 
-  * Journals include: Fisheries Research, Oecologia, Global Change Biology, Ecological Applications, Ecosphere, Freshwater Biology, Freshwater Science, Fisheries, North American Journal of Fisheries Management, Frontiers in Ecology and Evolution, Aquatic Invasions, Hydrobiologia, Journal of Ecology, Environmental Biology of Fishes, Restoration Ecology, PeerJ, River Research and Applications, Journal of Great Lakes Research Diversity and Distributions, Transportation Research: Part D.
-
-* External Grants
-  * Lake Champlain Fisheries Research Program.
-  * NSF, Division of Environmental Biology (DEB).
-
-* Internal Review
-  * I provide 5-10 internal reviews of manuscripts for USFS and USGS collleagues annually.
+-   Manuscript Review
+    -   Since 2016, I have reviewed `r n_reviewed` manuscripts from `r n_journals` journals ($\sim$ `r n_per_yr` per year).
+    -   Journals include:
+    -   Aquatic Invasions (2), Canadian Journal of Fisheries and Aquatic Sciences (2), Diversity and Distributions, Transportation Research: Part D (1), Ecological Applications (4), Ecosphere (5), Ecology (2) Environmental Biology of Fishes (2), Fisheries (4), Fisheries Research (2), Freshwater Biology (3), Freshwater Science (4), Frontiers in Ecology and Evolution (2), Global Change Biology (2), Hydrobiologia (8), Journal of Ecology (1), Journal of Great Lakes Research (2), North American Journal of Fisheries Management (5), Oecologia (1), PeerJ (1), River Research and Applications (1), Restoration Ecology (1).
+-   External Grants
+    -   Lake Champlain Fisheries Research Program.
+    -   NSF, Division of Environmental Biology (DEB).
+-   Internal Review
+    -   I provide 5-10 internal reviews of manuscripts for USFS and USGS colleagues annually.
 
 # University Involvement
 
@@ -487,14 +486,14 @@ postbacs <- tribble(
 
 ## Graduate Students
 
-``` {r postbac-tables, results='asis'}
+```{r postbac-tables, results='asis'}
 postbacs |> 
   baretable()
 ```
 
 ## Undergraduate Students
 
-``` {r undergrad-tables, results='asis'}
+```{r undergrad-tables, results='asis'}
 undergrads |> 
   baretable()
 ```
@@ -605,7 +604,6 @@ bibliography_entries("bibs/conf_presentations.bib") |>
 
 \refstepcounter{bib}\label{presend}
 
-
 <!-- # Technical skills and training -->
 
 <!-- ## Field -->
@@ -693,4 +691,3 @@ tribble(
   ) |> 
   baretable()
 ```
-
