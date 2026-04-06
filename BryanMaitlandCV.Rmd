@@ -388,14 +388,14 @@ tribble(
 ## Peer-Reviewing Activities
 
 ```{r reviews1}
-n_reviewed <- 55
+n_reviewed <- 58
 n_journals <- 18
 n_per_yr <- round(n_reviewed / (as.numeric(format(Sys.Date(), "%Y")) - 2016), 1)
 ```
 
 -   Manuscript Review
     -   Since 2016, I have reviewed `r n_reviewed` manuscripts from `r n_journals` journals ($\sim$ `r n_per_yr` per year).
-    -   Journals include: Aquatic Invasions (2), Canadian Journal of Fisheries and Aquatic Sciences (2), Diversity and Distributions, Transportation Research: Part D (1), Ecological Applications (4), Ecosphere (5), Ecology (2) Environmental Biology of Fishes (2), Fisheries (4), Fisheries Research (2), Freshwater Biology (3), Freshwater Science (4), Frontiers in Ecology and Evolution (2), Global Change Biology (2), Hydrobiologia (8), Journal of Ecology (1), Journal of Great Lakes Research (2), North American Journal of Fisheries Management (5), Oecologia (1), PeerJ (1), River Research and Applications (1), Restoration Ecology (1).
+    -   Journals include: *Aquatic Invasions* (2), *Canadian Journal of Fisheries and Aquatic Sciences* (2), *Diversity and Distributions*, *Transportation Research: Part D* (1), *Ecological Applications* (4), *Ecosphere* (5), *Ecology* (3), *Environmental Biology of Fishes* (2), *Fisheries* (5), *Fisheries Research* (2), *Freshwater Biology* (3), *Freshwater Science* (4), *Frontiers in Ecology and Evolution* (2), *Global Change Biology* (2), *Hydrobiologia* (8), *Journal of Ecology* (1), *Journal of Great Lakes Research* (2), *North American Journal of Fisheries Management* (5), *Oecologia* (1), *PeerJ* (1), *River Research and Applications* (1), *Restoration Ecology* (2).
 -   External Grants
     -   Lake Champlain Fisheries Research Program.
     -   NSF, Division of Environmental Biology (DEB).
@@ -466,8 +466,9 @@ undergrads <- tribble(
 
 postbacs <- tribble(
   ~ Start, ~ End, ~ Name, ~ Institution,
-  2025, NA, "Quinn Smith", "University of Wiscosnin-Madison",
   2025, NA, "Garrison Ferone", "University of Idaho",
+  # 2025, NA, "Will Mader", "University of Tennessee, Chattanooga",  # move to grad committee
+  2025, NA, "Quinn Smith", "University of Wiscosnin-Madison",
   2023, 2025, "Dylan Keisser", "University of Tennessee, Chattanooga",
   ) |>
   mutate(
