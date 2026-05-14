@@ -113,7 +113,7 @@ bibliography_entries("bibs/pkgs.bib")
 
 \refstepcounter{bib}\label{packageend}
 
-# Technical reports
+# Technical Reports
 
 ```{r techreports}
 bibliography_entries("bibs/tech_reports.bib") |> 
@@ -127,7 +127,7 @@ bibliography_entries("bibs/theses.bib") |>
   arrange(issued, desc(author$family))
 ```
 
-# Pre-Prints and In-Review
+# Manuscripts Under Consideration
 
 ```{r preprints}
 bibliography_entries("bibs/preprints.bib") 
