@@ -1,0 +1,4 @@
+project:
+  title: "Bryan M. Maitland CV"
+  render:
+    - "*.qmd"

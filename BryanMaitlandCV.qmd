@@ -1,6 +1,5 @@
 ---
 name: Bryan M. Maitland
-position: ""
 address: "Rocky Mountain Research Station,\\tabularnewline USDA Forest Service, Boise, ID, USA"
 email: "bmaitland101@gmail.com"
 orcid: 0000-0002-4491-5064
@@ -9,9 +8,9 @@ github: bmait101
 # researchgate: bryan-maitland
 date: "`r format(Sys.time(), '%B %Y')`"
 csl: "csl/apa_cv.csl"
-output: 
-  vitae::hyndman:
-    pandoc_args: ["--lua-filter=lua/names.lua"]
+format: cv-pdf
+filters:
+  - lua/names.lua
 header-includes:
   \definecolor{headcolor}{HTML}{005838}
 ---
@@ -20,8 +19,8 @@ header-includes:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = FALSE, 
-  warning = FALSE, 
+  echo = FALSE,
+  warning = FALSE,
   message = FALSE
   )
 
@@ -29,9 +28,18 @@ library(vitae)
 library(dplyr)
 library(RefManageR)
 source(here::here("R/pretty.R"))
-source(here::here("R/rpackages.R"))
-source(here::here("R/gcite.R"))
-# source(here::here("R/add_bib_section.R"))
+source(here::here("R/bib_section.R"))
+
+# Remove any temporary bib file from a previous render, then recreate it
+# empty so the cv-pdf template's unconditional \addbibresource{temp.bib}
+# doesn't fail to find the file (we don't populate it ourselves - that's
+# only used by the add_bib_section() workflow, which this CV doesn't use).
+if (fs::file_exists(here::here("temp.bib"))) {
+  fs::file_delete(here::here("temp.bib"))
+}
+fs::file_create(here::here("temp.bib"))
+
+targets::tar_load(c(bmm_cite, bmm_cite_papers, bmm_pkgs))
 ```
 
 # Employment
@@ -64,23 +72,23 @@ tribble(
 ```{r degrees, results='asis'}
 tribble(
   ~ Year, ~ Degree, ~ Feild, ~ Institution,
-  2020, "Ph.D.", "Ecology", "University of Wyoming",  
-  2015, "M.Sc.", "Conservation Biology (Fisheries)", "University of Alberta", 
+  2020, "Ph.D.", "Ecology", "University of Wyoming",
+  2015, "M.Sc.", "Conservation Biology (Fisheries)", "University of Alberta",
   2011, "B.S.", "Conservation Biology \\textit{cum laude}", "SUNY: College of Environmental Science and Forestry",
-  ) |> 
+  ) |>
   baretable()
 ```
 
 # Research Summary
 
 ```{r article-counts}
-n_pubs <- RefManageR::ReadBib("bibs/journal_articles.bib", check = FALSE) |> 
-  as_tibble() |> 
-  filter(bibtype == "Article") |> 
+n_pubs <- RefManageR::ReadBib("bibs/journal_articles.bib", check = FALSE) |>
+  as_tibble() |>
+  filter(bibtype == "Article") |>
   nrow()
 
-n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |> 
-  as_tibble() |> 
+n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
+  as_tibble() |>
   nrow()
 ```
 
@@ -96,9 +104,13 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
 
 \* indicates shared first authorship. \underline{Underlined names} indicate undergraduate research mentees.
 
-```{r articles}
-bibliography_entries("bibs/journal_articles.bib") |> 
-  arrange(issued, desc(author$family))
+```{r articles, results='asis'}
+article_cites <- RefManageR::ReadBib("bibs/journal_articles.bib", check = FALSE) |>
+  get_citation_counts(bmm_cite_papers)
+
+bibliography_entries("bibs/journal_articles.bib") |>
+  arrange(issued, desc(author$family)) |>
+  render_bib_section("bibs/journal_articles.bib", cites = article_cites)
 ```
 
 \refstepcounter{bib}\label{papersend}
@@ -107,36 +119,41 @@ bibliography_entries("bibs/journal_articles.bib") |>
 
 \refstepcounter{bib}\label{packagestart}
 
-```{r software}
-bibliography_entries("bibs/pkgs.bib")
+```{r software, results='asis'}
+bibliography_entries("bibs/pkgs.bib") |>
+  render_bib_section("bibs/pkgs.bib")
 ```
 
 \refstepcounter{bib}\label{packageend}
 
 # Technical Reports
 
-```{r techreports}
-bibliography_entries("bibs/tech_reports.bib") |> 
-  arrange(issued, desc(author$family))
+```{r techreports, results='asis'}
+bibliography_entries("bibs/tech_reports.bib") |>
+  arrange(issued, desc(author$family)) |>
+  render_bib_section("bibs/tech_reports.bib")
 ```
 
 # Theses
 
-```{r theses}
-bibliography_entries("bibs/theses.bib") |> 
-  arrange(issued, desc(author$family))
+```{r theses, results='asis'}
+bibliography_entries("bibs/theses.bib") |>
+  arrange(issued, desc(author$family)) |>
+  render_bib_section("bibs/theses.bib")
 ```
 
 # Manuscripts Under Consideration
 
-```{r preprints}
-bibliography_entries("bibs/preprints.bib") 
+```{r preprints, results='asis'}
+bibliography_entries("bibs/preprints.bib") |>
+  render_bib_section("bibs/preprints.bib")
 ```
 
 # Unpublished Working Papers
 
-```{r unpublished}
-bibliography_entries("bibs/working.bib")
+```{r unpublished, results='asis'}
+bibliography_entries("bibs/working.bib") |>
+  render_bib_section("bibs/working.bib")
 ```
 
 \vspace*{0.2cm}
@@ -146,9 +163,9 @@ bibliography_entries("bibs/working.bib")
 ```{r grants}
 grants <- readr::read_csv("grant_income.csv")
 
-sumgrants <- grants |> 
-  filter(Status %in% c("Complete", "In progress")) |> 
-  pull(Amount) |> 
+sumgrants <- grants |>
+  filter(Status %in% c("Complete", "In progress")) |>
+  pull(Amount) |>
   sum(na.rm = TRUE)
 ```
 
@@ -156,7 +173,7 @@ sumgrants <- grants |>
 
 ```{r grants-table, results='asis'}
 grants |>
-  filter(Status %in% c("Complete", "In progress", "Pending")) |> 
+  filter(Status %in% c("Complete", "In progress", "Pending")) |>
   filter(Amount >= 10000) |>
   mutate(
     Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
@@ -169,9 +186,9 @@ grants |>
     Amount = dollars(Amount)
   ) |>
   arrange(desc(Time), desc(Amount)) |>
-  select(Time, Entry, Amount) %>%  
+  select(Time, Entry, Amount) %>%
   baretable(
-    align = "llp{13.3cm}r",  
+    align = "llp{13.3cm}r",
     size = "\\fontsize{10}{12}",
     add.to.row = list(
       pos = as.list(seq(NROW(.))),
@@ -186,7 +203,7 @@ grants |>
 
 ```{r grantstable-with, results='asis'}
 grants |>
-  filter(Status %in% c("Invited, withdrawn")) |> 
+  filter(Status %in% c("Invited, withdrawn")) |>
   mutate(
     Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
     Entry = paste(
@@ -198,7 +215,7 @@ grants |>
     Amount = dollars(Amount)
   ) |>
   arrange(desc(Time), desc(Amount)) |>
-  select(Time, Entry, Amount) %>%  
+  select(Time, Entry, Amount) %>%
   baretable(
     align = "lp{1.6cm}p{13.3cm}r",
     size = "\\fontsize{10}{12}",
@@ -215,7 +232,7 @@ grants |>
 
 ```{r grantstable-nope, results='asis'}
 grants |>
-  filter(Status %in% c("Invited, not awarded")) |> 
+  filter(Status %in% c("Invited, not awarded")) |>
   mutate(
     Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
     Entry = paste(
@@ -227,7 +244,7 @@ grants |>
     Amount = dollars(Amount)
   ) |>
   arrange(desc(Time), desc(Amount)) |>
-  select(Time, Entry, Amount) %>%  
+  select(Time, Entry, Amount) %>%
   baretable(
     align = "lp{1.6cm}p{13.3cm}r",
     size = "\\fontsize{10}{12}",
@@ -369,7 +386,7 @@ shops |>
       sep = ""
       )
     ) |>
-  select(Time, Entry) %>%  
+  select(Time, Entry) %>%
   baretable()
 ```
 
@@ -380,7 +397,7 @@ tribble(
   ~Year, ~Program, ~Institution,
   2021, "Equity and Inclusion Workshop", "EQT By Design via WI Sea Grant",
   2008, "Leave No Trace Master Educator", "Center for Outdoor Ethics, NOLS",
-  ) |> 
+  ) |>
   baretable()
 ```
 
@@ -405,7 +422,7 @@ n_per_yr <- round(n_reviewed / (as.numeric(format(Sys.Date(), "%Y")) - 2016), 1)
 
 ### Adjunct and affiliate appointments
 
-- 2026-present: Graduate Faculty, Department of Biology, Geology, and Environmental Science, University of Tennessee at Chattanooga, Chattanooga, TN. 
+- 2026-present: Graduate Faculty, Department of Biology, Geology, and Environmental Science, University of Tennessee at Chattanooga, Chattanooga, TN.
 
 ### Doctoral and master student committees
 
@@ -427,7 +444,7 @@ talks |>
       sep = ""
       )
     ) |>
-  select(Time, Entry) %>%  
+  select(Time, Entry) %>%
   baretable(
     align = "llp{14cm}",
     size = "\\fontsize{10}{12}",
@@ -490,14 +507,14 @@ postbacs <- tribble(
 ## Graduate Students
 
 ```{r postbac-tables, results='asis'}
-postbacs |> 
+postbacs |>
   baretable()
 ```
 
 ## Undergraduate Students
 
 ```{r undergrad-tables, results='asis'}
-undergrads |> 
+undergrads |>
   baretable()
 ```
 
@@ -518,7 +535,7 @@ tribble(
 ```{r TA, results='asis'}
 tribble(
   ~Course, ~Name, ~Place, ~Term, ~Credits, ~Students,
-  "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2020", "3 credits", "22 students", 
+  "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2020", "3 credits", "22 students",
   "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2019", "3 credits", "20 students",
   "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2018", "3 credits", "25 students",
   "ZOO 4330", "Ichthyology", "University of Wyoming", "Spring 2017", "3 credits", "19 students",
@@ -548,7 +565,7 @@ lecs |>
       sep = ""
       )
     ) |>
-  select(Time, Entry) %>%  
+  select(Time, Entry) %>%
   baretable()
 ```
 
@@ -563,7 +580,7 @@ media |>
   mutate(
     Time = paste0(Year, "--", Month),
     ) |>
-  select(Time, Outlet, Topic) %>%  
+  select(Time, Outlet, Topic) %>%
   baretable()
 ```
 
@@ -600,9 +617,10 @@ Underlined names indicate undergraduate research mentees.
 
 \refstepcounter{bib}\label{presstart}
 
-```{r pres-offered}
-bibliography_entries("bibs/conf_presentations.bib") |> 
-  arrange(issued, desc(author$family))
+```{r pres-offered, results='asis'}
+bibliography_entries("bibs/conf_presentations.bib") |>
+  arrange(issued, desc(author$family)) |>
+  render_bib_section("bibs/conf_presentations.bib")
 ```
 
 \refstepcounter{bib}\label{presend}
@@ -619,7 +637,7 @@ tribble(
   "Identification", "Fish (freshwater and marine), amphibians, reptiles, aquatic invertebrates, aquatic plants",
   "Operations", "Piloting and trailering small vessels, rafting, helicopters experience, orienteering",
   "Other", "Light machinery operation, small power equipment repair, minor electrical repair, handiwork",
-  ) |> 
+  ) |>
   baretable()
 ```
 
@@ -632,7 +650,7 @@ tribble(
   "Aquatic Ecology", "Water quality analysis (nutrients, chlorophyll a, turbidity), invertebrate processing, aquatic vegetation",
   "Stable Isotopes", "Sample preparation, light (C, N, O, S) and heavy (Sr) stable isotope analysis",
   "Molecular", "DNA extraction, PCR, qPCR",
-  ) |> 
+  ) |>
   baretable()
 ```
 
@@ -649,7 +667,7 @@ tribble(
   "Version Control", "Git",
   "Text Editors", "RStudio, SQL Server Management Studio, Visual Studio, Visual Studio Code",
   "Microsoft Office", "Excel, Outlook, OneNote, PowerPoint, Word"
-  ) |> 
+  ) |>
   baretable()
 ```
 
@@ -663,7 +681,7 @@ tribble(
   "Data Management", "Data wrangling and cleaning, data management with SQL",
   "Spatial Analysis", "R, QGIS, ArcGIS, Google Earth Engine",
   "Package Development", "R package development, documentation, testing, and maintenance",
-  ) |> 
+  ) |>
   baretable()
 ```
 
@@ -678,7 +696,7 @@ tribble(
   2018, "Avalanche Safety Level 1", "National Ski Patrol",
   2013, "Electrofishing Safety", "University of Alberta",
   2013, "MOCC Federal Motor Boat Operator", "US Department of the Interior",
-  ) |> 
+  ) |>
   baretable()
 ```
 
@@ -691,6 +709,6 @@ tribble(
   2008, "Group Leadership Techniques", "2 credits", "University of Utah",
   2008, "Wilderness Skills Practicum, Backpacking", "2 credits", "University of Utah",
   2007, "Wilderness Skills Practicum, River Travel", "2 credits", "University of Utah",
-  ) |> 
+  ) |>
   baretable()
 ```

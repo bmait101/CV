@@ -53,3 +53,17 @@ rsconnect/
 *.aux
 *.out
 .positai
+
+# Generated/temporary bib files created during render
+temp.bib
+selected_pubs.bib
+articles_annotated.bib
+
+# Quarto
+/.quarto/
+*_files/
+
+# targets pipeline cache
+/_targets/
+
+**/*.quarto_ipynb

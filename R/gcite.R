@@ -26,11 +26,3 @@ get_scholar_cites <- function(date) {
   dplyr::bind_rows(gspapers) |>
     tibble::as_tibble()
 }
-
-
-# Current date
-date <- Sys.Date()
-
-# Update Google scolar citation
-bmm_cite <- get_gcites(date)
-bmm_cite_papers <- get_scholar_cites(date)

@@ -7,19 +7,20 @@ orcid: 0000-0002-4491-5064
 linkedin: bryanmaitland
 github: bmait101
 date: "`r format(Sys.time(), '%B %Y')`"
-output: 
-  vitae::hyndman:
-    pandoc_args: ["--lua-filter=bold-surname.lua"]
+csl: "csl/apa_cv.csl"
+format: cv-pdf
+filters:
+  - lua/names.lua
 header-includes:
-  \definecolor{headcolor}{HTML}{000088}
+  \definecolor{headcolor}{HTML}{005838}
 ---
 
 \newcounter{bib}
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = FALSE, 
-  warning = FALSE, 
+  echo = FALSE,
+  warning = FALSE,
   message = FALSE
   )
 
@@ -27,14 +28,20 @@ library(vitae)
 library(dplyr)
 library(RefManageR)
 source(here::here("R/pretty.R"))
-source(here::here("R/rpackages.R"))
-source(here::here("R/gcite.R"))
-source(here::here("R/add_bib_section.R"))
+source(here::here("R/bib_section.R"))
 
-# Remove any temporary bib file
-if (fs::file_exists("temp.bib")) {
-  fs::file_delete("temp.bib")
+# Remove any temporary bib files from a previous render, then recreate
+# temp.bib empty so the cv-pdf template's unconditional
+# \addbibresource{temp.bib} doesn't fail to find the file.
+if (fs::file_exists(here::here("temp.bib"))) {
+  fs::file_delete(here::here("temp.bib"))
 }
+fs::file_create(here::here("temp.bib"))
+if (fs::file_exists(here::here("selected_pubs.bib"))) {
+  fs::file_delete(here::here("selected_pubs.bib"))
+}
+
+targets::tar_load(c(bmm_cite, bmm_cite_papers))
 ```
 
 # Current position
@@ -52,10 +59,10 @@ tribble(
 ```{r degrees, results='asis'}
 tribble(
   ~ Degree, ~ Year, ~ Feild, ~ Institution,
-  "Ph.D.", 2020, "Ecology", "University of Wyoming",  
-  "M.Sc." ,2015, "Conservation Biology", "University of Alberta", 
-  "B.S.", 2011, "Conservation Biology \\textit{cum luade}", "SUNY: College of Environmental Science and Forestry",
-  ) |> 
+  "Ph.D.", 2020, "Ecology", "University of Wyoming",
+  "M.Sc." ,2015, "Conservation Biology", "University of Alberta",
+  "B.S.", 2011, "Conservation Biology \\textit{cum laude}", "SUNY: College of Environmental Science and Forestry",
+  ) |>
   baretable()
 ```
 
@@ -74,31 +81,34 @@ tribble(
 # Selected papers
 
 ```{r}
-pubs <- RefManageR::ReadBib("refs_articles.bib", check = FALSE)
+pubs <- RefManageR::ReadBib("bibs/journal_articles.bib", check = FALSE)
 
-n_pubs <- pubs |> 
-  as_tibble() |> 
-  filter(bibtype == "Article") |> 
+n_pubs <- pubs |>
+  as_tibble() |>
+  filter(bibtype == "Article") |>
   nrow()
 ```
 
 Since 2015 I have authored `r n_pubs` research papers on fish and conservation topics. Some highlights are listed below, with citations taken from Google Scholar on `r format(Sys.time(), "%e %B %Y")`.  My h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")`.
 
 ```{r}
+#| results: asis
 targs <- c(
-  "Sparks2025-1",
+  "Sparks2026",
   "Maitland2024",
-  "Barrus2024", 
+  "Barrus2024",
   "Maitland2023",
   "Maitland2022",
   "Craig2017"
   )
-pubs[targs] |>
-  bibliography_entries()
 
-# pubs[targs] |>
-#   add_bib_section(show_cites = TRUE, bmmcites = bmm_cite_papers)
+selected <- pubs[targs]
+selected_cites <- get_citation_counts(selected, bmm_cite_papers)
+
+# bibliography_entries() only accepts a bib *file path*, not a BibEntry
+# object, so write the selected subset out to its own small bib file first.
+RefManageR::WriteBib(selected, file = here::here("selected_pubs.bib"))
+
+bibliography_entries("selected_pubs.bib") |>
+  render_bib_section("selected_pubs.bib", cites = selected_cites)
 ```
-
-
-

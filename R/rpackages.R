@@ -141,9 +141,11 @@
 #   include_downloads = TRUE, start = "2025-01-01"
 # )
 
-bmm_pkgs <- cranlogs::cran_downloads(
-  packages = c("hatchR"),
-  from = "2025-01-01",
-  to = Sys.Date()
-  ) |>
-  dplyr::summarise(downloads = sum(count))
+get_bmm_pkgs <- function(date) {
+  cranlogs::cran_downloads(
+    packages = c("hatchR"),
+    from = "2025-01-01",
+    to = date
+    ) |>
+    dplyr::summarise(downloads = sum(count))
+}
