@@ -52,3 +52,4 @@ rsconnect/
 *.log
 *.aux
 *.out
+.positai
