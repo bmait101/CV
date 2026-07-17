@@ -1,3 +1,50 @@
+# Locate pandoc. This project has no separate system-wide pandoc install -
+# the only pandoc available is the one bundled with Quarto - and RSTUDIO_PANDOC
+# (which rmarkdown/vitae's citation helpers, and the pandoc call below, look
+# for) is only set for us automatically when rendering from inside RStudio.
+# We can't rely on setting it once in .Rprofile either: Quarto's R
+# subprocess for knitr execution doesn't reliably source the project's
+# .Rprofile on every platform (confirmed missing on Windows in practice), so
+# this re-derives it on demand instead of trusting ambient state.
+find_pandoc <- function() {
+  pandoc_name <- if (.Platform$OS.type == "windows") "pandoc.exe" else "pandoc"
+
+  env_dir <- Sys.getenv("RSTUDIO_PANDOC")
+  if (nzchar(env_dir) && file.exists(file.path(env_dir, pandoc_name))) {
+    return(file.path(env_dir, pandoc_name))
+  }
+
+  quarto_bin <- Sys.which("quarto")
+  if (nzchar(quarto_bin)) {
+    quarto_root <- dirname(dirname(normalizePath(quarto_bin)))
+    hits <- list.files(
+      file.path(quarto_root, "bin"),
+      pattern = paste0("^", pandoc_name, "$"),
+      recursive = TRUE,
+      full.names = TRUE
+    )
+    if (length(hits) > 1) {
+      # macOS ships a universal bundle with both x86_64 and aarch64 copies -
+      # narrow to the one matching this machine.
+      machine <- Sys.info()[["machine"]]
+      arch_token <- if (machine %in% c("arm64", "aarch64")) "aarch64" else machine
+      arch_hits <- hits[grepl(arch_token, hits, fixed = TRUE)]
+      if (length(arch_hits) > 0) {
+        hits <- arch_hits
+      }
+    }
+    if (length(hits) > 0) {
+      Sys.setenv(RSTUDIO_PANDOC = dirname(hits[1]))
+      return(hits[1])
+    }
+  }
+
+  stop(
+    "Could not find pandoc. Checked RSTUDIO_PANDOC and Quarto's bundled ",
+    "pandoc (via `quarto` on PATH). Is Quarto installed and on PATH?"
+  )
+}
+
 # Render a bibliography section (a subset of entries from a .bib file) as
 # LaTeX, using our CSL style and the names.lua bold/underline filter.
 #
@@ -36,10 +83,7 @@ render_bib_section <- function(
     return(invisible(NULL))
   }
 
-  pandoc_bin <- file.path(Sys.getenv("RSTUDIO_PANDOC"), "pandoc")
-  if (!file.exists(pandoc_bin)) {
-    stop("Could not find pandoc (checked RSTUDIO_PANDOC env var).")
-  }
+  pandoc_bin <- find_pandoc()
 
   tmp_md <- tempfile(fileext = ".md")
   tmp_tex <- tempfile(fileext = ".tex")

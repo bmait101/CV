@@ -30,6 +30,10 @@ library(RefManageR)
 source(here::here("R/pretty.R"))
 source(here::here("R/bib_section.R"))
 
+# Make sure RSTUDIO_PANDOC is set before anything below (bibliography_entries()
+# included) needs pandoc - see find_pandoc()'s comment in R/bib_section.R.
+find_pandoc()
+
 # Remove any temporary bib files from a previous render, then recreate
 # temp.bib empty so the cv-pdf template's unconditional
 # \addbibresource{temp.bib} doesn't fail to find the file.
