@@ -22,10 +22,29 @@ if (Sys.getenv("RSTUDIO_PANDOC") == "") {
   quarto_bin <- Sys.which("quarto")
   if (nzchar(quarto_bin)) {
     quarto_root <- dirname(dirname(normalizePath(quarto_bin)))
-    arch <- if (grepl("arm64|aarch64", Sys.info()[["machine"]])) "aarch64" else "x86_64"
-    pandoc_dir <- file.path(quarto_root, "bin", "tools", arch)
-    if (file.exists(file.path(pandoc_dir, "pandoc"))) {
-      Sys.setenv(RSTUDIO_PANDOC = pandoc_dir)
+    # Search rather than guess the exact subfolder: Quarto's internal layout
+    # differs by OS/arch (e.g. macOS nests it under bin/tools/<arch>/pandoc,
+    # Windows under bin/tools/pandoc.exe), and has changed across versions.
+    pandoc_name <- if (.Platform$OS.type == "windows") "pandoc.exe" else "pandoc"
+    hits <- list.files(
+      file.path(quarto_root, "bin"),
+      pattern = paste0("^", pandoc_name, "$"),
+      recursive = TRUE,
+      full.names = TRUE
+    )
+    if (length(hits) > 1) {
+      # macOS ships a universal bundle with both x86_64 and aarch64 copies -
+      # narrow to the one matching this machine so we don't grab a binary
+      # that can't actually run here.
+      machine <- Sys.info()[["machine"]]
+      arch_token <- if (machine %in% c("arm64", "aarch64")) "aarch64" else machine
+      arch_hits <- hits[grepl(arch_token, hits, fixed = TRUE)]
+      if (length(arch_hits) > 0) {
+        hits <- arch_hits
+      }
+    }
+    if (length(hits) > 0) {
+      Sys.setenv(RSTUDIO_PANDOC = dirname(hits[1]))
     }
   }
 }
