@@ -171,7 +171,7 @@ ecology, otolith and tissue chemistry, long-term agency biomonitoring records,
 remote sensing, and spatial and Bayesian modeling; much of my published work
 integrates multi-decade state and federal monitoring datasets with spatially
 explicit habitat and climate data to separate direct from indirect drivers of
-community change. I am Co-PI on the JFSP-funded project *From flames to fish:
+community change. I am a partner on the JFSP-funded project *From flames to fish:
 co-management for wildfire and aquatic species in Idaho* (2026--2028), I co-chaired
 the AGU session *Science to Restore and Manage Wildland Aquatic Habitats and
 Watersheds* (2024), and I co-chair the *Fish and Fire* symposium at the 2026 AFS
@@ -241,32 +241,38 @@ grants |>
   )
 ```
 
-```{r grants-invited, results='asis', eval=show_invited_proposals}
-cat("\n\\vspace*{0.15cm}\n\n**Invited full proposals (withdrawn due to U.S. federal funding disruptions, or not awarded):**\n\n\\vspace*{0.15cm}\n\n")
+```{r grants-invited, results='asis'}
+# The toggle is applied inside the chunk rather than as `eval=` in the chunk
+# header. knitr evaluates chunk options in an empty environment when purling,
+# and tarchetypes::tar_quarto() purls the .qmd to find tar_load() calls, so a
+# variable in a chunk option raises "object not found" on every tar_make().
+if (show_invited_proposals) {
+  cat("\n\\vspace*{0.15cm}\n\n**Invited full proposals (withdrawn due to U.S. federal funding disruptions, or not awarded):**\n\n\\vspace*{0.15cm}\n\n")
 
-grants |>
-  filter(Status %in% c("Invited, withdrawn", "Invited, not awarded")) |>
-  mutate(
-    Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
-    Entry = paste(
-      Role, ". ``", Title, "''. ",
-      "\\emph{", Source, "}.",
-      sep = ""
-    ),
-    sort_year = suppressWarnings(as.numeric(Start)),
-    sort_year = tidyr::replace_na(sort_year, Inf)
-  ) |>
-  arrange(desc(sort_year), desc(Amount)) |>
-  mutate(Amount = dollars(Amount)) |>
-  select(Time, Entry, Amount) %>%
-  baretable(
-    align = "llp{12.8cm}r",
-    size = "\\fontsize{9}{11}",
-    add.to.row = list(
-      pos = as.list(seq(NROW(.))),
-      command = rep("\\\\[-0.30cm]", NROW(.))
+  grants |>
+    filter(Status %in% c("Invited, withdrawn", "Invited, not awarded")) |>
+    mutate(
+      Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
+      Entry = paste(
+        Role, ". ``", Title, "''. ",
+        "\\emph{", Source, "}.",
+        sep = ""
+      ),
+      sort_year = suppressWarnings(as.numeric(Start)),
+      sort_year = tidyr::replace_na(sort_year, Inf)
+    ) |>
+    arrange(desc(sort_year), desc(Amount)) |>
+    mutate(Amount = dollars(Amount)) |>
+    select(Time, Entry, Amount) %>%
+    baretable(
+      align = "llp{12.8cm}r",
+      size = "\\fontsize{9}{11}",
+      add.to.row = list(
+        pos = as.list(seq(NROW(.))),
+        command = rep("\\\\[-0.30cm]", NROW(.))
+      )
     )
-  )
+}
 ```
 
 # Selected awards and honors
