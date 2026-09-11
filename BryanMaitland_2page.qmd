@@ -3,7 +3,7 @@ name: Bryan M. Maitland, Ph.D.
 position: "Research Fish Biologist"
 docname: "Curriculum Vitae"
 address: "Rocky Mountain Research Station,\\tabularnewline USDA Forest Service, Boise, ID, USA"
-email: "bmaitland101@gmail.com"
+email: "bryan.maitland@usda.gov"
 orcid: 0000-0002-4491-5064
 linkedin: bryanmaitland
 github: bmait101
@@ -139,12 +139,12 @@ tribble(
   baretable()
 ```
 
-# Affiliate Appointments
+# Academic Affiliations
 
-```{r employment, results='asis'}
+```{r unis, results='asis'}
 tribble(
   ~Start, ~End, ~Position,
-  2026, NA, "\\textbf{Affiliate Graduate Faculty}, Dept. of Biology, University of Tennessee at Chattanooga",
+  2026, NA, "\\textbf{Affiliate Faculty}, Dept. of Biology, University of Tennessee at Chattanooga",
   ) |>
   arrange(-Start) |>
   mutate(
@@ -180,22 +180,7 @@ tribble(
      macroinvertebrates in Idaho streams. The generic version of this paragraph
      is in git history at commit 01b17ff. -->
 
-I am a conservation ecologist at the Rocky Mountain Research Station studying how
-disturbance---wildfire, climate change, and altered flow regimes---propagates
-through stream ecosystems and the food webs they support. I combine stable isotope
-ecology, otolith and tissue chemistry, long-term agency biomonitoring records,
-remote sensing, and spatial and Bayesian modeling; much of my published work
-integrates multi-decade state and federal monitoring datasets with spatially
-explicit habitat and climate data to separate direct from indirect drivers of
-community change. I am a partner on the JFSP-funded project *From flames to fish:
-co-management for wildfire and aquatic species in Idaho* (2026--2028), I co-chaired
-the AGU session *Science to Restore and Manage Wildland Aquatic Habitats and
-Watersheds* (2024), and I co-chair the *Fish and Fire* symposium at the 2026 AFS
-Annual Meeting. A through-line in my work is building open, reusable tools and
-datasets---R packages, databases, and reproducible workflows---and teaching R
-workshops so that the methods transfer to the practitioners who must act on the
-results. I mentor graduate and undergraduate researchers, including Garrison
-Ferone at the University of Idaho.
+I am a conservation ecologist studying how disturbance---wildfire, climate change, and altered flow regimes---propagates through stream ecosystems and the food webs they support. I combine stable isotope ecology, otolith and tissue chemistry, long-term agency biomonitoring records, remote sensing, and spatial and Bayesian modeling; much of my published work integrates multi-decade state and federal monitoring datasets with spatially explicit habitat and climate data to separate direct from indirect drivers of community change. I am a partner on the JFSP-funded project *From flames to fish: co-management for wildfire and aquatic species in Idaho* (2026--2028), I co-chaired the AGU session *Science to Restore and Manage Wildland Aquatic Habitats and Watersheds* (2024), and the *Fish and Fire* symposium at the 2026 AFS Annual Meeting. A through-line in my work is building open, reusable tools and datasets---R packages, databases, and reproducible workflows. I also mentor graduate and undergraduate researchers, including Garrison Ferone at the University of Idaho.
 
 <!-- END TUNE PER PROPOSAL -->
 
@@ -206,7 +191,7 @@ Ferone at the University of Idaho.
 
 # Selected publications
 
-\textbf{Bold} indicates my name; \underline{underlined names} indicate undergraduate research mentees. Citation counts are from Google Scholar on `r format(Sys.time(), "%e %B %Y")`. A full list of `r n_pubs` articles is available in my complete CV.
+\underline{Underlined names} indicate undergraduate research mentees. Citation counts from Google Scholar (`r format(Sys.time(), "%e %B %Y")`). 
 
 ```{r selected-pubs, results='asis'}
 # The CSL sorts the bibliography by citation-number descending, i.e. entries
@@ -323,8 +308,8 @@ tribble(
 ```{r service, results='asis'}
 tribble(
   ~Years, ~Detail,
-  "2025--2029", "Mentor of Practice, NSF IRES: Climate Change Resilience in an Aquatic Bright Spot (Jensen, PI, UW-Madison)",
-  "2026", "Program co-chair, \\emph{Fish and Fire} symposium, American Fisheries Society Annual Meeting",
+  "2025--2029", "Mentor of Practice, NSF IRES: Climate Change Resilience in Aquatic Bright Spots",
+  "2026", "Program co-chair, \\emph{Fish and Fire} symposium, AFS Annual Meeting",
   "2024", "Program co-chair, \\emph{Science to Restore and Manage Wildland Aquatic Habitats and Watersheds}, AGU Fall Meeting",
   "2020--2022", "Member, Trout Species Team, Wisconsin Dept. of Natural Resources; Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
   "2015--present", "Member, Freshwater Working Group, Society for Conservation Biology; AFS, SCB, ESA, SFS",
