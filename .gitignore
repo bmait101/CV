@@ -57,6 +57,7 @@ rsconnect/
 # Generated/temporary bib files created during render
 temp.bib
 selected_pubs.bib
+selected_pubs_2page.bib
 articles_annotated.bib
 
 # Quarto

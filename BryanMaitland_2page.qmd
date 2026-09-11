@@ -1,0 +1,309 @@
+---
+name: Bryan M. Maitland, Ph.D.
+position: "Research Fish Biologist"
+docname: "Curriculum Vitae"
+address: "Rocky Mountain Research Station,\\tabularnewline USDA Forest Service, Boise, ID, USA"
+email: "bmaitland101@gmail.com"
+orcid: 0000-0002-4491-5064
+linkedin: bryanmaitland
+github: bmait101
+date: "`r format(Sys.time(), '%B %Y')`"
+date-format: "MMMM YYYY"
+csl: "csl/apa_cv.csl"
+format: cv-pdf
+filters:
+  - lua/names.lua
+header-includes:
+  \definecolor{headcolor}{HTML}{005838}
+---
+
+\newcounter{bib}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+  )
+
+library(vitae)
+library(dplyr)
+library(RefManageR)
+source(here::here("R/pretty.R"))
+source(here::here("R/bib_section.R"))
+
+# Make sure RSTUDIO_PANDOC is set before anything below (bibliography_entries()
+# included) needs pandoc - see find_pandoc()'s comment in R/bib_section.R.
+find_pandoc()
+
+# Remove any temporary bib files from a previous render, then recreate
+# temp.bib empty so the cv-pdf template's unconditional
+# \addbibresource{temp.bib} doesn't fail to find the file. The selected-pubs
+# file is per-document (see selected_bib below) so that this and the 1-pager
+# never clobber each other's subset.
+if (fs::file_exists(here::here("temp.bib"))) {
+  fs::file_delete(here::here("temp.bib"))
+}
+fs::file_create(here::here("temp.bib"))
+
+selected_bib <- "selected_pubs_2page.bib"
+if (fs::file_exists(here::here(selected_bib))) {
+  fs::file_delete(here::here(selected_bib))
+}
+
+targets::tar_load(c(bmm_cite, bmm_cite_papers, bmm_pkgs))
+```
+
+```{r tuning, include=FALSE}
+# ---------------------------------------------------------------------------
+# TUNE PER PROPOSAL ---------------------------------------------------------
+#
+# Everything a given grant proposal is likely to need changed lives either
+# here or in the "Research summary" prose immediately below. The rest of the
+# document builds itself from the same bibs/ and *.csv sources as the full CV,
+# so it stays in sync automatically.
+#
+# 1. Which papers to feature. Keys are from bibs/journal_articles.bib; they
+#    print top-to-bottom in the order listed here, so lead with the ones most
+#    relevant to the call. At 8 papers and 7 grants the document ends about a
+#    quarter of the way down page 2, which is deliberate slack: it absorbs a
+#    longer research summary, or two or three more papers, without spilling
+#    onto a third page.
+selected_pub_keys <- c(
+  "Sparks2026a",   # hatchR: developmental phenology toolset
+  "Keppeler2026",  # global analysis of freshwater fish trophic niches
+  "Maitland2024",  # Lake Michigan habitat coupling (top-cited, Ecology)
+  "Barrus2024",    # mentee-led; isotope baselines in streams
+  "Maitland2023",  # food web expansion along the RM-Great Plains ecotone
+  "Maitland2022",  # climate and stream trout recruitment
+  "Maitland2021a", # nonlethal fin sampling for isotope food web studies
+  "Craig2017"      # interacting threats in freshwater ecosystems
+)
+
+# 2. How many funded/pending grants to list, and the floor for inclusion.
+n_grants_shown <- 7
+grant_floor <- 20000
+
+# 3. Set to TRUE to include the withdrawn/declined invited full proposals
+#    (useful where a sponsor wants evidence of large-proposal leadership).
+#    This block costs roughly a third of a page, so drop selected_pub_keys to
+#    about 5 and n_grants_shown to about 5 to stay within two pages.
+show_invited_proposals <- FALSE
+# ---------------------------------------------------------------------------
+
+pubs <- RefManageR::ReadBib("bibs/journal_articles.bib", check = FALSE)
+
+missing_keys <- setdiff(selected_pub_keys, names(pubs))
+if (length(missing_keys) > 0) {
+  stop(
+    "selected_pub_keys not found in bibs/journal_articles.bib: ",
+    paste(missing_keys, collapse = ", ")
+  )
+}
+
+n_pubs <- pubs |>
+  as_tibble() |>
+  filter(bibtype == "Article") |>
+  nrow()
+
+n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
+  as_tibble() |>
+  nrow()
+
+grants <- readr::read_csv("grant_income.csv")
+
+sumgrants <- grants |>
+  filter(Status %in% c("Complete", "In progress")) |>
+  pull(Amount) |>
+  sum(na.rm = TRUE)
+```
+
+# Appointments
+
+```{r employment, results='asis'}
+tribble(
+  ~Start, ~End, ~Position,
+  2024, NA, "\\textbf{Research Fish Biologist}, Rocky Mountain Research Station, USDA Forest Service",
+  2023, 2024, "\\textbf{Research Associate}, Dept. of Civil and Environmental Engineering, University of Wisconsin-Madison",
+  2022, 2023, "\\textbf{Postdoctoral Fellow}, Center for Limnology, University of Wisconsin-Madison",
+  2020, 2022, "\\textbf{WI Water Resources Postdoctoral Fellow}, Aquatic Sciences Center (UW-Madison) and WDNR"
+  ) |>
+  arrange(-Start) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, "Present"),
+    Years = paste(Start, "--", End, sep = "")
+  ) |>
+  select(Years, Position) |>
+  baretable()
+```
+
+Affiliate: Graduate Faculty, Dept. of Biology, Geology, and Environmental Science, University of Tennessee at Chattanooga (2026--present).
+
+# Education
+
+```{r degrees, results='asis'}
+tribble(
+  ~ Year, ~ Degree, ~ Feild, ~ Institution,
+  2020, "Ph.D.", "Ecology", "University of Wyoming",
+  2015, "M.Sc.", "Conservation Biology (Fisheries)", "University of Alberta",
+  2011, "B.S.", "Conservation Biology \\textit{cum laude}", "SUNY: College of Environmental Science and Forestry",
+  ) |>
+  baretable()
+```
+
+# Research summary
+
+<!-- TUNE PER PROPOSAL: rewrite the paragraph below to foreground the work most
+     relevant to the call. The bullets underneath are generated from the same
+     sources as the full CV and normally need no editing. -->
+
+I am a conservation ecologist working on the population and food web ecology of
+freshwater fishes. My research combines stable isotope ecology, otolith and
+tissue chemistry, long-term monitoring data, remote sensing, and Bayesian and
+spatial statistical modeling to ask how climate change, wildfire, altered flow
+regimes, and land use reshape fish populations and the food webs that support
+them. I work across systems---headwater streams, large rivers, and the
+Laurentian Great Lakes---and at scales from individual foraging to
+continental-scale synthesis. Current work at the Rocky Mountain Research Station
+centers on salmonids in the interior Columbia River basin: predicting
+developmental phenology from thermal regimes, mapping spawning activity from
+satellite imagery, and reconstructing historical baselines to inform
+co-management of wildfire and aquatic species. A through-line in my work is
+building open, reusable tools and datasets---R packages, databases, and
+reproducible workflows---so that the methods transfer to the agencies and
+partners who must act on the results.
+
+<!-- END TUNE PER PROPOSAL -->
+
+- Since 2014 I have authored `r n_pubs` peer-reviewed journal articles and `r NROW(bmm_pkgs)` R package (`r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads), and presented `r n_talks` papers and posters at AFS, SFS, ASLO, AGU, IAGLR, and regional meetings.
+- Google Scholar h-index `r bmm_cite$All[2]`, `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
+- Since 2015 I have led, co-led, or partnered on \$`r sprintf("%2.1f", sumgrants/1e6)` million in funded projects, and contributed to invited proposals exceeding \$2 million in scope.
+- I have reviewed 60 manuscripts for 19 journals since 2016, and served as a grant reviewer for NSF (Division of Environmental Biology) and the Lake Champlain Fisheries Research Program.
+
+# Selected publications
+
+\textbf{Bold} indicates my name; \underline{underlined names} indicate undergraduate research mentees. Citation counts are from Google Scholar on `r format(Sys.time(), "%e %B %Y")`. A full list of `r n_pubs` articles is available in my complete CV.
+
+```{r selected-pubs, results='asis'}
+# The CSL sorts the bibliography by citation-number descending, i.e. entries
+# print in the reverse of the order they are cited in. Reverse the keys here
+# so that selected_pub_keys reads in the same order it renders on the page.
+selected <- pubs[rev(selected_pub_keys)]
+selected_cites <- get_citation_counts(selected, bmm_cite_papers)
+
+# bibliography_entries() only accepts a bib *file path*, not a BibEntry
+# object, so write the selected subset out to its own small bib file first.
+RefManageR::WriteBib(selected, file = here::here(selected_bib))
+
+bibliography_entries(selected_bib) |>
+  render_bib_section(selected_bib, cites = selected_cites)
+```
+
+# Selected funding
+
+```{r grants-table, results='asis'}
+grants |>
+  filter(Status %in% c("Complete", "In progress", "Pending")) |>
+  filter(Amount >= grant_floor) |>
+  mutate(
+    Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
+    Entry = paste(
+      Role, ". ``", Title, "''. ",
+      "\\emph{", Source, "}.",
+      sep = ""
+    ),
+    # Lead with active funded work, then the pending pipeline, then closed
+    # awards; within each group, most recent and largest first. Without this
+    # a short list fills up with nothing but "Pending" rows.
+    status_rank = match(Status, c("In progress", "Pending", "Complete")),
+    sort_year = suppressWarnings(as.numeric(Start)),
+    sort_year = tidyr::replace_na(sort_year, Inf)
+  ) |>
+  arrange(status_rank, desc(sort_year), desc(Amount)) |>
+  head(n_grants_shown) |>
+  mutate(Amount = dollars(Amount)) |>
+  select(Time, Entry, Amount) %>%
+  baretable(
+    align = "llp{12.8cm}r",
+    size = "\\fontsize{9}{11}",
+    add.to.row = list(
+      pos = as.list(seq(NROW(.))),
+      command = rep("\\\\[-0.30cm]", NROW(.))
+    )
+  )
+```
+
+```{r grants-invited, results='asis', eval=show_invited_proposals}
+cat("\n\\vspace*{0.15cm}\n\n**Invited full proposals (withdrawn due to U.S. federal funding disruptions, or not awarded):**\n\n\\vspace*{0.15cm}\n\n")
+
+grants |>
+  filter(Status %in% c("Invited, withdrawn", "Invited, not awarded")) |>
+  mutate(
+    Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
+    Entry = paste(
+      Role, ". ``", Title, "''. ",
+      "\\emph{", Source, "}.",
+      sep = ""
+    ),
+    sort_year = suppressWarnings(as.numeric(Start)),
+    sort_year = tidyr::replace_na(sort_year, Inf)
+  ) |>
+  arrange(desc(sort_year), desc(Amount)) |>
+  mutate(Amount = dollars(Amount)) |>
+  select(Time, Entry, Amount) %>%
+  baretable(
+    align = "llp{12.8cm}r",
+    size = "\\fontsize{9}{11}",
+    add.to.row = list(
+      pos = as.list(seq(NROW(.))),
+      command = rep("\\\\[-0.30cm]", NROW(.))
+    )
+  )
+```
+
+# Selected awards and honors
+
+```{r awards, results='asis'}
+tribble(
+  ~Year, ~Award,
+  2026, "Outstanding Service Award, USDA Forest Service, Rocky Mountain Research Station",
+  2024, "Outstanding Service Award, USDA Forest Service, Rocky Mountain Research Station",
+  2021, "Best Professional Presentation Award, Wisconsin Chapter American Fisheries Society",
+  2020, "Wisconsin Water Resources Postdoctoral Fellow, University of Wisconsin-Madison",
+  2019, "Dean's Graduate Fellowship, College of Arts and Sciences, University of Wyoming",
+  2018, "Eugene Maughan Graduate Award, Western Division American Fisheries Society",
+  ) |>
+  baretable()
+```
+
+# Mentoring and teaching
+
+```{r mentoring-counts, results='asis'}
+tribble(
+  ~Years, ~Detail,
+  "2023--present", "Supervised 3 graduate/post-baccalaureate researchers (U. Idaho, UW-Madison, UT-Chattanooga); MS committee member, UT-Chattanooga",
+  "2015--2025", "Mentored 11 undergraduate researchers, two of whom have led or co-authored peer-reviewed publications",
+  "2014--2020", "Instructor of record for Ichthyology (UWyo); teaching assistant for 12 sections of Ichthyology and Fisheries Management (UWyo, U. Alberta)",
+  ) |>
+  baretable(align = "lp{3.2cm}p{13.1cm}")
+```
+
+# Selected service and synergistic activities
+
+```{r service, results='asis'}
+tribble(
+  ~Years, ~Detail,
+  "2025--2029", "Mentor of Practice, NSF IRES: Climate Change Resilience in an Aquatic Bright Spot (Jensen, PI, UW-Madison)",
+  "2026", "Program co-chair, \\emph{Fish and Fire} symposium, American Fisheries Society Annual Meeting",
+  "2024", "Program co-chair, \\emph{Science to Restore and Manage Wildland Aquatic Habitats and Watersheds}, AGU Fall Meeting",
+  "2020--2022", "Member, Trout Species Team, Wisconsin Dept. of Natural Resources; Fisheries Working Group, Wisconsin Initiative on Climate Change Impacts",
+  "2015--present", "Member, Freshwater Working Group, Society for Conservation Biology; AFS, SCB, ESA, SFS",
+  ) |>
+  baretable(align = "lp{3.2cm}p{13.1cm}")
+```
+
+\vspace*{0.2cm}
+
+Developer and maintainer of `hatchR`, an open-source R package for predicting fish hatch and emergence timing from thermal regimes, with accompanying workshops delivered to state and federal fisheries staff. Research covered by regional and national media outlets.

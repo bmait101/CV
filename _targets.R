@@ -39,5 +39,6 @@ list(
   tar_target(bmm_pkgs, get_bmm_pkgs(date)),
   # Generate CV documents
   tar_quarto(cv_full, "BryanMaitlandCV.qmd", extra_files = data_files),
-  tar_quarto(cv_1page, "BryanMaitland_1page.qmd", extra_files = data_files)
+  tar_quarto(cv_1page, "BryanMaitland_1page.qmd", extra_files = data_files),
+  tar_quarto(cv_2page, "BryanMaitland_2page.qmd", extra_files = data_files)
 )

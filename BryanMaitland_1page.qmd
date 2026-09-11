@@ -7,6 +7,7 @@ orcid: 0000-0002-4491-5064
 linkedin: bryanmaitland
 github: bmait101
 date: "`r format(Sys.time(), '%B %Y')`"
+date-format: "MMMM YYYY"
 csl: "csl/apa_cv.csl"
 format: cv-pdf
 filters:
@@ -45,7 +46,57 @@ if (fs::file_exists(here::here("selected_pubs.bib"))) {
   fs::file_delete(here::here("selected_pubs.bib"))
 }
 
-targets::tar_load(c(bmm_cite, bmm_cite_papers))
+targets::tar_load(c(bmm_cite, bmm_cite_papers, bmm_pkgs))
+```
+
+```{r tuning, include=FALSE}
+# ---------------------------------------------------------------------------
+# TUNE PER PROPOSAL ---------------------------------------------------------
+#
+# Same idea as BryanMaitland_2page.qmd, just on a tighter budget: this page is
+# full, so anything added here has to displace something else.
+#
+# 1. Which papers to feature. Keys are from bibs/journal_articles.bib and print
+#    top-to-bottom in the order listed here, so lead with the ones most
+#    relevant to the call. 6 is what fits alongside everything else.
+selected_pub_keys <- c(
+  "Sparks2026a",  # hatchR: developmental phenology toolset
+  "Maitland2024", # Lake Michigan habitat coupling (top-cited, Ecology)
+  "Barrus2024",   # mentee-led; isotope baselines in streams
+  "Maitland2023", # food web expansion along the RM-Great Plains ecotone
+  "Maitland2022", # climate and stream trout recruitment
+  "Craig2017"     # interacting threats in freshwater ecosystems
+)
+
+# 2. How many funded/pending grants to list, and the floor for inclusion.
+#    The table is one unbreakable block that has to fit whole on the page, so
+#    a 5th row needs a shorter research summary or one fewer paper to pay for
+#    it. Always check the render after changing this.
+n_grants_shown <- 4
+grant_floor <- 20000
+# ---------------------------------------------------------------------------
+
+pubs <- RefManageR::ReadBib("bibs/journal_articles.bib", check = FALSE)
+
+missing_keys <- setdiff(selected_pub_keys, names(pubs))
+if (length(missing_keys) > 0) {
+  stop(
+    "selected_pub_keys not found in bibs/journal_articles.bib: ",
+    paste(missing_keys, collapse = ", ")
+  )
+}
+
+n_pubs <- pubs |>
+  as_tibble() |>
+  filter(bibtype == "Article") |>
+  nrow()
+
+grants <- readr::read_csv("grant_income.csv")
+
+sumgrants <- grants |>
+  filter(Status %in% c("Complete", "In progress")) |>
+  pull(Amount) |>
+  sum(na.rm = TRUE)
 ```
 
 # Current position
@@ -70,11 +121,27 @@ tribble(
   baretable()
 ```
 
+# Research summary
+
+<!-- TUNE PER PROPOSAL: rewrite the paragraph below to foreground the work most
+     relevant to the call. Keep it to four lines - the page is full, and the
+     funding table below is a single unbreakable block. -->
+
+I am a conservation ecologist studying the population and food web ecology of
+freshwater fishes. I combine stable isotopes, otolith chemistry, long-term
+monitoring, remote sensing, and spatial and Bayesian modeling to ask how climate
+change, wildfire, and altered flow regimes reshape fish populations. Current work
+centers on salmonids in the interior Columbia River basin, and on building open,
+reusable tools for the agencies that must act on the results.
+
+<!-- END TUNE PER PROPOSAL -->
+
 # Selected awards and honours
 
 ```{r awards, results='asis'}
 tribble(
   ~Year, ~Award,
+  2026, "Outstanding Service Award, USDA FS Rocky Mountain Research Station",
   2024, "Outstanding Service Award, USDA FS Rocky Mountain Research Station",
   2019, "Dean’s Graduate Scholar Award, College of Arts and Sciences University of Wyoming",
   2017, "William Trachtenberg Scholarship, Sustainable Fisheries Foundation",
@@ -84,29 +151,14 @@ tribble(
 
 # Selected papers
 
-```{r}
-pubs <- RefManageR::ReadBib("bibs/journal_articles.bib", check = FALSE)
-
-n_pubs <- pubs |>
-  as_tibble() |>
-  filter(bibtype == "Article") |>
-  nrow()
-```
-
 Since 2015 I have authored `r n_pubs` research papers on fish and conservation topics. Some highlights are listed below, with citations taken from Google Scholar on `r format(Sys.time(), "%e %B %Y")`.  My h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")`.
 
 ```{r}
 #| results: asis
-targs <- c(
-  "Sparks2026",
-  "Maitland2024",
-  "Barrus2024",
-  "Maitland2023",
-  "Maitland2022",
-  "Craig2017"
-  )
-
-selected <- pubs[targs]
+# The CSL sorts the bibliography by citation-number descending, i.e. entries
+# print in the reverse of the order they are cited in. Reverse the keys here so
+# that selected_pub_keys reads in the same order it renders on the page.
+selected <- pubs[rev(selected_pub_keys)]
 selected_cites <- get_citation_counts(selected, bmm_cite_papers)
 
 # bibliography_entries() only accepts a bib *file path*, not a BibEntry
@@ -115,4 +167,40 @@ RefManageR::WriteBib(selected, file = here::here("selected_pubs.bib"))
 
 bibliography_entries("selected_pubs.bib") |>
   render_bib_section("selected_pubs.bib", cites = selected_cites)
+```
+
+# Selected funding
+
+Led, co-led, or partnered on \$`r sprintf("%2.1f", sumgrants/1e6)` million in funded projects since 2015, plus invited proposals exceeding \$2 million in scope. \vspace*{0.15cm}
+
+```{r grants-table, results='asis'}
+grants |>
+  filter(Status %in% c("Complete", "In progress", "Pending")) |>
+  filter(Amount >= grant_floor) |>
+  mutate(
+    Time = paste0(Start, ifelse(is.na(End), "", paste0("--", End))),
+    Entry = paste(
+      Role, ". ``", Title, "''. ",
+      "\\emph{", Source, "}.",
+      sep = ""
+    ),
+    # Lead with active funded work, then the pending pipeline, then closed
+    # awards; within each group, most recent and largest first. Without this
+    # a short list fills up with nothing but "Pending" rows.
+    status_rank = match(Status, c("In progress", "Pending", "Complete")),
+    sort_year = suppressWarnings(as.numeric(Start)),
+    sort_year = tidyr::replace_na(sort_year, Inf)
+  ) |>
+  arrange(status_rank, desc(sort_year), desc(Amount)) |>
+  head(n_grants_shown) |>
+  mutate(Amount = dollars(Amount)) |>
+  select(Time, Entry, Amount) %>%
+  baretable(
+    align = "llp{12.8cm}r",
+    size = "\\fontsize{9}{11}",
+    add.to.row = list(
+      pos = as.list(seq(NROW(.))),
+      command = rep("\\\\[-0.30cm]", NROW(.))
+    )
+  )
 ```

@@ -7,6 +7,7 @@ orcid: 0000-0002-4491-5064
 github: bmait101
 # researchgate: bryan-maitland
 date: "`r format(Sys.time(), '%B %Y')`"
+date-format: "MMMM YYYY"
 csl: "csl/apa_cv.csl"
 format: cv-pdf
 filters:
@@ -153,14 +154,14 @@ bibliography_entries("bibs/preprints.bib") |>
   render_bib_section("bibs/preprints.bib")
 ```
 
-# Unpublished Working Papers
+<!-- # Unpublished Working Papers -->
 
-```{r unpublished, results='asis'}
+```{r unpublished, results='asis', eval=FALSE}
 bibliography_entries("bibs/working.bib") |>
   render_bib_section("bibs/working.bib")
 ```
 
-\vspace*{0.2cm}
+<!-- \vspace*{0.2cm} -->
 
 # Grants
 
@@ -259,7 +260,7 @@ grants |>
   )
 ```
 
-\newpage
+<!-- \newpage -->
 
 # Honors and Awards
 
@@ -408,14 +409,14 @@ tribble(
 ## Peer-Reviewing Activities
 
 ```{r reviews1}
-n_reviewed <- 58
-n_journals <- 18
+n_reviewed <- 60
+n_journals <- 19
 n_per_yr <- round(n_reviewed / (as.numeric(format(Sys.Date(), "%Y")) - 2016), 1)
 ```
 
 -   Manuscript Review
     -   Since 2016, I have reviewed `r n_reviewed` manuscripts from `r n_journals` journals ($\sim$ `r n_per_yr` per year).
-    -   Journals include: *Aquatic Invasions* (2), *Canadian Journal of Fisheries and Aquatic Sciences* (2), *Diversity and Distributions*, *Transportation Research: Part D* (1), *Ecological Applications* (4), *Ecosphere* (5), *Ecology* (3), *Environmental Biology of Fishes* (2), *Fisheries* (5), *Fisheries Research* (2), *Freshwater Biology* (3), *Freshwater Science* (4), *Frontiers in Ecology and Evolution* (2), *Global Change Biology* (2), *Hydrobiologia* (8), *Journal of Ecology* (1), *Journal of Great Lakes Research* (2), *North American Journal of Fisheries Management* (5), *Oecologia* (1), *PeerJ* (1), *River Research and Applications* (1), *Restoration Ecology* (2).
+    -   Journals include: *Aquatic Invasions* (2), *Canadian Journal of Fisheries and Aquatic Sciences* (2), *Diversity and Distributions*, *Transportation Research: Part D* (1), *Ecological Applications* (4), *Ecosphere* (5), *Ecology* (3), *Environmental Biology of Fishes* (2), *Fisheries* (5), *Fisheries Research* (2), *Freshwater Biology* (3), *Freshwater Science* (4), *Frontiers in Ecology and Evolution* (2), *Global Change Biology* (2), *Hydrobiologia* (8), *Journal of Ecology* (1), *Journal of Great Lakes Research* (3), *North American Journal of Fisheries Management* (5), *Oecologia* (1), *PeerJ* (1), *River Research and Applications* (1), *Restoration Ecology* (2), *Transactions of the American Fisheries Society* (1).
 -   External Grants
     -   Lake Champlain Fisheries Research Program.
     -   NSF, Division of Environmental Biology (DEB).
