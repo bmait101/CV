@@ -71,12 +71,12 @@ targets::tar_load(c(bmm_cite, bmm_cite_papers, bmm_pkgs))
 #    onto a third page.
 selected_pub_keys <- c(
   "Sparks2026a",   # hatchR: developmental phenology toolset
-  "Keppeler2026",  # global analysis of freshwater fish trophic niches
   "Maitland2024",  # Lake Michigan habitat coupling (top-cited, Ecology)
-  "Barrus2024",    # mentee-led; isotope baselines in streams
+  "Maitland2022",  # climate + long-term monitoring -> stream trout recruitment
+  "Kirk2022",      # climatic drivers and impacts of a rapid range expansion
   "Maitland2023",  # food web expansion along the RM-Great Plains ecotone
-  "Maitland2022",  # climate and stream trout recruitment
-  "Maitland2021a", # nonlethal fin sampling for isotope food web studies
+  "Barrus2024",    # mentee-led; isotope baselines in streams
+  "Maitland2016a", # land-use disturbance -> instream habitat + fish community
   "Craig2017"      # interacting threats in freshwater ecosystems
 )
 
@@ -157,23 +157,29 @@ tribble(
 
 <!-- TUNE PER PROPOSAL: rewrite the paragraph below to foreground the work most
      relevant to the call. The bullets underneath are generated from the same
-     sources as the full CV and normally need no editing. -->
+     sources as the full CV and normally need no editing.
 
-I am a conservation ecologist working on the population and food web ecology of
-freshwater fishes. My research combines stable isotope ecology, otolith and
-tissue chemistry, long-term monitoring data, remote sensing, and Bayesian and
-spatial statistical modeling to ask how climate change, wildfire, altered flow
-regimes, and land use reshape fish populations and the food webs that support
-them. I work across systems---headwater streams, large rivers, and the
-Laurentian Great Lakes---and at scales from individual foraging to
-continental-scale synthesis. Current work at the Rocky Mountain Research Station
-centers on salmonids in the interior Columbia River basin: predicting
-developmental phenology from thermal regimes, mapping spawning activity from
-satellite imagery, and reconstructing historical baselines to inform
-co-management of wildfire and aquatic species. A through-line in my work is
-building open, reusable tools and datasets---R packages, databases, and
-reproducible workflows---so that the methods transfer to the agencies and
-partners who must act on the results.
+     CURRENTLY TARGETED AT: JFSP FLAMES 2027 (FA-NOFO0027-001) - Ferone (student
+     investigator) / Caudill (PI), wildfire exposure metrics and benthic
+     macroinvertebrates in Idaho streams. The generic version of this paragraph
+     is in git history at commit 01b17ff. -->
+
+I am a conservation ecologist at the Rocky Mountain Research Station studying how
+disturbance---wildfire, climate change, and altered flow regimes---propagates
+through stream ecosystems and the food webs they support. I combine stable isotope
+ecology, otolith and tissue chemistry, long-term agency biomonitoring records,
+remote sensing, and spatial and Bayesian modeling; much of my published work
+integrates multi-decade state and federal monitoring datasets with spatially
+explicit habitat and climate data to separate direct from indirect drivers of
+community change. I am Co-PI on the JFSP-funded project *From flames to fish:
+co-management for wildfire and aquatic species in Idaho* (2026--2028), I co-chaired
+the AGU session *Science to Restore and Manage Wildland Aquatic Habitats and
+Watersheds* (2024), and I co-chair the *Fish and Fire* symposium at the 2026 AFS
+Annual Meeting. A through-line in my work is building open, reusable tools and
+datasets---R packages, databases, and reproducible workflows---and teaching R
+workshops so that the methods transfer to the practitioners who must act on the
+results. I mentor graduate and undergraduate researchers, including Garrison
+Ferone at the University of Idaho.
 
 <!-- END TUNE PER PROPOSAL -->
 
@@ -306,4 +312,4 @@ tribble(
 
 \vspace*{0.2cm}
 
-Developer and maintainer of `hatchR`, an open-source R package for predicting fish hatch and emergence timing from thermal regimes, with accompanying workshops delivered to state and federal fisheries staff. Research covered by regional and national media outlets.
+Developer and maintainer of `hatchR`, an open-source R package for predicting fish hatch and emergence timing from thermal regimes. Instructor for R programming and data visualization workshops at American Fisheries Society chapter meetings. Research covered by regional press and public radio.
