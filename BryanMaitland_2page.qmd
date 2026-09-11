@@ -139,7 +139,23 @@ tribble(
   baretable()
 ```
 
-Affiliate: Graduate Faculty, Dept. of Biology, Geology, and Environmental Science, University of Tennessee at Chattanooga (2026--present).
+# Affiliate Appointments
+
+```{r employment, results='asis'}
+tribble(
+  ~Start, ~End, ~Position,
+  2026, NA, "\\textbf{Affiliate Graduate Faculty}, Dept. of Biology, University of Tennessee at Chattanooga",
+  ) |>
+  arrange(-Start) |>
+  mutate(
+    Start = as.character(Start),
+    End = as.character(End),
+    End = tidyr::replace_na(End, "Present"),
+    Years = paste(Start, "--", End, sep = "")
+  ) |>
+  select(Years, Position) |>
+  baretable()
+```
 
 # Education
 
