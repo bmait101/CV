@@ -46,7 +46,15 @@ if (fs::file_exists(here::here("selected_pubs.bib"))) {
   fs::file_delete(here::here("selected_pubs.bib"))
 }
 
-targets::tar_load(c(bmm_cite, bmm_cite_papers, bmm_pkgs))
+source(here::here("R/gcite.R"))
+source(here::here("R/rpackages.R"))
+source(here::here("R/stats.R"))
+
+# Google Scholar + CRAN stats, cached in data/cv_stats.rds (see R/stats.R)
+stats <- load_cv_stats()
+bmm_cite <- stats$bmm_cite
+bmm_cite_papers <- stats$bmm_cite_papers
+bmm_pkgs <- stats$bmm_pkgs
 ```
 
 ```{r tuning, include=FALSE}
@@ -151,7 +159,7 @@ tribble(
 
 # Selected papers
 
-Since 2015 I have authored `r n_pubs` research papers on fish and conservation topics. Some highlights are listed below, with citations taken from Google Scholar on `r format(Sys.time(), "%e %B %Y")`.  My h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")`.
+Since 2015 I have authored `r n_pubs` research papers on fish and conservation topics. Some highlights are listed below, with citations taken from Google Scholar on `r format(stats$date, "%e %B %Y")`.  My h-index is `r bmm_cite$All[2]` with total citations of `r prettyNum(bmm_cite$All[1], big.mark=",")`.
 
 ```{r}
 #| results: asis

@@ -64,7 +64,4 @@ articles_annotated.bib
 /.quarto/
 *_files/
 
-# targets pipeline cache
-/_targets/
-
 **/*.quarto_ipynb

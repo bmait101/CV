@@ -44,7 +44,15 @@ if (fs::file_exists(here::here("temp.bib"))) {
 }
 fs::file_create(here::here("temp.bib"))
 
-targets::tar_load(c(bmm_cite, bmm_cite_papers, bmm_pkgs))
+source(here::here("R/gcite.R"))
+source(here::here("R/rpackages.R"))
+source(here::here("R/stats.R"))
+
+# Google Scholar + CRAN stats, cached in data/cv_stats.rds (see R/stats.R)
+stats <- load_cv_stats()
+bmm_cite <- stats$bmm_cite
+bmm_cite_papers <- stats$bmm_cite_papers
+bmm_pkgs <- stats$bmm_pkgs
 ```
 
 # Employment
@@ -99,7 +107,7 @@ n_talks <- RefManageR::ReadBib("bibs/conf_presentations.bib", check = FALSE) |>
 
 - Professional expertise: Conservation ecology of freshwater fishes using stable isotopes, spatial analysis, and predictive modeling to assess population and food web responses to climate and land use change.
 - Since 2014 I have authored `r n_pubs` papers in peer-reviewed journals (pages \pageref{papersstart}--\pageref{papersend}).
-- On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
+- On Google Scholar my h-index is `r bmm_cite$All[2]` with `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(stats$date, "%e %B %Y")`).
 - I have authored `r NROW(bmm_pkgs)` R package as a result of my research with a total of `r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads (page \pageref{packagestart}).
 - I have contributed `r n_talks` papers and posters at AFS, SFS, ASLO, AGU, IAGLR, and regional chapter meetings (pages \pageref{presstart}--\pageref{presend}).
 

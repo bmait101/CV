@@ -10,25 +10,31 @@ Originally built on the [vitae](https://github.com/mitchelloharawild/vitae) infr
 
 ## Building
 
-Dependencies are managed with [renv](https://rstudio.github.io/renv/). On a fresh clone:
+You need [Quarto](https://quarto.org), R, and a LaTeX install (e.g. `quarto install tinytex`). Install the R packages once per machine:
 
 ```r
-renv::restore()
+install.packages(c(
+  "vitae", "dplyr", "tidyr", "readr", "tibble", "stringr", "RefManageR", "bibtex",
+  "here", "fs", "xfun", "xtable", "fuzzyjoin", "gcite", "cranlogs",
+  "knitr", "rmarkdown"
+))
 ```
 
-Rendering is orchestrated with [targets](https://books.ropensci.org/targets/), which fetches Google Scholar citation stats and R package download counts (cached, refreshed once per day) and then renders all three CV documents:
+Then open a `.qmd` in RStudio and click **Render**, or from a terminal:
 
 ```sh
-make            # or: Rscript -e "targets::tar_make()"
-make clean      # or: Rscript -e "targets::tar_destroy()"
+quarto render                           # all three
+quarto render BryanMaitland_2page.qmd   # just one
 ```
+
+Google Scholar citation stats and R package download counts are cached in `data/cv_stats.rds` and refreshed at most once a day (`R/stats.R`). If the refresh fails (no network, Scholar blocking, a work firewall), the render uses the cached values, and the "as of" date in the CV shows when they were fetched.
 
 ## Layout
 
 - `BryanMaitlandCV.qmd` / `BryanMaitland_2page.qmd` / `BryanMaitland_1page.qmd` - the three CV documents
 - `_extensions/cv/` - the LaTeX/Quarto format (`cv-pdf`) the CVs render with
-- `_targets.R` - the render pipeline
 - `R/` - helper functions (tables, bibliography rendering, citation/download stats)
+- `data/cv_stats.rds` - cached citation and download stats
 - `bibs/` - bibliography files by category (`.bib`)
 - `csl/` - citation style
 - `lua/` - pandoc filter that bolds my name and underlines mentee names in citations

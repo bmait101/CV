@@ -51,7 +51,15 @@ if (fs::file_exists(here::here(selected_bib))) {
   fs::file_delete(here::here(selected_bib))
 }
 
-targets::tar_load(c(bmm_cite, bmm_cite_papers, bmm_pkgs))
+source(here::here("R/gcite.R"))
+source(here::here("R/rpackages.R"))
+source(here::here("R/stats.R"))
+
+# Google Scholar + CRAN stats, cached in data/cv_stats.rds (see R/stats.R)
+stats <- load_cv_stats()
+bmm_cite <- stats$bmm_cite
+bmm_cite_papers <- stats$bmm_cite_papers
+bmm_pkgs <- stats$bmm_pkgs
 ```
 
 ```{r tuning, include=FALSE}
@@ -185,13 +193,13 @@ I am a conservation ecologist studying how disturbance---wildfire, climate chang
 <!-- END TUNE PER PROPOSAL -->
 
 - Since 2014 I have authored `r n_pubs` peer-reviewed journal articles and `r NROW(bmm_pkgs)` R package (`r round(sum(bmm_pkgs$downloads, na.rm=TRUE))` downloads), and presented `r n_talks` papers and posters at AFS, SFS, ASLO, AGU, IAGLR, and regional meetings.
-- Google Scholar h-index `r bmm_cite$All[2]`, `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(Sys.time(), "%e %B %Y")`).
+- Google Scholar h-index `r bmm_cite$All[2]`, `r prettyNum(bmm_cite$All[1], big.mark=",")` total citations (as of `r format(stats$date, "%e %B %Y")`).
 - Since 2015 I have led, co-led, or partnered on \$`r sprintf("%2.1f", sumgrants/1e6)` million in funded projects, and contributed to invited proposals exceeding \$2 million in scope.
 - I have reviewed 60 manuscripts for 19 journals since 2016, and served as a grant reviewer for NSF (Division of Environmental Biology) and the Lake Champlain Fisheries Research Program.
 
 # Selected publications
 
-\underline{Underlined names} indicate undergraduate research mentees. Citation counts from Google Scholar (`r format(Sys.time(), "%e %B %Y")`). 
+\underline{Underlined names} indicate undergraduate research mentees. Citation counts from Google Scholar (`r format(stats$date, "%e %B %Y")`). 
 
 ```{r selected-pubs, results='asis'}
 # The CSL sorts the bibliography by citation-number descending, i.e. entries
@@ -243,10 +251,7 @@ grants |>
 ```
 
 ```{r grants-invited, results='asis'}
-# The toggle is applied inside the chunk rather than as `eval=` in the chunk
-# header. knitr evaluates chunk options in an empty environment when purling,
-# and tarchetypes::tar_quarto() purls the .qmd to find tar_load() calls, so a
-# variable in a chunk option raises "object not found" on every tar_make().
+# Toggle is set by show_invited_proposals in the tuning chunk above.
 if (show_invited_proposals) {
   cat("\n\\vspace*{0.15cm}\n\n**Invited full proposals (withdrawn due to U.S. federal funding disruptions, or not awarded):**\n\n\\vspace*{0.15cm}\n\n")
 

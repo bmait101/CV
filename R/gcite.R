@@ -1,12 +1,12 @@
 # Google scholar stats
-get_gcites <- function(date) {
+get_gcites <- function() {
   "https://scholar.google.com/citations?user=tGn-FzAAAAAJ&hl=en" |>
     gcite::gcite_url() |>
     gcite::gcite_citation_index()
 }
 
 # Get Google scholar citation data
-get_scholar_cites <- function(date) {
+get_scholar_cites <- function() {
   # Need to load in lots of 100 to avoid connection issues
   gspapers <- list()
   complete <- FALSE
